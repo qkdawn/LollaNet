@@ -1,0 +1,63 @@
+{
+  "nodes": [
+    {
+      "id": "dashboard",
+      "type": "file",
+      "file": "00-Start/Dashboard.md",
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 240
+    },
+    {
+      "id": "decision-checklist",
+      "type": "file",
+      "file": "02-Checklists/Decision Checklist.md",
+      "x": 460,
+      "y": 0,
+      "width": 360,
+      "height": 240
+    },
+    {
+      "id": "model-index",
+      "type": "file",
+      "file": "00-Start/Model Index.md",
+      "x": 0,
+      "y": 320,
+      "width": 360,
+      "height": 240
+    },
+    {
+      "id": "clusters",
+      "type": "file",
+      "file": "05-Maps/Model Clusters.md",
+      "x": 460,
+      "y": 320,
+      "width": 360,
+      "height": 240
+    }
+  ],
+  "edges": [
+    {
+      "id": "dashboard-checklist",
+      "fromNode": "dashboard",
+      "fromSide": "right",
+      "toNode": "decision-checklist",
+      "toSide": "left"
+    },
+    {
+      "id": "dashboard-index",
+      "fromNode": "dashboard",
+      "fromSide": "bottom",
+      "toNode": "model-index",
+      "toSide": "top"
+    },
+    {
+      "id": "index-clusters",
+      "fromNode": "model-index",
+      "fromSide": "right",
+      "toNode": "clusters",
+      "toSide": "left"
+    }
+  ]
+}

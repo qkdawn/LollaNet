@@ -1,0 +1,6 @@
+interface:
+  display_name: "LollaNet Analyze"
+  short_description: "Auditable mental-model retrieval for durable decisions"
+  default_prompt: "Use $lollanet-analyze to examine this decision with auditable model retrieval and long-horizon checks."
+policy:
+  allow_implicit_invocation: true
