@@ -1,7 +1,7 @@
 ---
 type: dashboard
 title: LollaNet Dashboard
-updated: 2026-07-13
+updated: 2026-07-14
 ---
 
 # LollaNet Dashboard
@@ -16,12 +16,16 @@ updated: 2026-07-13
 
 ## 认知资产
 
-- [[Model Index]]：浏览现有公共模型。
+- [[Model Index]]：按来源大类和具体领域浏览现有公共模型；由 `06-Scripts/generate_model_index.py` 从 Frontmatter 生成。
 - [[Model Relationship Index]]：查看模型关系与学科分布。
 - [Public Case Library](../09-Cases/README.md)：浏览基于公开可核验来源的真实案例。
-- [[Private Workspace]]：了解本地身份、准则、提案和可选项目空间。
+- [[Private Workspace]]：了解本地身份、价值、准则、目标、提案和可选项目空间。
+- `private/me/dashboard.md`：进入本地个人资料层。
 - `private/me/User Profile.md`：事实性的“我是谁”。
-- `private/me/Principles.md`：规范性的“我愿意怎样取舍”。
+- `private/me/Value Function.md`：用户确认的终极价值、硬约束和内部张力。
+- `private/me/Principles.md`：规范性的“在这些条件下我愿意怎样行动”。
+- `private/me/Long-term Goals.md`：服务价值、但可替换的目标状态。
+- `private/me/Current Focus.md`：当前短周期资源配置和实验。
 - `private/models/`：私人模型补充、候选或适用边界。
 - `private/model-proposals/`：由人审议的模型修改建议。
 - `private/evaluations/`：盲评与 30/90 天延迟复盘。
@@ -32,6 +36,7 @@ updated: 2026-07-13
 
 - [[Analysis Quality Checklist]]：检查证据、替代解释、行动和不确定性。
 - [[Decision Checklist]]：重大且需要完整检查时使用。
+- [[投资视角检查清单]]：配置时间、注意力、金钱、信誉和选择权前，检查风险、准备、仓位、复利、改变与退出。
 - [[Weekly Review]]：用户选择沉淀后再进行周期复盘。
 - [[Inbox Processing Report]]：处理用户主动放入长期层的材料。
 - [[PROJECT_SPEC]]：查看未来外部认知输入闭环的边界与数据契约。

@@ -1,7 +1,7 @@
 ---
 type: agent_protocol
 title: LollaNet Agent Protocol
-updated: 2026-07-12
+updated: 2026-07-14
 ---
 
 # LollaNet Agent Protocol
@@ -10,7 +10,7 @@ LollaNet 是公开认知框架、私人长期认知层和外部任务环境之�
 
 ```text
 framework: public files under 00-Start through 09-Cases
-identity and principles: private/me
+identity, values, principles, goals, and focus: private/me
 model proposals: private/model-proposals/<status>
 optional project memory: private/projects/<project_id>
 current task: its original chat, repository, application, or agent environment
@@ -64,9 +64,15 @@ The initialized workspace includes:
 ```text
 private/
 ├── me/
+│   ├── dashboard.md
 │   ├── User Profile.md
+│   ├── Value Function.md
 │   ├── Long-term Goals.md
-│   └── Principles.md
+│   ├── Principles.md
+│   ├── Current Focus.md
+│   ├── observations/
+│   ├── reviews/
+│   └── proposals/proposed/
 ├── models/
 ├── evaluations/
 ├── model-proposals/
@@ -83,7 +89,7 @@ private/
         └── reviews/
 ```
 
-`private/` is ignored by Git. Identity, principles, models, evidence, and proposals are distinct assets; do not silently convert an AI inference into a fact, principle, or accepted model.
+`private/` is ignored by Git. Identity, values, principles, goals, focus, models, evidence, and proposals are distinct assets; do not silently convert an AI inference into a fact, chosen value, principle, goal, or accepted model. `Value Function.md` is a user-authored multi-objective decision layer, not a license to invent a fixed global score or infer terminal values from observed behavior.
 
 ## Analysis Rule
 
@@ -97,7 +103,7 @@ Follow the vendor-neutral protocol in `04-Prompts/LollaNet Analysis Protocol.md`
 
 ## Change Governance
 
-AI agents are read-only against formal identity, principles, and models by default.
+AI agents are read-only against formal identity, value function, principles, long-term goals, and models by default. They may draft a `Current Focus.md` allocation or a personal-data proposal only after the user asks, and must not promote observations or candidate values without explicit approval.
 
 Allowed proposal types are `new`, `amend`, `split`, `merge`, `contest`, and `deprecate`. First show the proposal to the user. Write it under `private/model-proposals/proposed/` only after explicit approval; do not edit the target model in the same step unless the user separately approves accepting the proposal.
 

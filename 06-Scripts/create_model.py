@@ -5,8 +5,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import re
+import sys
 from datetime import date
 from pathlib import Path
+
+try:
+    from model_taxonomy import canonicalize, model_path
+except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from model_taxonomy import canonicalize, model_path
 
 
 MODEL_KINDS = {"world", "reasoning", "action"}
@@ -29,9 +36,18 @@ DEFAULT_CONFLICTS = {
 }
 
 
-def default_model_id(name: str, discipline: str) -> str:
+def default_model_id(
+    name: str,
+    discipline: str,
+    source_category: str = "学科知识",
+    subdiscipline: str = "通用",
+) -> str:
     """Return a deterministic initial ID; the persisted ID must survive later renames."""
-    source = f"{discipline.strip().lower()}\0{name.strip()}".encode("utf-8")
+    classification = canonicalize(source_category, discipline, subdiscipline)
+    source = (
+        f"{classification.source_category}\0{classification.discipline}\0"
+        f"{classification.subdiscipline}\0{name.strip()}"
+    ).encode("utf-8")
     return f"mm-{hashlib.sha256(source).hexdigest()[:12]}"
 
 
@@ -49,6 +65,28 @@ def frontmatter_value(text: str, key: str) -> str | None:
     block = text[4:].split("\n---\n", 1)[0]
     match = re.search(rf"(?m)^{re.escape(key)}:[ \t]*(.*?)[ \t]*$", block)
     return None if not match else match.group(1).strip().strip('"\'')
+
+
+def frontmatter_list(text: str, key: str) -> list[str]:
+    if not text.startswith("---\n") or "\n---\n" not in text[4:]:
+        return []
+    block = text[4:].split("\n---\n", 1)[0]
+    match = re.search(rf"(?m)^{re.escape(key)}:[ \t]*(.*?)\s*$", block)
+    if not match:
+        return []
+    inline = match.group(1).strip()
+    if inline.startswith("[") and inline.endswith("]"):
+        return [item.strip().strip('"\'') for item in inline[1:-1].split(",") if item.strip()]
+    if inline:
+        return [inline.strip('"\'')]
+    values: list[str] = []
+    for line in block[match.end() :].splitlines():
+        item = re.fullmatch(r"\s{2,}-\s+(.+?)\s*", line)
+        if item:
+            values.append(item.group(1).strip('"\''))
+        elif line.strip():
+            break
+    return values
 
 
 def accepted_new_proposal(vault_root: Path, proposal_id: str) -> Path:
@@ -91,11 +129,20 @@ def model_body(
     model_id: str | None = None,
     kind: str = "reasoning",
     proposal_id: str = "accepted-proposal-required",
+    source_category: str = "学科知识",
+    subdiscipline: str = "通用",
+    formalism: bool = False,
 ) -> str:
     if kind not in MODEL_KINDS:
         raise ValueError(f"kind must be one of: {', '.join(sorted(MODEL_KINDS))}")
 
-    model_id = model_id or default_model_id(name, discipline)
+    classification = canonicalize(source_category, discipline, subdiscipline)
+    model_id = model_id or default_model_id(
+        name,
+        classification.discipline,
+        classification.source_category,
+        classification.subdiscipline,
+    )
     if not MODEL_ID_RE.fullmatch(model_id):
         raise ValueError("model_id must be an ASCII identifier beginning with 'mm-'")
 
@@ -109,8 +156,10 @@ type: mental_model
 id: {model_id}
 name: {name}
 english_name: {english_name}
-discipline: {discipline}
-subdiscipline:
+discipline: {classification.discipline}
+source_category: {classification.source_category}
+subdiscipline: {classification.subdiscipline}
+formalism: {str(formalism).lower()}
 kind: {kind}
 status: candidate
 version: 1
@@ -140,6 +189,10 @@ use_cases:
 ## 核心机制
 
 候选卡尚需补充可检验的因果链、关键变量，以及增强或削弱机制的条件。
+
+## 形式化内容
+
+{"候选卡尚需补充定义、符号、公式或算法、成立前提、推导或证明来源、反例与跨域转译。" if formalism else "本卡不要求独立的形式化表示；如后续发现公式、算法或可证明结构会改变判断，应提出模型修订提案。"}
 
 ## 耐久机制
 
@@ -226,29 +279,39 @@ use_cases:
 
 ### 来源
 
-来源需要核验。
+- 核心来源：待验证线索；接受前替换为 `[作者或机构，标题（年份）](可回引 URL 或 DOI)`。
+- 案例来源：待验证线索；接受前补充观察日期和可回引 URL。
+- 来源支持的事实：暂无。
+- 来源没有证明的推断：当前案例与机制解释均未验证。
 
 ## 支持证据
 
-- 暂无足以激活本模型的可靠证据。
-- 接受前至少补充一种能回指底层材料的证据，并说明证据强度与局限。
+- 机制主张：暂无足以激活本模型的可靠证据。
+  - 来源：待验证线索。
+  - 证据类型：未分类。
+  - 支持范围：暂无。
+  - 外推限制：暂无证据支持跨场景外推。
+- 独立支持或复现：暂无；接受前至少补充一项独立材料。
 
 ## 反证
 
-- 关键变量不存在时，本模型可能只是事后解释。
-- 替代机制同样能解释结果时，必须降低本模型置信度。
-- 跨时代迁移只存在表面相似时，不应沿用结论。
+- 最强反证或边界来源：待验证线索。
+- 削弱模型的观察：关键变量不存在时，本模型可能只是事后解释。
+- 可替代解释：其他机制同样能解释结果时，必须降低本模型置信度。
+- 转为 `contested` 的条件：可靠反证显示预测方向不稳定或依赖未声明的边界。
 
 ## 失效条件
 
-- 因果链中的关键环节不存在或方向相反。
-- 观测指标无法区分本模型与替代解释。
-- 制度、技术或成本结构已经改变模型成立的前提。
+- 任务中缺少该模型声称的必要机制。
+- 当前指标无法区分本模型与主要替代解释。
+- 制度、技术、样本或时间变化破坏了来源材料的外推条件。
 
 ## 可观察预测
 
-- 如果模型成立，关键变量的变化应先于或伴随目标结果出现。
-- 重复观察未出现预测关系时，应降低模型置信度并提交修改提案。
+- 预测对象与时间窗：接受前定义。
+- 如果模型成立：关键变量的变化应先于或伴随目标结果出现。
+- 区分性结果：接受前写明与主要替代解释不同的预测。
+- 降低置信度的结果：重复观察未出现预测关系，或替代解释预测得更准确。
 
 ## 关联模型
 
@@ -291,22 +354,36 @@ def create_model(
     model_id: str | None = None,
     kind: str = "reasoning",
     proposal_id: str | None = None,
+    source_category: str = "学科知识",
+    subdiscipline: str = "通用",
+    formalism: bool = False,
 ) -> Path:
     today = today or date.today().isoformat()
-    model_id = model_id or default_model_id(name, discipline)
+    classification = canonicalize(source_category, discipline, subdiscipline)
+    model_id = model_id or default_model_id(
+        name,
+        classification.discipline,
+        classification.source_category,
+        classification.subdiscipline,
+    )
     if not MODEL_ID_RE.fullmatch(model_id):
         raise ValueError("model_id must be an ASCII identifier beginning with 'mm-'")
-    target_dir = Path(vault_root) / "01-Models" / discipline
+    target = model_path(vault_root, classification, name)
+    target_dir = target.parent
     target_dir.mkdir(parents=True, exist_ok=True)
-    target = target_dir / f"{name}.md"
     if target.exists():
         return target
     if proposal_id is None:
         raise ValueError("creating a public candidate requires --proposal <accepted-new-proposal-id>")
-    accepted_new_proposal(vault_root, proposal_id)
+    proposal_path = accepted_new_proposal(vault_root, proposal_id)
+    proposal_text = proposal_path.read_text(encoding="utf-8")
+    is_batch = frontmatter_value(proposal_text, "batch") == "true"
+    proposed_models = frontmatter_list(proposal_text, "proposed_models")
+    if is_batch and name not in proposed_models:
+        raise ValueError(f"model {name!r} is not listed in batch proposal {proposal_id}")
     for existing in (Path(vault_root) / "01-Models").rglob("*.md"):
         existing_text = existing.read_text(encoding="utf-8")
-        if f"| {proposal_id} |" in existing_text:
+        if not is_batch and f"| {proposal_id} |" in existing_text:
             raise ValueError(f"accepted proposal already created a model: {proposal_id}")
         if frontmatter_value(existing_text, "id") == model_id:
             raise ValueError(f"model_id already exists in {existing}: {model_id}")
@@ -321,6 +398,9 @@ def create_model(
             model_id,
             kind,
             proposal_id,
+            classification.source_category,
+            classification.subdiscipline,
+            formalism,
         ),
         encoding="utf-8",
     )
@@ -330,7 +410,10 @@ def create_model(
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Create a candidate LollaNet mental model card.")
     parser.add_argument("name", help="Model name, for example: 激励机制")
-    parser.add_argument("--discipline", default="Psychology", help="Model discipline folder")
+    parser.add_argument("--source-category", default="学科知识", help="Canonical source category")
+    parser.add_argument("--discipline", default="心理学", help="Canonical field; legacy English aliases are accepted")
+    parser.add_argument("--subdiscipline", default="通用", help="Specific field within the discipline")
+    parser.add_argument("--formalism", action="store_true", help="Require the formal-content section")
     parser.add_argument("--kind", choices=sorted(MODEL_KINDS), default="reasoning", help="Model role")
     parser.add_argument("--id", dest="model_id", default=None, help="Stable ASCII ID beginning with mm-")
     parser.add_argument(
@@ -358,6 +441,9 @@ def main() -> int:
         model_id=args.model_id,
         kind=args.kind,
         proposal_id=args.proposal_id,
+        source_category=args.source_category,
+        subdiscipline=args.subdiscipline,
+        formalism=args.formalism,
     )
     print(path)
     return 0

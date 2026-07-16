@@ -11,6 +11,8 @@ LollaNet does not assume that more models produce better reasoning. This
 protocol compares the system with an ordinary AI baseline and reports results
 without claiming causality from a single answer or outcome.
 
+This v1 document remains the record of the original 10-task exploratory blind evaluation. New system, ablation, and portfolio tests follow [LollaNet Model Test Protocol v2](model-test-protocol-v2.md); v2 does not retroactively reinterpret v1 results.
+
 ## Hypotheses
 
 1. Relevant private context can make analysis less generic without leaking unrelated personal information.

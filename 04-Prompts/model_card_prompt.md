@@ -25,7 +25,9 @@ updated: 2026-07-12
 - `kind: world|reasoning|action`
 - `status: candidate|active|contested|deprecated`
 - 从 1 开始的整数 `version`
-- `name`、`english_name`、`discipline`、`created`、`updated`
+- `source_category`：`时势信号|哲学模型|历史机制|他人失败|学科知识`
+- `name`、`english_name`、`discipline`、`subdiscipline`、`created`、`updated`
+- `formalism: true|false`
 - `conflicts` 与 `supersedes`，没有关系时写 `[]`
 
 `kind` 的含义：
@@ -67,3 +69,4 @@ updated: 2026-07-12
 - 可观察预测必须允许未来证据降低模型置信度，不能写成永远正确的解释。
 - 每个场景至少给 3 个能改变假设、预测或行动的问题。
 - 关联模型必须区分“常一起调用 / 容易混淆 / 互相校正”；真正存在张力的模型另写入 `conflicts`。
+- `formalism: true` 的模型还必须写出定义与符号、公式或算法、成立前提、推导或证明来源、反例与边界、跨域转译；不能只用类比或口号替代形式化内容。

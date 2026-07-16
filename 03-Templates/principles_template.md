@@ -1,7 +1,7 @@
 ---
 type: template
 template_for: personal_principles
-updated: 2026-07-12
+updated: 2026-07-14
 ---
 
 # Principles
@@ -16,13 +16,16 @@ in a particular way.
 
 For each principle, record:
 
-### {{principle_name}}
+### pr-{{principle_id}} — {{principle_name}}
 
+- Status: `candidate | active | retired`
 - Principle:
+- Protects values: `vf-*`
 - Originating moment, observation, or reading:
 - Why it matters:
 - Applies when:
 - Does not apply when:
+- Failure mode when overused:
 - Tension with other principles:
 - Last reviewed:
 

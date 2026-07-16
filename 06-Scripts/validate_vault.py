@@ -4,9 +4,16 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from datetime import date
 from pathlib import Path
 from typing import NamedTuple
+
+try:
+    from model_taxonomy import CATEGORY_FIELDS, SOURCE_CATEGORIES, canonicalize
+except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from model_taxonomy import CATEGORY_FIELDS, SOURCE_CATEGORIES, canonicalize
 
 
 REQUIRED_DIRS = [
@@ -28,6 +35,9 @@ MODEL_FIELDS = [
     "name",
     "english_name",
     "discipline",
+    "source_category",
+    "subdiscipline",
+    "formalism",
     "kind",
     "status",
     "version",
@@ -57,10 +67,30 @@ MODEL_SECTIONS = [
     "## AI 输出要求",
     "## 修订历史",
 ]
+FORMAL_MODEL_SECTIONS = [
+    "## 形式化内容",
+    "### 定义与符号",
+    "### 公式或算法",
+    "### 成立前提",
+    "### 推导或证明来源",
+    "### 反例与边界",
+    "### 跨域转译",
+]
 
 MODEL_KINDS = {"world", "reasoning", "action"}
 MODEL_STATUSES = {"candidate", "active", "contested", "deprecated"}
 MODEL_ID_RE = re.compile(r"^mm-[a-z0-9]+(?:-[a-z0-9]+)*$")
+ATTRIBUTABLE_SOURCE_RE = re.compile(
+    r"https?://|\bdoi:\s*10\.\d{4,9}/|\bisbn(?:-1[03])?:\s*[0-9Xx-]+",
+    re.IGNORECASE,
+)
+MODEL_QUALITY_PLACEHOLDERS = (
+    "这个案例用于检查：",
+    "现有证据以案例性材料为主",
+    "当前支持材料是“经典案例”所列事实与来源",
+    "来源标记为“需要核验”时",
+    "核心因果链中的关键变量不存在、方向相反，或被更强机制覆盖",
+)
 PROPOSAL_FIELDS = [
     "id",
     "proposal_type",
@@ -180,10 +210,22 @@ def should_validate_note(path: Path, root: Path, include_private: bool = False) 
     rel = path.relative_to(root)
     if is_ignored_path(path, root, include_private):
         return False
-    return rel.name != "PROJECT_SPEC.md"
+    return rel.name not in {"README.md", "PROJECT_SPEC.md"}
 
 
-def validate_model_card(path: Path, text: str, rel: Path, errors: list[str]) -> ModelMetadata | None:
+def markdown_section(text: str, heading: str) -> str:
+    pattern = rf"(?ms)^{re.escape(heading)}[ \t]*\n(.*?)(?=^##[ \t]|\Z)"
+    match = re.search(pattern, text)
+    return match.group(1) if match else ""
+
+
+def validate_model_card(
+    path: Path,
+    text: str,
+    rel: Path,
+    errors: list[str],
+    warnings: list[str] | None = None,
+) -> ModelMetadata | None:
     block = frontmatter_block(text)
     if block is None:
         return None
@@ -218,6 +260,30 @@ def validate_model_card(path: Path, text: str, rel: Path, errors: list[str]) -> 
     if values["type"] not in {None, "mental_model"}:
         errors.append(f"{rel}: model type must be mental_model")
 
+    source_category = values["source_category"] or ""
+    discipline = values["discipline"] or ""
+    subdiscipline = values["subdiscipline"] or ""
+    try:
+        classification = canonicalize(source_category, discipline, subdiscipline)
+    except ValueError as exc:
+        errors.append(f"{rel}: invalid model taxonomy: {exc}")
+        classification = None
+
+    if classification is not None:
+        expected_rel = Path("01-Models") / classification.source_category / classification.discipline / path.name
+        if rel != expected_rel:
+            errors.append(
+                f"{rel}: model path does not match taxonomy; expected {expected_rel}"
+            )
+
+    formalism = values["formalism"]
+    if formalism not in {"true", "false"}:
+        errors.append(f"{rel}: formalism must be true or false")
+    elif formalism == "true":
+        for section in FORMAL_MODEL_SECTIONS:
+            if section not in text:
+                errors.append(f"{rel}: formal model missing required section {section}")
+
     model_id = values["id"] or ""
     if model_id and not MODEL_ID_RE.fullmatch(model_id):
         errors.append(f"{rel}: invalid model id {model_id!r}; expected ASCII mm-* identifier")
@@ -229,6 +295,30 @@ def validate_model_card(path: Path, text: str, rel: Path, errors: list[str]) -> 
     status = values["status"]
     if status is not None and status not in MODEL_STATUSES:
         errors.append(f"{rel}: invalid model status {status!r}")
+
+    if warnings is not None and status in {"active", "contested"}:
+        quality_issues: list[str] = []
+        evidence_text = "\n".join(
+            [
+                markdown_section(text, "## 经典案例"),
+                markdown_section(text, "## 支持证据"),
+            ]
+        )
+        counterevidence_text = markdown_section(text, "## 反证")
+        prediction_text = markdown_section(text, "## 可观察预测")
+        if not ATTRIBUTABLE_SOURCE_RE.search(evidence_text):
+            quality_issues.append("no attributable source in case or supporting evidence")
+        if not ATTRIBUTABLE_SOURCE_RE.search(counterevidence_text):
+            quality_issues.append("no attributable counterevidence or boundary source")
+        if "时间窗" not in prediction_text:
+            quality_issues.append("prediction does not define an object and time window")
+        if "替代解释" not in prediction_text:
+            quality_issues.append("prediction does not distinguish the main alternative explanation")
+        placeholders = [phrase for phrase in MODEL_QUALITY_PLACEHOLDERS if phrase in text]
+        if placeholders:
+            quality_issues.append(f"contains {len(placeholders)} seed boilerplate phrase(s)")
+        if quality_issues:
+            warnings.append(f"{rel}: active model quality debt: {'; '.join(quality_issues)}")
 
     version = values["version"]
     if version is not None and (not version.isdigit() or int(version) < 1):
@@ -399,7 +489,7 @@ def validate_vault(vault_root: Path, include_private: bool = False) -> dict[str,
         elif frontmatter_value(block, "type") == "case":
             validate_case_card(text, rel, errors)
         if rel.parts and rel.parts[0] == "01-Models" and path.suffix == ".md":
-            metadata = validate_model_card(path, text, rel, errors)
+            metadata = validate_model_card(path, text, rel, errors, warnings)
             if metadata:
                 model_metadata.append(metadata)
         for link in WIKI_LINK_RE.findall(text):

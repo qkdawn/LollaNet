@@ -2,8 +2,8 @@
 type: project_spec
 title: LollaNet 可演化认知层产品规格
 status: active
-version: 1.0
-updated: 2026-07-13
+version: 1.1
+updated: 2026-07-14
 ---
 
 # LollaNet 可演化认知层产品规格
@@ -12,7 +12,7 @@ updated: 2026-07-13
 
 LollaNet 是：
 
-> 一套由人通过 Obsidian 拥有和维护的长期身份、个人准则与可演化模型，以及让 AI 在当前任务中按需召回、相互质疑并提出修改建议的开放认知协议。
+> 一套由人通过 Obsidian 拥有和维护的长期身份、价值函数、个人准则、目标与可演化模型，以及让 AI 在当前任务中按需召回、相互质疑并提出修改建议的开放认知协议。
 
 LollaNet 的研究对象不是“保存多少知识”，而是外部认知资产能否让 AI 的假设、预测和行动发生可解释的改善。
 
@@ -24,7 +24,7 @@ LollaNet 的研究对象不是“保存多少知识”，而是外部认知资�
 
 ### H1：降低平均化
 
-把人工选择的准则、异质模型、冲突和反例装配给 AI，可能比仅依赖通用训练分布产生更贴合、非显然且有行动价值的结果。
+把用户确认的价值、准则、目标与异质模型、冲突和反例装配给 AI，可能比仅依赖通用训练分布产生更贴合、非显然且有行动价值的结果。
 
 可观察指标：盲评中的贴合度、非显然增量、简洁性、证据质量、行动价值和“此刻的优雅”。
 
@@ -70,7 +70,7 @@ LollaNet 的研究对象不是“保存多少知识”，而是外部认知资�
 ```text
 公共框架                         私人长期认知层                           当前任务环境
 00-Start..09-Cases             private/                                任意 AI / 应用 / 仓库
-模型、协议、模板、公开案例、脚本、Skill  身份、准则、私人证据、提案、可选项目记忆  当前事实、文件、聊天、执行与临时结果
+模型、协议、模板、公开案例、脚本、Skill  身份、价值、准则、目标、焦点、私人证据与项目记忆  当前事实、文件、聊天、执行与临时结果
 ```
 
 ### 5.1 公共层
@@ -86,9 +86,15 @@ LollaNet 的研究对象不是“保存多少知识”，而是外部认知资�
 ```text
 private/
 ├── me/
+│   ├── dashboard.md
 │   ├── User Profile.md
+│   ├── Value Function.md
 │   ├── Long-term Goals.md
-│   └── Principles.md
+│   ├── Principles.md
+│   ├── Current Focus.md
+│   ├── observations/
+│   ├── reviews/
+│   └── proposals/proposed/
 ├── models/                          # 可选私人模型补充或候选
 ├── evaluations/                     # 私人盲评与 30/90 天复盘
 ├── model-proposals/
@@ -105,13 +111,31 @@ private/
     └── reviews/
 ```
 
-`models/` 可以记录私人适用边界、候选模型或对公共模型的异议，但不能静默改写公共文件，也不能把个人偏好伪装成事实。综合时必须让来源和冲突可见。`evaluations/` 只保存用户选择记录的盲评与延迟复盘，不作为新的事实来源。
+`me/` 中的正式身份、价值函数、准则和长期目标由用户拥有，AI 默认只读。`observations/` 保存用户陈述或行为观察，但不得自动升级为正式自我定义；`Current Focus.md` 只表达一个可撤回的短周期配置。`models/` 可以记录私人适用边界、候选模型或对公共模型的异议，但不能静默改写公共文件，也不能把个人偏好伪装成事实。综合时必须让来源和冲突可见。`evaluations/` 只保存用户选择记录的盲评与延迟复盘，不作为新的事实来源。
 
 ### 5.3 当前任务层
 
 当前输入、工作文件、聊天过程、Agent 执行记录和一次性输出留在原环境。一次任务完成后不写回也是合法且完整的结果。
 
-### 5.4 外部认知输入闭环
+### 5.4 模型应用、演化证据与治理的职责分层
+
+LollaNet 将模型的使用、产生演化理由和正式变更分为三个相互衔接但不得互相越权的层次：
+
+| 层次 | 核心问题 | 权威入口 | 可产生的输出 | 不得做什么 |
+| --- | --- | --- | --- | --- |
+| A. 模型应用层 | 当前任务应选择并怎样使用哪 3–7 个模型？ | `04-Prompts/LollaNet Analysis Protocol.md` | 条件性判断、预测、行动建议和可验证下一步 | 默认保存任务记录、强行套用模型或直接改正式资产 |
+| B. 模型演化证据层 | 外部输入和真实任务怎样形成可审计的演化线索？ | `04-Prompts/Model Evolution Protocol.md`；两个实施计划分别定义输入通道边界 | 可回引公开证据、私人调用证据、反证、复盘与候选理由 | 因单次结果、调用次数或自动评分直接改变模型 |
+| C. 模型治理层 | 证据怎样成为 proposal，并在接受后怎样改变版本？ | 本规格第 8 节与 `private/model-proposals/` | `new`、`amend`、`split`、`merge`、`contest` 或 `deprecate` 的可审议提案和修订历史 | 绕过人工审阅、接受状态或隐私边界 |
+
+A 层只负责当前任务中的模型选择和转译；B 层只负责产生并区分证据、反证和归因不确定性；C 层是正式模型或私人长期资产变更的唯一治理通道。默认不保存任务是合法结果。用户选择保存的真实任务证据默认留在 `private/` 或原任务环境；它最多触发研究问题、私人适配或 proposal，不能单独作为公共模型修订的证据基础。公共修订仍须满足公开、可核验的独立证据要求。
+
+B 层的统一手工运行契约是 `04-Prompts/Model Evolution Protocol.md`：它定义进入条件、最小证据单元、即时/30 天/90 天复盘、私人适配与公共修订的证据边界，以及到 C 层的交接规则。该协议默认不保存、不开自动化；两个实施计划只分别说明输入通道的能力路线与风险闸门。
+
+模型测试的方法权威入口是 `07-Docs/model-test-protocol-v2.md`：它将卡片质量、系统盲测、模型级消融和真实任务延迟复盘分开测试；测试结果只能形成 B 层的可审计证据与研究线索，不得自动改变模型状态或绕过 C 层。
+
+B 层有两条互补通道：外部认知输入通道处理公开材料、时势信号和阅读线索；个人资料驱动的应用通道处理经授权的最小私人上下文、任务级调用结果与延迟复盘。两者共用 C 层的 proposal 闸门，但不共享私人原始材料。
+
+### 5.5 外部认知输入闭环
 
 这是第一阶段之后的候选能力，不代表当前已经实现。目标是把用户主动选择的外部信息源转化为可审计的模型迭代信号：
 
@@ -137,7 +161,7 @@ RSS 信息源
 
 该方向不把 LollaNet 扩展为全量阅读器、内容数据库、自动写作系统或无人值守的自我改模 Agent。先以小规模、可暂停、可回溯的实验验证：输入质量是否足以产生增量，日报是否比随机信息流更能改变模型判断，以及持续阅读是否值得其时间与维护成本。
 
-### 5.5 知识来源分类体系
+### 5.6 知识来源分类体系
 
 LollaNet 用三级分类体系组织促进模型迭代的知识来源：
 
@@ -152,6 +176,8 @@ LollaNet 用三级分类体系组织促进模型迭代的知识来源：
         └── 二级分类：具体领域
             └── 三级分类：具体模型
 ```
+
+公共模型目录必须与该层级一致：`01-Models/<一级分类>/<二级领域>/<模型>.md`。分类字段同时写入模型 Frontmatter，目录是可读导航，字段是机器可验证接口；分类用于存储和审计，不是固定模型路由。
 
 五个一级分类的默认含义如下：
 
@@ -179,11 +205,19 @@ LollaNet 用三级分类体系组织促进模型迭代的知识来源：
 
 身份是事实性的“我是谁”，包括经历、能力、约束、阶段状态和协作偏好。AI 推断不得未经确认写成稳定身份；用户当前明确表达优先于旧画像。
 
-### 6.2 准则
+### 6.2 价值函数
 
-准则是规范性的“我愿意怎样取舍”，包括要保护的价值、不可接受的代价和长期优先级。准则属于用户选择，不能被经验事实自动推出，也不能伪装成描述世界的模型。
+价值函数记录用户明确认可的终极价值、硬约束、代理风险和内部张力，用于判断“什么本身值得”以及一条生命或行动轨迹为什么值得选择。它不是假定人拥有稳定单目标效用，也不得被 AI 从行为记录中自动反推。默认使用多目标和约束表达；永久全局权重只有在用户明确给出且说明适用情境时才有效。
 
-### 6.3 模型
+### 6.3 准则
+
+准则是规范性的“在这些条件下，我愿意怎样行动”，并通过稳定 `pr-*` 标识链接所保护的 `vf-*` 价值。准则属于用户选择，不能被经验事实自动推出，也不能伪装成描述世界的模型。
+
+### 6.4 长期目标与当前焦点
+
+长期目标是服务一个或多个价值的可替换目标状态，必须记录时间窗口、可观察成功、机会成本、复查日期和停止条件。`Current Focus.md` 把已确认目标转成 6–12 周的可撤回资源配置和实验；它不能建立新的终极价值，也不能因计划执行而自动证明目标正确。
+
+### 6.5 模型
 
 模型描述以下三类内容之一：
 
@@ -193,13 +227,15 @@ LollaNet 用三级分类体系组织促进模型迭代的知识来源：
 
 模型不是语录、标签或固定答案。它必须说明机制、边界、反证和能够被观察的预测。
 
-### 6.4 证据
+### 6.6 证据
 
 证据包括阅读、研究、历史记录、失败案例和现实观察。证据必须保留来源、观察时间和时代条件；没有可回引来源的内容只能作为待验证线索。基于公开来源的案例可以成为公共证据，但案例整理者的推断必须与来源直接支持的事实分开。
 
 案例用两个正交字段区分公开性与来源：`privacy: public|private` 说明能否进入公共层，`provenance: public-sourced|private-material|fictional` 说明材料来源。公开案例同时记录 `created`、`updated`、事件日期 `date_observed` 和资料核验截止日 `as_of`；未知事件日期写 `unknown`，不能以创建日冒充。
 
-### 6.5 修改提案
+个人观察同样属于证据。重复行为可以挑战用户的自我描述，但不能自动成为身份、价值、准则或目标；冲突应保留并交由用户审议。
+
+### 6.7 修改提案
 
 修改提案描述长期认知可能如何变化，但本身不是正式模型。一次阅读、一次失败或一次 Agent 结论最多产生提案，不能直接改卡。
 
@@ -215,7 +251,10 @@ type: mental_model
 id: mm-incentives
 name: 激励机制
 english_name: Incentives
-discipline: Psychology
+source_category: 学科知识
+discipline: 心理学
+subdiscipline: 动机与行为
+formalism: false
 kind: world
 status: active
 version: 1
@@ -230,6 +269,9 @@ supersedes: []
 约束：
 
 - `id` 是稳定、ASCII、不可因标题或目录变化而改变的标识。现有模型使用语义化 `mm-*` ID；新模型可由 `--id` 指定，省略时由创建脚本确定性生成。
+- `source_category` 只能是 `时势信号`、`哲学模型`、`历史机制`、`他人失败` 或 `学科知识`；正式公共模型只能位于 `哲学模型`、`历史机制` 或 `学科知识` 路径，输入材料和失败案例不直接成为模型卡。
+- `discipline` 是二级领域，`subdiscipline` 是领域内的具体分支；两者不得为空，且必须与模型文件路径一致。
+- `formalism` 只能是 `true` 或 `false`。形式化模型必须增加定义与符号、公式或算法、成立前提、推导或证明来源、反例与边界、跨域转译六个小节。
 - `kind` 只能是 `world`、`reasoning` 或 `action`。
 - `status` 只能是 `candidate`、`active`、`contested` 或 `deprecated`。
 - `version` 是从 1 开始的正整数；接受会改变模型内容的提案时递增。
@@ -260,6 +302,18 @@ AI 调用条件
 关联模型
 AI 输出要求
 修订历史
+```
+
+当 `formalism: true` 时，正文还必须包含：
+
+```text
+形式化内容
+  定义与符号
+  公式或算法
+  成立前提
+  推导或证明来源
+  反例与边界
+  跨域转译
 ```
 
 其中：
@@ -376,7 +430,7 @@ privacy: private
 ### 10.1 三类 Scout
 
 - `model-scout`：搜索模型触发条件、边界、关系和版本状态。
-- `memory-scout`：只读取与当前任务直接相关的身份、准则、证据或私人覆盖。
+- `memory-scout`：只读取与当前任务直接相关的身份、价值、准则、目标、当前焦点、证据或私人覆盖，并保持这些来源的语义差异。
 - `challenge-scout`：搜索反例、竞争性机制、遗漏变量和长期风险。
 
 复杂任务最多并行三个只读 Scout。简单事实查询、格式转换和低风险执行请求跳过 Scout。宿主不支持子 Agent 时，按相同职责和返回契约串行检索。
@@ -389,7 +443,7 @@ privacy: private
 kind: model | memory | evidence | challenge
 title: <human-readable title>
 location: <file + section, or external URL + locator>
-source_category: public-model | private-model | private-identity | private-principle | private-project | private-evidence | public-evidence | external
+source_category: public-model | private-model | private-identity | private-value | private-principle | private-goal | private-focus | private-project | private-evidence | public-evidence | external
 match_signal: <why this item was retrieved>
 basis: <what the underlying source supports>
 boundary_or_counterevidence: <limit, conflict, or disconfirming evidence>
@@ -415,7 +469,7 @@ Packet 必须回引底层来源。Scout 自己的概括、置信度或共识不�
 
 - 保留现有 30 张模型并迁移，不批量覆盖其有效内容。
 - `create_model.py` 只有在 `--proposal` 指向 `private/model-proposals/accepted/` 中类型为 `new` 的已接受提案时才新建 `candidate` 模型；不覆盖同名文件、不复用已消费提案，也不允许重复稳定 ID。
-- `init_private.py` 只补充缺失的 `Principles.md`、`models/`、`evaluations/` 和提案状态目录，不移动或覆盖现有私人数据。
+- `init_private.py` 只补充缺失的个人 dashboard、`Value Function.md`、`Current Focus.md`、观察/复盘/提议目录、`models/`、`evaluations/` 和模型提案状态目录，不移动或覆盖现有私人数据。
 - 现有 `create_project.py` 和 `create_decision.py` 继续提供可选沉淀能力。
 - `create_case.py` 的 `--public-case`、`--project` 与 `--public-example` 三种目标模式互斥。
 - 基于公开可核验来源的真实案例通过 `create_case.py "<标题>" --public-case --source "<ref>"` 写入 `09-Cases/<domain>/`；至少一个 `--source` 是必需的，并生成非空 `source_refs`。案例必须记录 `created`、`updated`、`date_observed`、`as_of`、`privacy: public` 与 `provenance: public-sourced`，在正文中区分事实与推断并说明时代条件。
@@ -463,7 +517,9 @@ python 06-Scripts/validate_vault.py --include-private
 - 行动价值；
 - “此刻的优雅”。
 
-初步支持条件：LollaNet 至少在 7/10 次盲评中获选，且事实可靠性不低于基线。
+初步支持条件：LollaNet 至少在 7/10 次盲评中获选，且事实可靠性不低于基线。这是 v1 的探索性历史门槛，不是模型状态或后续测试的自动判定规则。
+
+后续的可重复测试遵循 `07-Docs/model-test-protocol-v2.md`：它使用 24 个完全虚构任务做系统盲测，并通过 Baseline / Full / Ablation 区分系统增量与单卡的独立行动增量；结果全量报告、保留评审分歧，且不以固定总分自动变更模型。
 
 短视假设必须另做 30/90 天复盘。在长期结果产生前，只能报告时间尺度覆盖、条件性预测和风险识别，不能宣称判断结果已经改善。
 
@@ -471,7 +527,7 @@ python 06-Scripts/validate_vault.py --include-private
 
 第一阶段完成时应具备：
 
-1. 清晰区分身份、准则、模型、证据和提案的本地结构；
+1. 清晰区分身份、价值函数、准则、目标、当前焦点、模型、证据和提案的本地结构；
 2. 30 张已迁移且可追踪版本的公共模型；
 3. 厂商无关、无固定模型清单的分析协议；
 4. 可运行并通过校验的 Codex 参考 Skill；

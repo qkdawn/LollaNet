@@ -21,17 +21,48 @@ def test_init_private_adds_cognitive_assets_without_overwrite(tmp_path):
 
     created = module.init_private(tmp_path, today="2026-07-12")
     principles = tmp_path / "private" / "me" / "Principles.md"
+    value_function = tmp_path / "private" / "me" / "Value Function.md"
+    current_focus = tmp_path / "private" / "me" / "Current Focus.md"
 
     assert principles in created
+    assert value_function in created
+    assert current_focus in created
     assert "type: personal_principles" in principles.read_text(encoding="utf-8")
+    value_text = value_function.read_text(encoding="utf-8")
+    assert "type: personal_value_function" in value_text
+    assert "status: draft" in value_text
+    assert "Global numeric weights are" in value_text
+    assert "### vf-example" in value_text
+    assert "type: current_focus" in current_focus.read_text(encoding="utf-8")
+    assert (tmp_path / "private" / "me" / "observations").is_dir()
+    assert (tmp_path / "private" / "me" / "reviews").is_dir()
+    assert (tmp_path / "private" / "me" / "proposals" / "proposed").is_dir()
     assert (tmp_path / "private" / "models").is_dir()
     for status in ["proposed", "accepted", "rejected", "deferred"]:
         assert (tmp_path / "private" / "model-proposals" / status).is_dir()
     assert (tmp_path / "private" / "evaluations").is_dir()
 
     principles.write_text("my private principles", encoding="utf-8")
+    value_function.write_text("my private values", encoding="utf-8")
     module.init_private(tmp_path, today="2026-07-13")
     assert principles.read_text(encoding="utf-8") == "my private principles"
+    assert value_function.read_text(encoding="utf-8") == "my private values"
+
+
+def test_public_personal_templates_keep_asset_types_distinct():
+    templates = ROOT / "03-Templates"
+    profile = (templates / "user_profile_template.md").read_text(encoding="utf-8")
+    values = (templates / "value_function_template.md").read_text(encoding="utf-8")
+    principles = (templates / "principles_template.md").read_text(encoding="utf-8")
+    goals = (templates / "long_term_goals_template.md").read_text(encoding="utf-8")
+    focus = (templates / "current_focus_template.md").read_text(encoding="utf-8")
+
+    assert "factual identity" in profile
+    assert "stable `vf-*` IDs" in values
+    assert "Global numeric weights are forbidden" in values
+    assert "Protects values: `vf-*`" in principles
+    assert "Serves values: `vf-*`" in goals
+    assert "6-12 week allocation" in focus
 
 
 def test_create_case_requires_an_explicit_private_or_public_destination(tmp_path):
