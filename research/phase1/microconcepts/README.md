@@ -21,6 +21,7 @@ not be edited by hand.
 - [[EVIDENCE_CATALOG]]
 - [[MODEL_MICROCONCEPT_GRAPH]]
 - [[MICROCONCEPT_EVIDENCE_GRAPH]]
+- [Phase 1 Microconcept State Encoder Training Protocol](../../../07-Docs/papers/lollanet-v1/03-microconcept-state-encoder-training-protocol.md)
 
 ## Validate and Generate
 
