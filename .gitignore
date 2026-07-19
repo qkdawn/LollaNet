@@ -2,5 +2,6 @@ private/
 .pytest_cache/
 __pycache__/
 **/__pycache__/
+.tmp-crossref-*.json
 .obsidian/workspace*.json
 .obsidian/cache/
