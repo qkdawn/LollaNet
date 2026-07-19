@@ -1,0 +1,27 @@
+id: mm-p1-numerical-error
+name: 数值误差传播
+domain: math
+kind: reasoning
+functional_roles: [observation, challenge]
+definition: 追踪测量、近似和计算误差怎样传播到最终判断。
+mechanism: 对输入误差、模型近似和计算精度建立误差预算，并识别主导误差源。
+key_variables:
+  - {name: input_error, type: numeric, meaning: 输入测量或估计误差}
+  - {name: output_error, type: numeric, meaning: 最终结果不确定性}
+input_fields:
+  - {name: measurement_precision, type: numeric, meaning: 输入的精度或区间}
+output_fields:
+  - {name: uncertainty_budget, type: numeric, meaning: 各误差源对总不确定性的贡献}
+positive_task_signals: [结论依赖近似计算, 多个测量误差会累积]
+negative_task_signals: [只有定性关系且无数值主张, 输入误差不影响行动]
+preconditions: [误差来源可枚举, 输出指标已定义]
+failure_conditions: [忽略相关误差, 用虚假精度掩盖模型错设]
+prediction_targets: [主导误差源改善后总不确定性显著下降]
+action_affordances: [提高关键测量精度, 报告置信区间]
+composition:
+  prerequisites: [mm-p1-function-mapping]
+  successors: [mm-p1-safety-margin]
+  compatible_with: [mm-p1-local-sensitivity, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-numerical-error, mm-p1-safety-margin], purpose: 用不确定性预算确定必要的安全缓冲}

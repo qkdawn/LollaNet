@@ -1,0 +1,27 @@
+id: mm-p1-mass-stoichiometry
+name: 物质守恒与限制试剂
+domain: chemistry
+kind: world
+functional_roles: [transition, observation]
+definition: 反应产出受守恒关系和限制性投入共同约束。
+mechanism: 比较各反应物的可用量与化学计量需求，确定最大反应进度和剩余量。
+key_variables:
+  - {name: quantity, type: numeric, meaning: 各组分可用物质的量}
+  - {name: stoichiometric_ratio, type: numeric, meaning: 反应所需比例}
+input_fields:
+  - {name: component_inventory, type: numeric, meaning: 各投入的初始数量}
+output_fields:
+  - {name: limiting_input, type: categorical, meaning: 限制产出的投入}
+positive_task_signals: [多个投入共同决定产出, 需要找出限制性资源]
+negative_task_signals: [产出不受守恒约束, 投入不可量化]
+preconditions: [系统边界明确, 反应比例或资源关系已知]
+failure_conditions: [遗漏流入流出, 忽略纯度、损耗或并行反应]
+prediction_targets: [增加限制性投入将提高可转换产出，增加过量投入主要增加剩余]
+action_affordances: [补充限制投入, 调整配比, 测量剩余量]
+composition:
+  prerequisites: []
+  successors: [mm-p1-rate-control]
+  compatible_with: [mm-p1-rate-control, mm-p1-bottleneck]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-mass-stoichiometry, mm-p1-rate-control], purpose: 先确定可达产出上限，再判断达到上限的速度}

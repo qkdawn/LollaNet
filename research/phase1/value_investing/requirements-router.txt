@@ -1,0 +1,2 @@
+# Research-only CPU training dependency. Install separately from the framework base requirements.
+torch>=2.2

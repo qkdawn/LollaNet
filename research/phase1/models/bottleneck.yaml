@@ -1,0 +1,27 @@
+id: mm-p1-bottleneck
+name: 瓶颈
+domain: engineering
+kind: world
+functional_roles: [observation, control]
+definition: 系统总吞吐由当前最紧的约束决定，而非由最忙的局部环节决定。
+mechanism: 比较需求、能力、等待、阻塞与返工，通过小幅干预验证真正限制总产出的环节。
+key_variables:
+  - {name: capacity, type: numeric, meaning: 各环节有效能力}
+  - {name: throughput, type: numeric, meaning: 系统总产出速度}
+input_fields:
+  - {name: queue_and_utilization, type: time_series, meaning: 等待和利用率轨迹}
+output_fields:
+  - {name: constraint_location, type: categorical, meaning: 当前约束所在环节}
+positive_task_signals: [产出受限且存在多个环节, 局部忙碌与整体交付不一致]
+negative_task_signals: [需求不足, 没有可比较的系统吞吐]
+preconditions: [系统边界和吞吐单位明确, 关键环节可测]
+failure_conditions: [短期波动掩盖约束, 干预同时改变多个环节]
+prediction_targets: [缓解真实约束将提高总吞吐或降低周期时间]
+action_affordances: [增加约束能力, 降低约束负荷, 防止非约束过度投入]
+composition:
+  prerequisites: []
+  successors: [mm-p1-feedback-loop, mm-p1-safety-margin]
+  compatible_with: [mm-p1-rate-control, mm-p1-reliability-lifetime]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-bottleneck, mm-p1-safety-margin], purpose: 缓解约束时同时检查可用容量与失效风险}

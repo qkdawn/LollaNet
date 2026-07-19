@@ -1,0 +1,27 @@
+id: mm-p1-compounding
+name: 复利
+domain: finance
+kind: world
+functional_roles: [transition, evaluation]
+definition: 收益、损失和能力会在时间中以累积基础继续增长或缩减，长期结果常呈非线性。
+mechanism: 每期变化作用于更新后的基数，增长率、时间和中断共同决定终值。
+key_variables:
+  - {name: growth_rate, type: numeric, meaning: 每期增长或衰减率}
+  - {name: horizon, type: time_series, meaning: 累积持续时间}
+input_fields:
+  - {name: initial_base, type: numeric, meaning: 初始本金、能力或存量}
+output_fields:
+  - {name: compounded_value, type: numeric, meaning: 指定时间后的累计值}
+positive_task_signals: [结果会跨期累积, 需要比较短期与长期影响]
+negative_task_signals: [一次性结果且不保留基数, 时间窗极短]
+preconditions: [增长规则和时间周期明确, 基数可持续作用]
+failure_conditions: [增长率频繁变化却假设恒定, 忽略中断、费用或上限]
+prediction_targets: [相同增速下更长时间窗将放大终值差异]
+action_affordances: [延长高质量积累, 降低持续损耗, 比较长期路径]
+composition:
+  prerequisites: []
+  successors: [mm-p1-opportunity-cost]
+  compatible_with: [mm-p1-opportunity-cost, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-compounding, mm-p1-opportunity-cost], purpose: 比较不同路径在长期累积后的放弃成本}

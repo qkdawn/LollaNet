@@ -1,0 +1,17 @@
+fixture_id: anonymous-microconcept-evidence-v1
+projection_type: semantic_contract_expectation
+microconcepts:
+  capacity_headroom:
+    expected_direction: mixed
+    reason: 流动性指标尚可，但杠杆和再融资依赖形成相反证据。
+  conversion_gap:
+    expected_direction: increasing
+    reason: 应收增长快于收入且结构化营运资本命题为负向。
+  evidence_quality:
+    expected_direction: mixed
+    reason: 来源定位完整，但部分命题缺失且管理层证据相互冲突。
+expected_model_links:
+  - mm-p1-safety-margin
+  - mm-p1-bottleneck
+  - mm-p1-numerical-error
+boundary: 该文件验证结构投影，不提供数值训练标签或投资结论。

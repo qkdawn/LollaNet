@@ -1,0 +1,27 @@
+id: mm-p1-opportunity-cost
+name: 机会成本
+domain: finance
+kind: action
+functional_roles: [evaluation, challenge]
+definition: 选择一个方案的真实代价包括放弃的最佳可行替代方案价值。
+mechanism: 在资源、时间和约束固定时比较可行替代方案，识别被当前选择占用的稀缺资源。
+key_variables:
+  - {name: chosen_value, type: numeric, meaning: 当前方案的预期价值}
+  - {name: best_alternative_value, type: numeric, meaning: 最佳替代方案的预期价值}
+input_fields:
+  - {name: scarce_resources, type: numeric, meaning: 时间、资金或能力等稀缺投入}
+output_fields:
+  - {name: opportunity_cost, type: numeric, meaning: 放弃最佳替代方案的价值}
+positive_task_signals: [资源只能投向部分方案, 当前选择排除了替代行动]
+negative_task_signals: [资源不稀缺且方案可同时实施, 没有可行替代项]
+preconditions: [替代方案和资源边界可比较, 时间窗一致]
+failure_conditions: [遗漏关键替代项, 把沉没成本当成机会成本]
+prediction_targets: [最佳替代方案价值提高时当前选择的机会成本上升]
+action_affordances: [重新分配资源, 延后低价值承诺, 保留选择权]
+composition:
+  prerequisites: [mm-p1-expected-value]
+  successors: []
+  compatible_with: [mm-p1-optimization-constraints, mm-p1-compounding]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-optimization-constraints, mm-p1-opportunity-cost], purpose: 在资源约束下比较不同可行方案的放弃代价}

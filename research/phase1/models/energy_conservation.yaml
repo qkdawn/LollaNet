@@ -1,0 +1,27 @@
+id: mm-p1-energy-conservation
+name: 能量守恒
+domain: physics
+kind: world
+functional_roles: [transition, challenge]
+definition: 在明确边界内，能量只会转化、传递或储存，不会无来源地产生或消失。
+mechanism: 建立系统能量收支，区分输入、输出、储能与耗散。
+key_variables:
+  - {name: energy_input, type: numeric, meaning: 进入系统的能量}
+  - {name: dissipation, type: numeric, meaning: 不可用能量或损耗}
+input_fields:
+  - {name: boundary_flows, type: time_series, meaning: 边界上的能量流}
+output_fields:
+  - {name: energy_balance, type: numeric, meaning: 收支残差与储能变化}
+positive_task_signals: [存在输入输出和损耗, 需要检查物理可行性]
+negative_task_signals: [能量边界不可定义, 问题只涉及偏好]
+preconditions: [系统边界明确, 能量形式可换算]
+failure_conditions: [遗漏隐含输入或储能, 混淆能量守恒与效率守恒]
+prediction_targets: [收支不平衡将对应储能变化或测量遗漏]
+action_affordances: [减少耗散, 增加供能, 检查边界泄漏]
+composition:
+  prerequisites: []
+  successors: [mm-p1-stability-transition]
+  compatible_with: [mm-p1-force-balance, mm-p1-stability-transition]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-energy-conservation, mm-p1-stability-transition], purpose: 由能量与扰动判断稳定状态是否可能改变}

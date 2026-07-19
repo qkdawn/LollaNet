@@ -1,0 +1,53 @@
+fixture_id: anonymous-microconcept-evidence-v1
+available_at: '2019-05-14T16:15:00Z'
+decision_at: '2019-05-15T20:00:00Z'
+quantitative_factors:
+  ttm_revenue_growth: 0.08
+  gross_margin_change: -0.05
+  ttm_operating_margin: 0.09
+  ttm_operating_cash_flow: 120.0
+  ttm_capex: 40.0
+  ttm_free_cash_flow: 80.0
+  free_cash_flow_positive_years: 3
+  roic: 0.15
+  net_debt_to_ebitda: 3.2
+  interest_coverage: 4.0
+  current_ratio: 1.2
+  receivables_growth_minus_revenue_growth: 0.12
+  inventory_growth_minus_revenue_growth: 0.04
+  earnings_surprise_zscore: 1.3
+  earnings_volatility: 0.30
+  free_cash_flow_yield: 0.08
+  valuation_percentile: 0.50
+  trailing_drawdown: -0.12
+qualitative_evidence:
+  - claim_id: working_capital_change
+    polarity: negative
+    time_horizon: near_term
+    strength: strong
+    source: {accession: fixture-0001, section: Item 2, start_char: 0, end_char: 120, text_sha256: fixture-hash-working-capital, extractor_version: fixture-extractor-v1}
+  - claim_id: liquidity_outlook
+    polarity: positive
+    time_horizon: near_term
+    strength: medium
+    source: {accession: fixture-0001, section: Item 2, start_char: 121, end_char: 220, text_sha256: fixture-hash-liquidity-positive, extractor_version: fixture-extractor-v1}
+  - claim_id: refinancing_dependency
+    polarity: negative
+    time_horizon: medium_term
+    strength: medium
+    source: {accession: fixture-0001, section: Item 2, start_char: 221, end_char: 320, text_sha256: fixture-hash-refinancing, extractor_version: fixture-extractor-v1}
+  - claim_id: demand_outlook
+    polarity: mixed
+    time_horizon: medium_term
+    strength: weak
+    source: {accession: fixture-0001, section: Item 2, start_char: 321, end_char: 400, text_sha256: fixture-hash-demand-mixed, extractor_version: fixture-extractor-v1}
+missing_evidence_examples:
+  - {claim_id: covenant_risk, reason: section_not_present, state: unknown}
+conflicting_evidence_examples:
+  - microconcept_id: capacity_headroom
+    claims: [liquidity_outlook, refinancing_dependency]
+    resolution: preserve_both_and_reduce_confidence
+limitations:
+  - values and locators are fictional
+  - no real filing text is stored
+  - no investment outcome is included

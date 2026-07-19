@@ -1,0 +1,28 @@
+id: mm-p1-optimization-constraints
+name: 优化与约束
+domain: math
+kind: action
+functional_roles: [evaluation, control]
+definition: 在明确目标和约束下寻找可行解，而不是只优化单一局部指标。
+mechanism: 用目标函数比较候选方案，并将资源、风险和不可违反边界写成约束。
+key_variables:
+  - {name: objective, type: numeric, meaning: 需要最大化或最小化的目标}
+  - {name: constraints, type: categorical, meaning: 可行域边界}
+input_fields:
+  - {name: candidate_options, type: categorical, meaning: 待比较方案}
+  - {name: resource_limits, type: numeric, meaning: 资源和风险限制}
+output_fields:
+  - {name: feasible_choice, type: categorical, meaning: 满足约束的候选行动}
+positive_task_signals: [存在多种可选方案, 资源或风险边界明确]
+negative_task_signals: [目标不可比较, 约束尚未确定]
+preconditions: [目标方向明确, 约束可检验]
+failure_conditions: [遗漏硬约束, 把不可量化价值伪装成单一分数]
+prediction_targets: [约束放松或收紧后的最优方案变化]
+action_affordances: [选择方案, 分配资源, 制定约束]
+composition:
+  prerequisites: [mm-p1-function-mapping]
+  successors: [mm-p1-local-sensitivity, mm-p1-opportunity-cost]
+  compatible_with: [mm-p1-local-sensitivity, mm-p1-opportunity-cost]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-optimization-constraints, mm-p1-opportunity-cost], purpose: 在可行解中比较放弃不同方案的代价}

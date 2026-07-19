@@ -1,0 +1,27 @@
+id: mm-p1-buffer-capacity
+name: 缓冲与容量
+domain: chemistry
+kind: world
+functional_roles: [transition, control]
+definition: 缓冲系统只能在有限容量内抵抗扰动，接近耗尽时状态会迅速改变。
+mechanism: 可逆组分吸收外部扰动，剩余缓冲量决定状态变化的斜率和失效阈值。
+key_variables:
+  - {name: buffer_reserve, type: numeric, meaning: 可用缓冲容量}
+  - {name: disturbance_load, type: numeric, meaning: 外部扰动量}
+input_fields:
+  - {name: current_state, type: numeric, meaning: 当前被保护的状态}
+output_fields:
+  - {name: remaining_capacity, type: numeric, meaning: 扰动后的可用缓冲}
+positive_task_signals: [系统需要抵抗波动, 存在有限备用容量]
+negative_task_signals: [扰动不可吸收或没有可定义的容量]
+preconditions: [缓冲机制存在, 扰动与容量使用同一尺度]
+failure_conditions: [缓冲被重复占用, 未知故障绕过缓冲机制]
+prediction_targets: [容量接近耗尽时相同扰动会导致更大状态变化]
+action_affordances: [补充缓冲, 降低负荷, 设置容量告警]
+composition:
+  prerequisites: [mm-p1-equilibrium-response]
+  successors: [mm-p1-feedback-loop]
+  compatible_with: [mm-p1-safety-margin, mm-p1-feedback-loop]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-buffer-capacity, mm-p1-safety-margin], purpose: 将剩余缓冲量转化为可接受风险边界}

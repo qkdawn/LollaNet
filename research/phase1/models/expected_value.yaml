@@ -1,0 +1,27 @@
+id: mm-p1-expected-value
+name: 期望值
+domain: finance
+kind: action
+functional_roles: [evaluation, control]
+definition: 在结果概率和代价可比较时，用概率加权结果比较候选行动的平均价值。
+mechanism: 枚举主要情景、概率和收益损失，并检查尾部风险与不可接受结果是否另有硬约束。
+key_variables:
+  - {name: probability, type: probability, meaning: 情景发生概率}
+  - {name: payoff, type: numeric, meaning: 情景下的收益或损失}
+input_fields:
+  - {name: scenarios, type: categorical, meaning: 可比较的结果情景}
+output_fields:
+  - {name: expected_value, type: numeric, meaning: 概率加权结果}
+positive_task_signals: [存在多种不确定结果, 需要比较行动的平均收益]
+negative_task_signals: [概率和结果不可比较, 存在不能补偿的硬损失]
+preconditions: [情景集合足够完整, 概率和结果口径一致]
+failure_conditions: [遗漏尾部事件, 用平均收益掩盖不可承受损失]
+prediction_targets: [概率或收益变化将按权重改变候选行动排序]
+action_affordances: [比较投资或实验, 设定风险阈值, 选择信息获取]
+composition:
+  prerequisites: [mm-p1-bayesian-update]
+  successors: [mm-p1-opportunity-cost]
+  compatible_with: [mm-p1-opportunity-cost, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-expected-value, mm-p1-opportunity-cost], purpose: 在预计收益之外计入放弃最佳替代方案的代价}

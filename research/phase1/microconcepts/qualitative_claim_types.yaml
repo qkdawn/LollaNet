@@ -1,0 +1,16 @@
+version: 0.1.0
+status: candidate
+families: [operating_change, liquidity, capital_allocation, risk, management_outlook]
+required_locator: [accession, section, start_char, end_char, text_sha256, extractor_version]
+claims:
+  - {id: revenue_demand_change, family: operating_change, definition: 管理层披露需求或收入变化, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: margin_pressure, family: operating_change, definition: 管理层披露毛利或经营利润压力, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: working_capital_change, family: operating_change, definition: 管理层披露应收、库存或营运资本变化, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: liquidity_outlook, family: liquidity, definition: 管理层对未来流动性的判断, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: refinancing_dependency, family: liquidity, definition: 对未来融资或再融资的依赖, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: covenant_risk, family: liquidity, definition: 债务契约或偿付约束风险, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: capital_allocation_change, family: capital_allocation, definition: 管理层披露资本开支、回购、分红或并购变化, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: reinvestment_quality, family: capital_allocation, definition: 再投资方向和回报质量的管理层证据, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: operational_risk, family: risk, definition: 运营、供应链或执行风险披露, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: demand_outlook, family: management_outlook, definition: 管理层对未来需求或经营趋势的展望, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}
+  - {id: guidance_revision, family: management_outlook, definition: 指引相对历史或前期的变化, polarity: [positive, negative, mixed, unknown], time_horizon: [near_term, medium_term, long_term, unspecified], strength: [weak, medium, strong, unknown]}

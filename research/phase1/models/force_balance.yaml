@@ -1,0 +1,27 @@
+id: mm-p1-force-balance
+name: 力与平衡
+domain: physics
+kind: world
+functional_roles: [transition, control]
+definition: 物体或系统的状态由合力、约束和力矩平衡共同决定。
+mechanism: 分解作用力和约束反力，检查净力或净力矩是否为零以及失衡方向。
+key_variables:
+  - {name: force, type: numeric, meaning: 作用力大小和方向}
+  - {name: equilibrium, type: categorical, meaning: 是否满足平衡条件}
+input_fields:
+  - {name: loads, type: numeric, meaning: 系统受到的载荷}
+output_fields:
+  - {name: net_force, type: numeric, meaning: 净作用力或失衡量}
+positive_task_signals: [存在载荷与支撑关系, 需要判断静止或运动趋势]
+negative_task_signals: [对象边界不明, 主要问题是概率更新]
+preconditions: [受力对象和坐标系明确, 主要作用力可识别]
+failure_conditions: [遗漏作用力或约束, 将动态过程误作静态平衡]
+prediction_targets: [净力方向将决定初始加速度或失衡方向]
+action_affordances: [调整载荷, 增加支撑, 重新分配力矩]
+composition:
+  prerequisites: []
+  successors: [mm-p1-safety-margin]
+  compatible_with: [mm-p1-energy-conservation, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-force-balance, mm-p1-safety-margin], purpose: 先求工作载荷，再判断是否接近失效边界}

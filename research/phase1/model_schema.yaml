@@ -1,0 +1,28 @@
+required_fields:
+  - id
+  - name
+  - domain
+  - kind
+  - functional_roles
+  - definition
+  - mechanism
+  - key_variables
+  - input_fields
+  - output_fields
+  - positive_task_signals
+  - negative_task_signals
+  - preconditions
+  - failure_conditions
+  - prediction_targets
+  - action_affordances
+  - composition
+domains: [math, physics, chemistry, engineering, finance]
+kinds: [world, reasoning, action]
+functional_roles: [observation, transition, evaluation, control, challenge]
+field_types: [numeric, categorical, probability, time_series]
+composition_fields:
+  - prerequisites
+  - successors
+  - compatible_with
+  - conflicts_with
+  - composition_patterns

@@ -1,0 +1,27 @@
+id: mm-p1-diffusion-gradient
+name: 扩散与梯度
+domain: physics
+kind: world
+functional_roles: [transition, observation]
+definition: 物质、热量或信息在梯度驱动下从高势区域向低势区域传播。
+mechanism: 梯度、介质阻力和边界条件共同决定流量与达到平衡的时间尺度。
+key_variables:
+  - {name: gradient, type: numeric, meaning: 势差或浓度差}
+  - {name: flux, type: numeric, meaning: 沿梯度发生的流量}
+input_fields:
+  - {name: spatial_distribution, type: time_series, meaning: 不同位置的状态分布}
+output_fields:
+  - {name: flow_direction, type: categorical, meaning: 传播方向与速度}
+positive_task_signals: [不同区域存在浓度或温度差, 需要解释传播与滞后]
+negative_task_signals: [不存在可传播量, 变化只由离散决策造成]
+preconditions: [梯度可观测, 介质与边界条件可定义]
+failure_conditions: [忽略主动输运或外力, 将快速混合误判为纯扩散]
+prediction_targets: [更大梯度或更低阻力将提高早期流量]
+action_affordances: [改变梯度, 调整阻力, 设置隔离边界]
+composition:
+  prerequisites: []
+  successors: [mm-p1-feedback-loop]
+  compatible_with: [mm-p1-feedback-loop, mm-p1-stability-transition]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-diffusion-gradient, mm-p1-feedback-loop], purpose: 将传播延迟纳入反馈系统的动态判断}

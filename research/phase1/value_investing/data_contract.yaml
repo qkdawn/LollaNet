@@ -1,0 +1,37 @@
+dataset:
+  name: value_investing_us_nonfinancial_free_pilot_v1
+  universe: US non-financial common shares
+  decision_frequency: quarterly
+  entry_rule: next trading-day close after public filing availability
+  holding_period_days: 365
+  primary_outcome: exploratory raw 12-month price return minus public benchmark return
+  research_grade_outcome: requires a delisting-adjusted licensed provider before performance claims
+  raw_data_policy: raw filings and downloaded price data are external to this repository
+free_pilot_sources:
+  filings: SEC EDGAR submissions and Company Facts API
+  prices: Stooq daily CSV endpoint or Alpha Vantage free-tier raw monthly prices
+  limitations:
+    - Stooq is not treated as a complete delisting-return source.
+    - SEC Company Facts must be filtered by the fact filing date to avoid later revisions.
+    - Free-pilot results cannot support strategy-performance claims or total-return estimates.
+splits:
+  train: [2005-01-01, 2016-12-31]
+  development: [2017-01-01, 2019-12-31]
+  sealed_test: [2020-01-01, 2023-12-31]
+required_episode_fields:
+  - episode_id
+  - split
+  - security
+  - availability
+  - sources
+  - financial_features
+  - market_state
+  - mda_locator
+  - decision
+  - route_labels
+  - outcome
+forbidden_episode_fields:
+  - raw_mda_text
+  - future_filing_values
+  - future_index_membership
+  - model_parameters

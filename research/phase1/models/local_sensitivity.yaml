@@ -1,0 +1,27 @@
+id: mm-p1-local-sensitivity
+name: 局部敏感度
+domain: math
+kind: reasoning
+functional_roles: [observation, evaluation]
+definition: 衡量关键输入的小变化对结果会造成多大边际影响。
+mechanism: 在声明的局部范围内估计导数、弹性或扰动响应，并识别高敏感变量。
+key_variables:
+  - {name: perturbation, type: numeric, meaning: 输入的小幅变化}
+  - {name: marginal_effect, type: numeric, meaning: 输出对变化的响应}
+input_fields:
+  - {name: baseline_state, type: numeric, meaning: 当前工作点}
+output_fields:
+  - {name: sensitivity_rank, type: numeric, meaning: 变量影响的排序}
+positive_task_signals: [需要判断哪个变量最值得干预, 可在局部范围内比较变化]
+negative_task_signals: [存在剧烈阈值跳变, 没有可信基线]
+preconditions: [局部范围已声明, 变量变化可测]
+failure_conditions: [把局部结论外推到远离基线的区域, 忽略变量联动]
+prediction_targets: [高敏感变量扰动将产生更大的结果变化]
+action_affordances: [优先测试高敏感变量, 分配测量资源]
+composition:
+  prerequisites: [mm-p1-optimization-constraints]
+  successors: [mm-p1-safety-margin]
+  compatible_with: [mm-p1-numerical-error, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-optimization-constraints, mm-p1-local-sensitivity], purpose: 用敏感度检查最优解对关键参数是否脆弱}

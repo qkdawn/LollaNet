@@ -1,0 +1,27 @@
+id: mm-p1-equilibrium-response
+name: 平衡扰动响应
+domain: chemistry
+kind: world
+functional_roles: [transition, challenge]
+definition: 系统受到浓度、温度或压力扰动后，会沿降低该扰动影响的方向重新分配状态。
+mechanism: 用反应商与平衡条件比较当前状态和稳态，预测净反应方向与新的平衡位置。
+key_variables:
+  - {name: reaction_quotient, type: numeric, meaning: 当前状态比值}
+  - {name: equilibrium_constant, type: numeric, meaning: 给定条件下的平衡基准}
+input_fields:
+  - {name: perturbation_condition, type: categorical, meaning: 浓度、温度或压力的改变}
+output_fields:
+  - {name: net_direction, type: categorical, meaning: 向哪一侧重新分配}
+positive_task_signals: [系统接近或处于平衡, 外部条件发生扰动]
+negative_task_signals: [过程远离平衡且时间不足, 不存在可逆关系]
+preconditions: [反应或系统边界明确, 平衡关系适用]
+failure_conditions: [把动力学慢误作无响应, 忽略相变或副反应]
+prediction_targets: [扰动后净变化方向将降低反应商与平衡差异]
+action_affordances: [调节条件, 选择分离时机, 监测新稳态]
+composition:
+  prerequisites: [mm-p1-rate-control]
+  successors: [mm-p1-buffer-capacity]
+  compatible_with: [mm-p1-buffer-capacity, mm-p1-feedback-loop]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-equilibrium-response, mm-p1-buffer-capacity], purpose: 判断扰动后系统能否维持关键状态范围}

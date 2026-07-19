@@ -1,0 +1,54 @@
+rule_version: value-investing-route-v1
+allowed_model_ids:
+  - mm-p1-function-mapping
+  - mm-p1-optimization-constraints
+  - mm-p1-local-sensitivity
+  - mm-p1-numerical-error
+  - mm-p1-bottleneck
+  - mm-p1-feedback-loop
+  - mm-p1-safety-margin
+  - mm-p1-reliability-lifetime
+  - mm-p1-bayesian-update
+  - mm-p1-expected-value
+  - mm-p1-compounding
+  - mm-p1-opportunity-cost
+always_active:
+  - mm-p1-function-mapping
+  - mm-p1-optimization-constraints
+  - mm-p1-expected-value
+  - mm-p1-opportunity-cost
+rules:
+  - id: evidence_revision
+    inputs: [earnings_surprise_zscore, ttm_revenue_growth, ttm_operating_cash_flow]
+    threshold: abs(earnings_surprise_zscore) >= 1.0 or operating cash flow sign changed from prior TTM
+    activate: [mm-p1-bayesian-update]
+    order_after: [mm-p1-function-mapping]
+    counterexample: one-off accounting classification change without an economic change
+  - id: durable_compounding
+    inputs: [free_cash_flow_positive_years, roic, ttm_revenue_growth]
+    threshold: free_cash_flow_positive_years >= 3 and roic >= 0.12 and ttm_revenue_growth >= 0.05
+    activate: [mm-p1-compounding]
+    order_before: [mm-p1-expected-value]
+    counterexample: growth financed by unsustainable leverage or dilution
+  - id: balance_sheet_margin
+    inputs: [net_debt_to_ebitda, interest_coverage, current_ratio]
+    threshold: net_debt_to_ebitda > 3.0 or interest_coverage < 3.0 or current_ratio < 1.0
+    activate: [mm-p1-safety-margin, mm-p1-reliability-lifetime]
+    order_before: [mm-p1-expected-value]
+    counterexample: capital structure is normal for the issuer's regulated business model
+  - id: operating_constraint
+    inputs: [gross_margin_change, receivables_growth_minus_revenue_growth, inventory_growth_minus_revenue_growth]
+    threshold: gross_margin_change <= -0.03 and max(receivables_growth_minus_revenue_growth, inventory_growth_minus_revenue_growth) >= 0.10
+    activate: [mm-p1-bottleneck, mm-p1-feedback-loop]
+    order_before: [mm-p1-expected-value]
+    counterexample: temporary seasonal working-capital build with confirmed subsequent conversion
+  - id: fragile_estimate
+    inputs: [valuation_percentile, earnings_volatility]
+    threshold: 0.20 <= valuation_percentile <= 0.80 and earnings_volatility >= 0.25
+    activate: [mm-p1-local-sensitivity, mm-p1-numerical-error]
+    order_before: [mm-p1-expected-value]
+    counterexample: volatility is caused by a known, non-recurring event with no valuation sensitivity
+base_edges:
+  - [mm-p1-function-mapping, mm-p1-optimization-constraints]
+  - [mm-p1-optimization-constraints, mm-p1-expected-value]
+  - [mm-p1-expected-value, mm-p1-opportunity-cost]

@@ -1,0 +1,27 @@
+id: mm-p1-rate-control
+name: 速率控制
+domain: chemistry
+kind: world
+functional_roles: [transition, control]
+definition: 多步骤过程的整体速度由最慢步骤、活化障碍和条件共同控制。
+mechanism: 比较各步骤的速率常数、浓度依赖和能垒，定位控制总进程的步骤。
+key_variables:
+  - {name: rate_constant, type: numeric, meaning: 步骤速率参数}
+  - {name: concentration, type: numeric, meaning: 参与物浓度或可用量}
+input_fields:
+  - {name: process_steps, type: categorical, meaning: 过程步骤及其条件}
+output_fields:
+  - {name: controlling_step, type: categorical, meaning: 当前控速步骤}
+positive_task_signals: [总过程由多步骤组成, 需要解释为何进展缓慢]
+negative_task_signals: [没有时间动态, 唯一问题是投入上限]
+preconditions: [步骤可区分, 速率或代理指标可观测]
+failure_conditions: [控制步骤随条件迁移却未重测, 忽略传热传质限制]
+prediction_targets: [改善控速步骤将比改善非控速步骤更明显地提高总速率]
+action_affordances: [降低控速障碍, 改变温度或浓度, 重新测量控制步骤]
+composition:
+  prerequisites: [mm-p1-mass-stoichiometry]
+  successors: [mm-p1-equilibrium-response]
+  compatible_with: [mm-p1-bottleneck, mm-p1-equilibrium-response]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-rate-control, mm-p1-bottleneck], purpose: 比较化学控速步骤与系统吞吐约束是否为同一限制}

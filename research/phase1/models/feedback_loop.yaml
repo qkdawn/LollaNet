@@ -1,0 +1,27 @@
+id: mm-p1-feedback-loop
+name: 反馈回路
+domain: engineering
+kind: world
+functional_roles: [transition, challenge]
+definition: 系统输出会经由延迟和增益反过来影响后续输入，从而强化、平衡或振荡。
+mechanism: 明确节点、因果方向、极性、增益和时滞，再预测闭环动态。
+key_variables:
+  - {name: feedback_gain, type: numeric, meaning: 输出回流对输入的影响强度}
+  - {name: delay, type: numeric, meaning: 反馈生效前的时间滞后}
+input_fields:
+  - {name: state_history, type: time_series, meaning: 状态与控制的历史轨迹}
+output_fields:
+  - {name: loop_behavior, type: categorical, meaning: 强化、平衡或振荡趋势}
+positive_task_signals: [行动效果延迟出现, 结果会改变后续决策]
+negative_task_signals: [因果链单向且无回流, 观察窗口短于延迟]
+preconditions: [反馈节点和方向可识别, 时间尺度已声明]
+failure_conditions: [共同原因伪装成反馈, 忽略增益变化或外部驱动]
+prediction_targets: [高增益和长延迟更可能造成过冲或振荡]
+action_affordances: [降低增益, 缩短反馈延迟, 设置稳定器]
+composition:
+  prerequisites: [mm-p1-bottleneck]
+  successors: [mm-p1-stability-transition]
+  compatible_with: [mm-p1-diffusion-gradient, mm-p1-buffer-capacity]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-bottleneck, mm-p1-feedback-loop], purpose: 判断缓解约束的行动会否经延迟反馈制造新的拥塞}

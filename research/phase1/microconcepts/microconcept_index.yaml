@@ -1,0 +1,792 @@
+version: 0.1.0
+status: read_only_generated
+source: cards/*.md
+concepts:
+- id: capacity_headroom
+  family: state
+  quantitative_factors:
+  - current_ratio
+  - interest_coverage
+  - net_debt_to_ebitda
+  - ttm_operating_cash_flow
+  qualitative_claims:
+  - liquidity_outlook
+  - refinancing_dependency
+  - covenant_risk
+  models:
+  - mm-p1-buffer-capacity
+  - mm-p1-safety-margin
+  - mm-p1-reliability-lifetime
+- id: constraint_pressure
+  family: relation
+  quantitative_factors:
+  - ttm_revenue_growth
+  - gross_margin_change
+  - current_ratio
+  - receivables_growth_minus_revenue_growth
+  - inventory_growth_minus_revenue_growth
+  qualitative_claims:
+  - revenue_demand_change
+  - margin_pressure
+  - working_capital_change
+  - operational_risk
+  models:
+  - mm-p1-bottleneck
+  - mm-p1-rate-control
+  - mm-p1-optimization-constraints
+- id: conversion_gap
+  family: relation
+  quantitative_factors:
+  - ttm_revenue_growth
+  - ttm_operating_margin
+  - ttm_operating_cash_flow
+  - ttm_free_cash_flow
+  - receivables_growth_minus_revenue_growth
+  - inventory_growth_minus_revenue_growth
+  qualitative_claims:
+  - working_capital_change
+  - margin_pressure
+  - capital_allocation_change
+  models:
+  - mm-p1-bottleneck
+  - mm-p1-feedback-loop
+  - mm-p1-mass-stoichiometry
+- id: countervailing_pressure
+  family: relation
+  quantitative_factors:
+  - ttm_revenue_growth
+  - gross_margin_change
+  - ttm_capex
+  - net_debt_to_ebitda
+  - interest_coverage
+  qualitative_claims:
+  - revenue_demand_change
+  - margin_pressure
+  - capital_allocation_change
+  - covenant_risk
+  models:
+  - mm-p1-force-balance
+  - mm-p1-equilibrium-response
+  - mm-p1-feedback-loop
+- id: evidence_quality
+  family: evidence
+  quantitative_factors:
+  - earnings_surprise_zscore
+  - earnings_volatility
+  qualitative_claims:
+  - guidance_revision
+  - liquidity_outlook
+  - operational_risk
+  - demand_outlook
+  models:
+  - mm-p1-numerical-error
+  - mm-p1-bayesian-update
+  - mm-p1-local-sensitivity
+- id: feedback_polarity
+  family: relation
+  quantitative_factors:
+  - ttm_revenue_growth
+  - gross_margin_change
+  - ttm_free_cash_flow
+  - ttm_capex
+  - roic
+  qualitative_claims:
+  - reinvestment_quality
+  - capital_allocation_change
+  - operational_risk
+  - demand_outlook
+  models:
+  - mm-p1-feedback-loop
+  - mm-p1-equilibrium-response
+  - mm-p1-stability-transition
+- id: outcome_asymmetry
+  family: state
+  quantitative_factors:
+  - free_cash_flow_yield
+  - valuation_percentile
+  - earnings_volatility
+  - trailing_drawdown
+  - interest_coverage
+  qualitative_claims:
+  - demand_outlook
+  - liquidity_outlook
+  - operational_risk
+  - guidance_revision
+  models:
+  - mm-p1-expected-value
+  - mm-p1-opportunity-cost
+  - mm-p1-safety-margin
+- id: regime_proximity
+  family: state
+  quantitative_factors:
+  - current_ratio
+  - interest_coverage
+  - net_debt_to_ebitda
+  - earnings_volatility
+  - gross_margin_change
+  qualitative_claims:
+  - liquidity_outlook
+  - covenant_risk
+  - margin_pressure
+  - operational_risk
+  models:
+  - mm-p1-stability-transition
+  - mm-p1-safety-margin
+  - mm-p1-buffer-capacity
+- id: relative_gradient
+  family: relation
+  quantitative_factors:
+  - ttm_revenue_growth
+  - gross_margin_change
+  - earnings_surprise_zscore
+  - valuation_percentile
+  - trailing_drawdown
+  qualitative_claims:
+  - revenue_demand_change
+  - margin_pressure
+  - guidance_revision
+  - demand_outlook
+  models:
+  - mm-p1-diffusion-gradient
+  - mm-p1-opportunity-cost
+  - mm-p1-local-sensitivity
+- id: resource_balance
+  family: relation
+  quantitative_factors:
+  - ttm_operating_cash_flow
+  - ttm_capex
+  - ttm_free_cash_flow
+  - ttm_revenue_growth
+  qualitative_claims:
+  - working_capital_change
+  - capital_allocation_change
+  - operational_risk
+  models:
+  - mm-p1-mass-stoichiometry
+  - mm-p1-energy-conservation
+  - mm-p1-function-mapping
+- id: temporal_persistence
+  family: state
+  quantitative_factors:
+  - free_cash_flow_positive_years
+  - roic
+  - ttm_revenue_growth
+  - earnings_volatility
+  - ttm_operating_margin
+  qualitative_claims:
+  - revenue_demand_change
+  - margin_pressure
+  - reinvestment_quality
+  - operational_risk
+  models:
+  - mm-p1-compounding
+  - mm-p1-reliability-lifetime
+  - mm-p1-stability-transition
+by_model:
+- model_id: mm-p1-bayesian-update
+  microconcepts:
+  - microconcept_id: evidence_quality
+    relation: modulates
+- model_id: mm-p1-bottleneck
+  microconcepts:
+  - microconcept_id: constraint_pressure
+    relation: supports
+  - microconcept_id: conversion_gap
+    relation: supports
+- model_id: mm-p1-buffer-capacity
+  microconcepts:
+  - microconcept_id: capacity_headroom
+    relation: supports
+  - microconcept_id: regime_proximity
+    relation: requires
+- model_id: mm-p1-compounding
+  microconcepts:
+  - microconcept_id: temporal_persistence
+    relation: supports
+- model_id: mm-p1-diffusion-gradient
+  microconcepts:
+  - microconcept_id: relative_gradient
+    relation: supports
+- model_id: mm-p1-energy-conservation
+  microconcepts:
+  - microconcept_id: resource_balance
+    relation: supports
+- model_id: mm-p1-equilibrium-response
+  microconcepts:
+  - microconcept_id: countervailing_pressure
+    relation: supports
+  - microconcept_id: feedback_polarity
+    relation: supports
+- model_id: mm-p1-expected-value
+  microconcepts:
+  - microconcept_id: outcome_asymmetry
+    relation: requires
+- model_id: mm-p1-feedback-loop
+  microconcepts:
+  - microconcept_id: conversion_gap
+    relation: modulates
+  - microconcept_id: countervailing_pressure
+    relation: modulates
+  - microconcept_id: feedback_polarity
+    relation: supports
+- model_id: mm-p1-force-balance
+  microconcepts:
+  - microconcept_id: countervailing_pressure
+    relation: requires
+- model_id: mm-p1-function-mapping
+  microconcepts:
+  - microconcept_id: resource_balance
+    relation: modulates
+- model_id: mm-p1-local-sensitivity
+  microconcepts:
+  - microconcept_id: evidence_quality
+    relation: challenges
+  - microconcept_id: relative_gradient
+    relation: modulates
+- model_id: mm-p1-mass-stoichiometry
+  microconcepts:
+  - microconcept_id: conversion_gap
+    relation: supports
+  - microconcept_id: resource_balance
+    relation: supports
+- model_id: mm-p1-numerical-error
+  microconcepts:
+  - microconcept_id: evidence_quality
+    relation: supports
+- model_id: mm-p1-opportunity-cost
+  microconcepts:
+  - microconcept_id: outcome_asymmetry
+    relation: supports
+  - microconcept_id: relative_gradient
+    relation: supports
+- model_id: mm-p1-optimization-constraints
+  microconcepts:
+  - microconcept_id: constraint_pressure
+    relation: supports
+- model_id: mm-p1-rate-control
+  microconcepts:
+  - microconcept_id: constraint_pressure
+    relation: supports
+- model_id: mm-p1-reliability-lifetime
+  microconcepts:
+  - microconcept_id: capacity_headroom
+    relation: modulates
+  - microconcept_id: temporal_persistence
+    relation: supports
+- model_id: mm-p1-safety-margin
+  microconcepts:
+  - microconcept_id: capacity_headroom
+    relation: supports
+  - microconcept_id: outcome_asymmetry
+    relation: modulates
+  - microconcept_id: regime_proximity
+    relation: supports
+- model_id: mm-p1-stability-transition
+  microconcepts:
+  - microconcept_id: feedback_polarity
+    relation: modulates
+  - microconcept_id: regime_proximity
+    relation: supports
+  - microconcept_id: temporal_persistence
+    relation: modulates
+edges:
+- source: capacity_headroom
+  target: mm-p1-buffer-capacity
+  relation: supports
+  rationale: 量化可吸收扰动的容量
+- source: capacity_headroom
+  target: mm-p1-safety-margin
+  relation: supports
+  rationale: 评估距风险边界的距离
+- source: capacity_headroom
+  target: mm-p1-reliability-lifetime
+  relation: modulates
+  rationale: 余量决定给定负荷下的失效时间
+- source: capacity_headroom
+  target: current_ratio
+  relation: grounded_by
+  rationale: liquidity_capacity via point_in_time_ratio
+- source: capacity_headroom
+  target: interest_coverage
+  relation: grounded_by
+  rationale: debt_service_capacity via point_in_time_ratio
+- source: capacity_headroom
+  target: net_debt_to_ebitda
+  relation: grounded_by
+  rationale: leverage_load via ratio
+- source: capacity_headroom
+  target: ttm_operating_cash_flow
+  relation: grounded_by
+  rationale: replenishment_flow via ttm_flow
+- source: capacity_headroom
+  target: liquidity_outlook
+  relation: modulated_by
+  rationale: 管理层对未来流动性的判断
+- source: capacity_headroom
+  target: refinancing_dependency
+  relation: modulated_by
+  rationale: 对未来融资或再融资的依赖
+- source: capacity_headroom
+  target: covenant_risk
+  relation: modulated_by
+  rationale: 债务契约或偿付约束风险
+- source: constraint_pressure
+  target: mm-p1-bottleneck
+  relation: supports
+  rationale: 定位限制总吞吐的环节
+- source: constraint_pressure
+  target: mm-p1-rate-control
+  relation: supports
+  rationale: 识别最慢的控制步骤
+- source: constraint_pressure
+  target: mm-p1-optimization-constraints
+  relation: supports
+  rationale: 将资源和目标写成受限优化问题
+- source: constraint_pressure
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: target_flow via rate
+- source: constraint_pressure
+  target: gross_margin_change
+  relation: grounded_by
+  rationale: unit_economics_pressure via delta
+- source: constraint_pressure
+  target: current_ratio
+  relation: grounded_by
+  rationale: liquidity_constraint via ratio
+- source: constraint_pressure
+  target: receivables_growth_minus_revenue_growth
+  relation: grounded_by
+  rationale: collection_constraint via delta
+- source: constraint_pressure
+  target: inventory_growth_minus_revenue_growth
+  relation: grounded_by
+  rationale: inventory_constraint via delta
+- source: constraint_pressure
+  target: revenue_demand_change
+  relation: modulated_by
+  rationale: 管理层披露需求或收入变化
+- source: constraint_pressure
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: constraint_pressure
+  target: working_capital_change
+  relation: modulated_by
+  rationale: 管理层披露应收、库存或营运资本变化
+- source: constraint_pressure
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: conversion_gap
+  target: mm-p1-bottleneck
+  relation: supports
+  rationale: 兑现环节可能限制增长质量
+- source: conversion_gap
+  target: mm-p1-feedback-loop
+  relation: modulates
+  rationale: 现金兑现会改变再投资和后续产出
+- source: conversion_gap
+  target: mm-p1-mass-stoichiometry
+  relation: supports
+  rationale: 检查投入和产出是否守恒转化
+- source: conversion_gap
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: growth_input via rate
+- source: conversion_gap
+  target: ttm_operating_margin
+  relation: grounded_by
+  rationale: accounting_output via ratio
+- source: conversion_gap
+  target: ttm_operating_cash_flow
+  relation: grounded_by
+  rationale: cash_output via ttm_flow
+- source: conversion_gap
+  target: ttm_free_cash_flow
+  relation: grounded_by
+  rationale: cash_output_after_investment via derived_flow
+- source: conversion_gap
+  target: receivables_growth_minus_revenue_growth
+  relation: grounded_by
+  rationale: collection_gap via delta
+- source: conversion_gap
+  target: inventory_growth_minus_revenue_growth
+  relation: grounded_by
+  rationale: inventory_gap via delta
+- source: conversion_gap
+  target: working_capital_change
+  relation: modulated_by
+  rationale: 管理层披露应收、库存或营运资本变化
+- source: conversion_gap
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: conversion_gap
+  target: capital_allocation_change
+  relation: modulated_by
+  rationale: 管理层披露资本开支、回购、分红或并购变化
+- source: countervailing_pressure
+  target: mm-p1-force-balance
+  relation: requires
+  rationale: 把增长、成本和融资压力投影到共同目标上
+- source: countervailing_pressure
+  target: mm-p1-equilibrium-response
+  relation: supports
+  rationale: 净压力决定扰动后状态移动方向
+- source: countervailing_pressure
+  target: mm-p1-feedback-loop
+  relation: modulates
+  rationale: 反馈会放大或抵消初始净压力
+- source: countervailing_pressure
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: growth_pressure via rate
+- source: countervailing_pressure
+  target: gross_margin_change
+  relation: grounded_by
+  rationale: cost_pressure via delta
+- source: countervailing_pressure
+  target: ttm_capex
+  relation: grounded_by
+  rationale: investment_load via ttm_flow
+- source: countervailing_pressure
+  target: net_debt_to_ebitda
+  relation: grounded_by
+  rationale: financing_load via ratio
+- source: countervailing_pressure
+  target: interest_coverage
+  relation: grounded_by
+  rationale: debt_capacity via ratio
+- source: countervailing_pressure
+  target: revenue_demand_change
+  relation: modulated_by
+  rationale: 管理层披露需求或收入变化
+- source: countervailing_pressure
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: countervailing_pressure
+  target: capital_allocation_change
+  relation: modulated_by
+  rationale: 管理层披露资本开支、回购、分红或并购变化
+- source: countervailing_pressure
+  target: covenant_risk
+  relation: modulated_by
+  rationale: 债务契约或偿付约束风险
+- source: evidence_quality
+  target: mm-p1-numerical-error
+  relation: supports
+  rationale: 传播缺失、误差和修订不确定性
+- source: evidence_quality
+  target: mm-p1-bayesian-update
+  relation: modulates
+  rationale: 决定证据对后验的权重
+- source: evidence_quality
+  target: mm-p1-local-sensitivity
+  relation: challenges
+  rationale: 检查结论是否由单个不稳健字段主导
+- source: evidence_quality
+  target: earnings_surprise_zscore
+  relation: grounded_by
+  rationale: signal_strength via standardized_delta
+- source: evidence_quality
+  target: earnings_volatility
+  relation: grounded_by
+  rationale: noise via dispersion
+- source: evidence_quality
+  target: guidance_revision
+  relation: modulated_by
+  rationale: 指引相对历史或前期的变化
+- source: evidence_quality
+  target: liquidity_outlook
+  relation: modulated_by
+  rationale: 管理层对未来流动性的判断
+- source: evidence_quality
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: evidence_quality
+  target: demand_outlook
+  relation: modulated_by
+  rationale: 管理层对未来需求或经营趋势的展望
+- source: feedback_polarity
+  target: mm-p1-feedback-loop
+  relation: supports
+  rationale: 判断再投资和经营结果的反馈符号
+- source: feedback_polarity
+  target: mm-p1-equilibrium-response
+  relation: supports
+  rationale: 观察扰动后回到或偏离平衡的方向
+- source: feedback_polarity
+  target: mm-p1-stability-transition
+  relation: modulates
+  rationale: 正反馈增益可能推近临界状态
+- source: feedback_polarity
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: output_flow via rate
+- source: feedback_polarity
+  target: gross_margin_change
+  relation: grounded_by
+  rationale: operating_response via delta
+- source: feedback_polarity
+  target: ttm_free_cash_flow
+  relation: grounded_by
+  rationale: reinvestment_resource via derived_flow
+- source: feedback_polarity
+  target: ttm_capex
+  relation: grounded_by
+  rationale: intervention via ttm_flow
+- source: feedback_polarity
+  target: roic
+  relation: grounded_by
+  rationale: reinvestment_return via ratio
+- source: feedback_polarity
+  target: reinvestment_quality
+  relation: modulated_by
+  rationale: 再投资方向和回报质量的管理层证据
+- source: feedback_polarity
+  target: capital_allocation_change
+  relation: modulated_by
+  rationale: 管理层披露资本开支、回购、分红或并购变化
+- source: feedback_polarity
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: feedback_polarity
+  target: demand_outlook
+  relation: modulated_by
+  rationale: 管理层对未来需求或经营趋势的展望
+- source: outcome_asymmetry
+  target: mm-p1-expected-value
+  relation: requires
+  rationale: 期望比较需要同时保留概率和结果幅度
+- source: outcome_asymmetry
+  target: mm-p1-opportunity-cost
+  relation: supports
+  rationale: 候选方案的分布差异改变放弃另一方案的代价
+- source: outcome_asymmetry
+  target: mm-p1-safety-margin
+  relation: modulates
+  rationale: 下行尾部越重所需安全余量越大
+- source: outcome_asymmetry
+  target: free_cash_flow_yield
+  relation: grounded_by
+  rationale: cash_valuation via ratio
+- source: outcome_asymmetry
+  target: valuation_percentile
+  relation: grounded_by
+  rationale: relative_valuation via percentile
+- source: outcome_asymmetry
+  target: earnings_volatility
+  relation: grounded_by
+  rationale: outcome_dispersion via dispersion
+- source: outcome_asymmetry
+  target: trailing_drawdown
+  relation: grounded_by
+  rationale: observed_downside via drawdown
+- source: outcome_asymmetry
+  target: interest_coverage
+  relation: grounded_by
+  rationale: downside_capacity via ratio
+- source: outcome_asymmetry
+  target: demand_outlook
+  relation: modulated_by
+  rationale: 管理层对未来需求或经营趋势的展望
+- source: outcome_asymmetry
+  target: liquidity_outlook
+  relation: modulated_by
+  rationale: 管理层对未来流动性的判断
+- source: outcome_asymmetry
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: outcome_asymmetry
+  target: guidance_revision
+  relation: modulated_by
+  rationale: 指引相对历史或前期的变化
+- source: regime_proximity
+  target: mm-p1-stability-transition
+  relation: supports
+  rationale: 判断是否接近临界状态
+- source: regime_proximity
+  target: mm-p1-safety-margin
+  relation: supports
+  rationale: 将临界距离转化为安全缓冲
+- source: regime_proximity
+  target: mm-p1-buffer-capacity
+  relation: requires
+  rationale: 需要容量余量解释接近程度
+- source: regime_proximity
+  target: current_ratio
+  relation: grounded_by
+  rationale: liquidity_margin via ratio
+- source: regime_proximity
+  target: interest_coverage
+  relation: grounded_by
+  rationale: debt_service_margin via ratio
+- source: regime_proximity
+  target: net_debt_to_ebitda
+  relation: grounded_by
+  rationale: leverage_load via ratio
+- source: regime_proximity
+  target: earnings_volatility
+  relation: grounded_by
+  rationale: instability via dispersion
+- source: regime_proximity
+  target: gross_margin_change
+  relation: grounded_by
+  rationale: deterioration_rate via delta
+- source: regime_proximity
+  target: liquidity_outlook
+  relation: modulated_by
+  rationale: 管理层对未来流动性的判断
+- source: regime_proximity
+  target: covenant_risk
+  relation: modulated_by
+  rationale: 债务契约或偿付约束风险
+- source: regime_proximity
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: regime_proximity
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: relative_gradient
+  target: mm-p1-diffusion-gradient
+  relation: supports
+  rationale: 表示相对状态差及其趋向
+- source: relative_gradient
+  target: mm-p1-opportunity-cost
+  relation: supports
+  rationale: 比较候选行动与基准的相对收益
+- source: relative_gradient
+  target: mm-p1-local-sensitivity
+  relation: modulates
+  rationale: 梯度可作为局部变化方向
+- source: relative_gradient
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: operating_gradient via rate
+- source: relative_gradient
+  target: gross_margin_change
+  relation: grounded_by
+  rationale: margin_gradient via delta
+- source: relative_gradient
+  target: earnings_surprise_zscore
+  relation: grounded_by
+  rationale: evidence_gradient via standardized_delta
+- source: relative_gradient
+  target: valuation_percentile
+  relation: grounded_by
+  rationale: relative_valuation via percentile
+- source: relative_gradient
+  target: trailing_drawdown
+  relation: grounded_by
+  rationale: price_state via drawdown
+- source: relative_gradient
+  target: revenue_demand_change
+  relation: modulated_by
+  rationale: 管理层披露需求或收入变化
+- source: relative_gradient
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: relative_gradient
+  target: guidance_revision
+  relation: modulated_by
+  rationale: 指引相对历史或前期的变化
+- source: relative_gradient
+  target: demand_outlook
+  relation: modulated_by
+  rationale: 管理层对未来需求或经营趋势的展望
+- source: resource_balance
+  target: mm-p1-mass-stoichiometry
+  relation: supports
+  rationale: 比较资源流入流出与存量变化
+- source: resource_balance
+  target: mm-p1-energy-conservation
+  relation: supports
+  rationale: 检查投入资源是否在边界内守恒或转化
+- source: resource_balance
+  target: mm-p1-function-mapping
+  relation: modulates
+  rationale: 为输入到输出的映射提供状态变量
+- source: resource_balance
+  target: ttm_operating_cash_flow
+  relation: grounded_by
+  rationale: inflow via ttm_flow
+- source: resource_balance
+  target: ttm_capex
+  relation: grounded_by
+  rationale: outflow via ttm_flow
+- source: resource_balance
+  target: ttm_free_cash_flow
+  relation: grounded_by
+  rationale: residual via derived_flow
+- source: resource_balance
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: output_flow via rate
+- source: resource_balance
+  target: working_capital_change
+  relation: modulated_by
+  rationale: 管理层披露应收、库存或营运资本变化
+- source: resource_balance
+  target: capital_allocation_change
+  relation: modulated_by
+  rationale: 管理层披露资本开支、回购、分红或并购变化
+- source: resource_balance
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露
+- source: temporal_persistence
+  target: mm-p1-compounding
+  relation: supports
+  rationale: 持续回报和再投资是复利前提
+- source: temporal_persistence
+  target: mm-p1-reliability-lifetime
+  relation: supports
+  rationale: 跨期稳定性影响寿命与失效率估计
+- source: temporal_persistence
+  target: mm-p1-stability-transition
+  relation: modulates
+  rationale: 持续恶化可提示状态转移
+- source: temporal_persistence
+  target: free_cash_flow_positive_years
+  relation: grounded_by
+  rationale: persistence_count via count
+- source: temporal_persistence
+  target: roic
+  relation: grounded_by
+  rationale: return_quality via ratio
+- source: temporal_persistence
+  target: ttm_revenue_growth
+  relation: grounded_by
+  rationale: growth_persistence via rate
+- source: temporal_persistence
+  target: earnings_volatility
+  relation: grounded_by
+  rationale: instability via dispersion
+- source: temporal_persistence
+  target: ttm_operating_margin
+  relation: grounded_by
+  rationale: margin_persistence via ratio
+- source: temporal_persistence
+  target: revenue_demand_change
+  relation: modulated_by
+  rationale: 管理层披露需求或收入变化
+- source: temporal_persistence
+  target: margin_pressure
+  relation: modulated_by
+  rationale: 管理层披露毛利或经营利润压力
+- source: temporal_persistence
+  target: reinvestment_quality
+  relation: modulated_by
+  rationale: 再投资方向和回报质量的管理层证据
+- source: temporal_persistence
+  target: operational_risk
+  relation: modulated_by
+  rationale: 运营、供应链或执行风险披露

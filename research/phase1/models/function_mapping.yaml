@@ -1,0 +1,27 @@
+id: mm-p1-function-mapping
+name: 函数与映射
+domain: math
+kind: reasoning
+functional_roles: [observation, transition]
+definition: 将输入变量与输出变量的对应关系显式化，以检查输入变化会怎样改变结果。
+mechanism: 先定义定义域、输出域和映射规则，再判断映射是否稳定、可逆或需要分段处理。
+key_variables:
+  - {name: input, type: numeric, meaning: 被映射的状态或决策变量}
+  - {name: output, type: numeric, meaning: 结果变量}
+input_fields:
+  - {name: variables, type: numeric, meaning: 已观测的输入与输出变量}
+output_fields:
+  - {name: mapping_rule, type: categorical, meaning: 输入到输出的关系形式}
+positive_task_signals: [需要厘清输入如何影响输出, 变量关系尚未形式化]
+negative_task_signals: [没有可辨认的输入输出对象, 仅需价值取舍]
+preconditions: [变量边界可定义, 观察窗口与单位一致]
+failure_conditions: [遗漏关键中介变量, 映射随情境变化但未条件化]
+prediction_targets: [改变输入后输出的方向或区间]
+action_affordances: [定义变量接口, 比较候选映射]
+composition:
+  prerequisites: []
+  successors: [mm-p1-optimization-constraints, mm-p1-numerical-error]
+  compatible_with: [mm-p1-optimization-constraints, mm-p1-numerical-error]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-function-mapping, mm-p1-optimization-constraints], purpose: 先定义变量关系，再在关系上求可行最优解}

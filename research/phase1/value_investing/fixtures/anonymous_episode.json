@@ -1,0 +1,93 @@
+{
+  "episode_id": "fixture-value-2015q2-001",
+  "split": "train",
+  "security": {
+    "security_id": "fixture-us-common-001",
+    "security_type": "common_stock",
+    "is_financial": false,
+    "sector_code": "fixture-industrials"
+  },
+  "availability": {
+    "period_end": "2015-03-31",
+    "filing_accepted_at": "2015-05-14T16:15:00Z",
+    "public_available_at": "2015-05-14T16:15:00Z",
+    "entry_date": "2015-05-15"
+  },
+  "sources": {
+    "filing": {
+      "provider": "fixture-sec-edgar",
+      "accession": "fixture-0001",
+      "form": "10-Q",
+      "record_version": "fixture-v1"
+    },
+    "financials": {
+      "provider": "fixture-point-in-time-fundamentals",
+      "record_version": "fixture-v1",
+      "source_fields": {"revenue": "fixture_revenue", "cash_flow": "fixture_ocf"}
+    },
+    "market": {
+      "provider": "fixture-delisting-aware-prices",
+      "record_version": "fixture-v1",
+      "source_fields": {"entry_close": "fixture_px", "market_return": "fixture_mkt"}
+    }
+  },
+  "financial_features": {
+    "ttm_revenue_growth": 0.08,
+    "gross_margin_change": -0.05,
+    "ttm_operating_margin": 0.09,
+    "ttm_operating_cash_flow": 120.0,
+    "ttm_capex": 40.0,
+    "ttm_free_cash_flow": 80.0,
+    "free_cash_flow_positive_years": 3,
+    "roic": 0.15,
+    "net_debt_to_ebitda": 3.2,
+    "interest_coverage": 4.0,
+    "current_ratio": 1.2,
+    "receivables_growth_minus_revenue_growth": 0.12,
+    "inventory_growth_minus_revenue_growth": 0.04,
+    "capex_to_revenue_change": 0.06,
+    "earnings_surprise_zscore": 1.3,
+    "earnings_volatility": 0.30,
+    "operating_cash_flow_sign_changed": false
+  },
+  "market_state": {
+    "market_cap": 1000.0,
+    "free_cash_flow_yield": 0.08,
+    "valuation_percentile": 0.50,
+    "sector_code": "fixture-industrials",
+    "trailing_drawdown": -0.12
+  },
+  "mda_locator": {
+    "accession": "fixture-0001",
+    "section": "Item 2",
+    "start_char": 0,
+    "end_char": 200,
+    "text_sha256": "fixture-only-no-real-filing-text",
+    "extractor_version": "mda-locator-v1"
+  },
+  "decision": {
+    "goal": "quarterly long-only value screen",
+    "constraints": ["non-financial common share", "equal-weight candidate selection"],
+    "action": "candidate_review"
+  },
+  "route_labels": {
+    "rule_version": "value-investing-route-v1",
+    "triggered_rules": ["evidence_revision", "durable_compounding", "balance_sheet_margin", "operating_constraint", "fragile_estimate"],
+    "activated_models": ["mm-p1-function-mapping", "mm-p1-optimization-constraints", "mm-p1-local-sensitivity", "mm-p1-numerical-error", "mm-p1-bottleneck", "mm-p1-feedback-loop", "mm-p1-safety-margin", "mm-p1-reliability-lifetime", "mm-p1-bayesian-update", "mm-p1-compounding", "mm-p1-expected-value", "mm-p1-opportunity-cost"],
+    "ordered_models": ["mm-p1-function-mapping", "mm-p1-optimization-constraints", "mm-p1-local-sensitivity", "mm-p1-numerical-error", "mm-p1-bottleneck", "mm-p1-feedback-loop", "mm-p1-safety-margin", "mm-p1-reliability-lifetime", "mm-p1-bayesian-update", "mm-p1-compounding", "mm-p1-expected-value", "mm-p1-opportunity-cost"],
+    "conditional_edges": [["mm-p1-function-mapping", "mm-p1-optimization-constraints"], ["mm-p1-optimization-constraints", "mm-p1-expected-value"], ["mm-p1-expected-value", "mm-p1-opportunity-cost"], ["mm-p1-function-mapping", "mm-p1-bayesian-update"], ["mm-p1-compounding", "mm-p1-expected-value"], ["mm-p1-safety-margin", "mm-p1-expected-value"], ["mm-p1-reliability-lifetime", "mm-p1-expected-value"], ["mm-p1-bottleneck", "mm-p1-expected-value"], ["mm-p1-feedback-loop", "mm-p1-expected-value"], ["mm-p1-local-sensitivity", "mm-p1-expected-value"], ["mm-p1-numerical-error", "mm-p1-expected-value"]]
+  },
+  "outcome": {
+    "exit_date": "2016-05-14",
+    "entry_close": 100.0,
+    "exit_close": 112.0,
+    "total_return": 0.12,
+    "market_return": 0.08,
+    "market_excess_return": 0.04,
+    "sector_relative_return": 0.03,
+    "maximum_drawdown": -0.16,
+    "tail_loss": -0.16,
+    "delisting_return": 0.0,
+    "delisting_return_included": true
+  }
+}

@@ -1,0 +1,27 @@
+id: mm-p1-stability-transition
+name: 稳定性与相变
+domain: physics
+kind: world
+functional_roles: [transition, challenge]
+definition: 系统在扰动后是否回到原状态，取决于反馈、势阱与临界阈值。
+mechanism: 小扰动下的恢复趋势描述局部稳定性，参数跨越临界点可能导致状态突变。
+key_variables:
+  - {name: perturbation, type: numeric, meaning: 对系统的扰动}
+  - {name: threshold, type: numeric, meaning: 状态转变临界边界}
+input_fields:
+  - {name: recovery_trace, type: time_series, meaning: 扰动后的状态轨迹}
+output_fields:
+  - {name: stability_class, type: categorical, meaning: 稳定、临界或不稳定判断}
+positive_task_signals: [系统接近阈值, 需要判断扰动后是否恢复]
+negative_task_signals: [无状态变化或阈值概念, 只需静态比较]
+preconditions: [状态变量和时间尺度明确, 可观察扰动响应]
+failure_conditions: [把短期噪声当作相变, 忽略外部驱动持续变化]
+prediction_targets: [恢复时间变长或方差上升可能先于临界转变]
+action_affordances: [降低控制参数, 增强恢复机制, 监测早期预警信号]
+composition:
+  prerequisites: [mm-p1-energy-conservation]
+  successors: [mm-p1-safety-margin]
+  compatible_with: [mm-p1-feedback-loop, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-stability-transition, mm-p1-safety-margin], purpose: 在临界阈值前设定可接受扰动与缓冲}

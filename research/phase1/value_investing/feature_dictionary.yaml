@@ -1,0 +1,24 @@
+financial_features:
+  - {name: ttm_revenue_growth, unit: ratio, source: SEC XBRL facts filtered by filing date, formula: TTM revenue growth versus prior TTM}
+  - {name: gross_margin_change, unit: ratio, source: SEC XBRL facts filtered by filing date, formula: current TTM gross margin minus prior TTM gross margin}
+  - {name: ttm_operating_margin, unit: ratio, source: SEC XBRL facts filtered by filing date, formula: operating income divided by revenue}
+  - {name: ttm_operating_cash_flow, unit: currency, source: SEC XBRL cash flow facts, formula: sum of four reported fiscal quarters}
+  - {name: ttm_capex, unit: currency, source: SEC XBRL cash flow facts, formula: sum of four reported fiscal quarters}
+  - {name: ttm_free_cash_flow, unit: currency, source: derived, formula: operating cash flow minus capital expenditure}
+  - {name: free_cash_flow_positive_years, unit: count, source: derived, formula: positive annual free-cash-flow count over prior three fiscal years}
+  - {name: roic, unit: ratio, source: derived, formula: NOPAT divided by invested capital}
+  - {name: net_debt_to_ebitda, unit: ratio, source: derived, formula: cash-adjusted debt divided by TTM EBITDA}
+  - {name: interest_coverage, unit: ratio, source: derived, formula: TTM EBIT divided by TTM interest expense}
+  - {name: current_ratio, unit: ratio, source: point-in-time balance sheet, formula: current assets divided by current liabilities}
+  - {name: receivables_growth_minus_revenue_growth, unit: ratio, source: derived, formula: receivables growth minus revenue growth}
+  - {name: inventory_growth_minus_revenue_growth, unit: ratio, source: derived, formula: inventory growth minus revenue growth}
+  - {name: capex_to_revenue_change, unit: ratio, source: derived, formula: current capex/revenue minus prior capex/revenue}
+  - {name: earnings_surprise_zscore, unit: numeric, source: derived from previously filed SEC XBRL earnings, formula: standardized reported earnings change versus trailing reported history}
+  - {name: earnings_volatility, unit: ratio, source: derived, formula: standard deviation of quarterly earnings over trailing twelve quarters}
+  - {name: operating_cash_flow_sign_changed, unit: categorical, source: derived, formula: whether TTM operating cash flow changed sign versus the prior TTM}
+market_state:
+  - {name: market_cap, unit: currency, source: public daily close and SEC XBRL shares outstanding, formula: entry-date close times point-in-time shares outstanding}
+  - {name: free_cash_flow_yield, unit: ratio, source: derived, formula: TTM free cash flow divided by market capitalization}
+  - {name: valuation_percentile, unit: percentile, source: derived, formula: sector-relative value percentile using only current snapshot data}
+  - {name: sector_code, unit: categorical, source: point-in-time classification, formula: provider sector classification at availability time}
+  - {name: trailing_drawdown, unit: ratio, source: public daily closes, formula: drawdown over the prior 252 trading days}

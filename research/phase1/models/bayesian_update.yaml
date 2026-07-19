@@ -1,0 +1,27 @@
+id: mm-p1-bayesian-update
+name: 贝叶斯更新
+domain: finance
+kind: reasoning
+functional_roles: [observation, evaluation, challenge]
+definition: 新证据应按其对竞争假设的区分力更新先验判断，而不是被新奇性支配。
+mechanism: 后验赔率由先验赔率和似然比共同决定，并对相关证据降低重复计数权重。
+key_variables:
+  - {name: prior, type: probability, meaning: 观察新证据前的假设概率}
+  - {name: likelihood_ratio, type: probability, meaning: 证据在竞争假设下的区分强度}
+input_fields:
+  - {name: evidence_quality, type: probability, meaning: 证据独立性和可靠度}
+output_fields:
+  - {name: posterior, type: probability, meaning: 更新后的假设概率}
+positive_task_signals: [存在先验和新证据, 需要比较竞争性解释]
+negative_task_signals: [没有假设集合, 证据无法区分任何结论]
+preconditions: [先验和似然有可辩护依据, 相关性已检查]
+failure_conditions: [遗漏主要假设, 将相关证据重复相乘]
+prediction_targets: [独立且高似然比证据将带来更大后验变化]
+action_affordances: [更新仓位或行动信心, 请求高信息价值证据]
+composition:
+  prerequisites: []
+  successors: [mm-p1-expected-value]
+  compatible_with: [mm-p1-expected-value, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-bayesian-update, mm-p1-expected-value], purpose: 先更新情景概率，再比较行动的期望结果}

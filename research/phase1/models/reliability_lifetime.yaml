@@ -1,0 +1,27 @@
+id: mm-p1-reliability-lifetime
+name: 可靠度与寿命分布
+domain: engineering
+kind: world
+functional_roles: [observation, transition, control]
+definition: 组件或系统在给定时间和条件下保持功能的概率会随失效率、老化和环境改变。
+mechanism: 用失效时间、危险率和环境应力描述可靠度，并据此安排维护与冗余。
+key_variables:
+  - {name: failure_rate, type: probability, meaning: 单位时间失效风险}
+  - {name: lifetime, type: time_series, meaning: 运行至失效的时间分布}
+input_fields:
+  - {name: operating_conditions, type: categorical, meaning: 负荷、环境和维护条件}
+output_fields:
+  - {name: reliability_estimate, type: probability, meaning: 指定时间窗内保持功能的概率}
+positive_task_signals: [系统会老化或失效, 需要比较维护与冗余策略]
+negative_task_signals: [一次性静态问题, 没有时间或失效风险]
+preconditions: [功能失效定义明确, 运行时间和条件可记录]
+failure_conditions: [失效机制混合却使用单一分布, 选择性漏报故障]
+prediction_targets: [高应力或更长运行时间将降低可靠度]
+action_affordances: [安排维护, 增加冗余, 降低应力]
+composition:
+  prerequisites: []
+  successors: [mm-p1-safety-margin]
+  compatible_with: [mm-p1-bottleneck, mm-p1-safety-margin]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-reliability-lifetime, mm-p1-bottleneck], purpose: 判断关键约束环节的失效是否会主导总吞吐风险}

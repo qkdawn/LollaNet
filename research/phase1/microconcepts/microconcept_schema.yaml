@@ -1,0 +1,28 @@
+version: 0.1.0
+semantic_level: microconcept
+card_type: microconcept
+required_frontmatter:
+  - type
+  - id
+  - version
+  - status
+  - family
+  - semantic_level
+  - definition
+  - mechanism
+  - quantitative_evidence
+  - qualitative_evidence
+  - output_interface
+  - model_relations
+  - counterexamples
+  - falsifiers
+  - counterfactual_tests
+  - failure_conditions
+  - evidence_boundary
+statuses: [candidate, active, contested, deprecated]
+families: [resource, relation, state, evidence]
+relation_types: [supports, requires, modulates, challenges]
+directions: [increasing, decreasing, stable, mixed, unknown]
+quantitative_roles: [state, flow, rate, threshold, benchmark, probability, evidence, capacity, stock, payoff]
+qualitative_aggregation: [signed_claims]
+qualitative_missing_policies: [preserve_unknown]

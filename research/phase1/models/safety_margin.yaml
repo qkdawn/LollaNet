@@ -1,0 +1,27 @@
+id: mm-p1-safety-margin
+name: 安全边际
+domain: engineering
+kind: action
+functional_roles: [evaluation, control, challenge]
+definition: 用工作点与不可接受失效边界之间的显式距离吸收误差、波动和未知风险。
+mechanism: 统一载荷、能力、失效阈值和不确定性口径，计算剩余缓冲并进行压力测试。
+key_variables:
+  - {name: load, type: numeric, meaning: 当前或预计负荷}
+  - {name: capacity, type: numeric, meaning: 失效阈值或可用能力}
+input_fields:
+  - {name: uncertainty_estimate, type: probability, meaning: 负荷和能力的不确定性}
+output_fields:
+  - {name: margin, type: numeric, meaning: 工作点到失效边界的距离}
+positive_task_signals: [失败代价高, 计划依赖乐观估计或存在不可逆风险]
+negative_task_signals: [失效边界无法定义, 边际不影响任何行动]
+preconditions: [载荷能力单位可比, 失败状态可明确]
+failure_conditions: [未知故障模式主导, 缓冲不可调用或已被占用]
+prediction_targets: [负荷仍处于边际内时关键功能应在压力下保持]
+action_affordances: [留出缓冲, 降低负荷, 设置退出阈值]
+composition:
+  prerequisites: [mm-p1-local-sensitivity]
+  successors: []
+  compatible_with: [mm-p1-reliability-lifetime, mm-p1-expected-value]
+  conflicts_with: []
+  composition_patterns:
+    - {route: [mm-p1-reliability-lifetime, mm-p1-safety-margin], purpose: 用故障风险与能力退化确定可接受裕度}
