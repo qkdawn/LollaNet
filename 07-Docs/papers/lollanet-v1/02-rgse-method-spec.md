@@ -1,11 +1,14 @@
 ---
 type: research_method_spec
 title: RGSE：残差门控语义演化方法规格
-status: draft
-updated: 2026-07-18
+status: superseded
+superseded_by: ../../trainable-cognitive-model-network.md
+updated: 2026-07-28
 ---
 
 # RGSE：残差门控语义演化方法规格
+
+> 历史研究稿，已被 V4 的显式 Proposal 治理和机制程序编译取代。
 
 > 第二阶段产物：把 Proposal 中的 RGSE 从研究直觉收敛为可实现、可比较、可证伪的方法。
 

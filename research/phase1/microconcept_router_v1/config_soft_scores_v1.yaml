@@ -1,0 +1,18 @@
+version: microconcept-router-v1.1.0-fact-residual
+seed: 20260720
+architecture:
+  node_hidden_dim: 48
+  relation_embedding_dim: 12
+  model_embedding_dim: 24
+  task_relevance_attention_strength: 0.15
+  task_relevance_residual_strength: 0.25
+training:
+  epochs: 40
+  batch_size: 8
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  activation_loss_weight: 1.0
+  attention_alignment_loss_weight: 0.0
+  huber_beta: 0.1
+inference:
+  activation_threshold: 0.5

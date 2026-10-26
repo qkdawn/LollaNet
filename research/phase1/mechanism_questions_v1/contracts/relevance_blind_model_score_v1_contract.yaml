@@ -1,0 +1,88 @@
+version: relevance-blind-model-score-v1.0.0
+schema_version: relevance-blind-model-score-contract-v1
+status: research_contract
+purpose: Compare all-model teacher scores with and without route/relevance hints.
+packet_boundary:
+  semantic_payload_allowlist:
+    - raw_facts.facts
+    - raw_facts.factual_uncertainties
+    - raw_facts.structured_evidence
+    - question
+    - models
+  provenance_metadata_allowlist:
+    - packet_version
+    - prompt_version
+    - episode_id
+    - source_manifest_sha256
+    - episode_sha256
+    - model_ids
+    - score_rubric
+    - instructions
+    - visibility_attestation
+  exact_top_level_fields:
+    - packet_version
+    - prompt_version
+    - episode_id
+    - source_manifest_sha256
+    - episode_sha256
+    - raw_facts
+    - question
+    - model_ids
+    - models
+    - score_rubric
+    - instructions
+    - visibility_attestation
+  raw_fact_fields:
+    - facts
+    - factual_uncertainties
+    - structured_evidence
+  prohibited_recursive_fields:
+    - task_relevance
+    - task_relevance_profile
+    - task_focus_microconcept_id
+    - microconcept_states
+    - fact_microconcept_states
+    - candidate_subgraph
+    - candidate_graph
+    - candidate_model_ids
+    - model_selection_contracts
+    - route_labels
+    - primary_model
+    - auxiliary_models
+    - near_miss_models
+  omitted_task_fields:
+    - goal
+    - constraints
+    - question_kind
+    - cross_domain_transfer
+    - transfer_rationale
+    - counterfactual_delta
+  omitted_identity_and_source_fields:
+    - case_id
+    - domain
+    - split
+    - source_refs
+    - as_of
+    - public_available_at
+teacher_contract:
+  teacher_count: 2
+  teacher_slots: [a, b]
+  independence_requirement: distinct_normalized_provider_model_between_slots
+  model_count: 20
+  score_scale: {minimum: 0, maximum: 4}
+  score_each_model_independently: true
+aggregation_contract:
+  gap_lte_1: arithmetic_mean_then_normalize
+  gap_gt_1: mask_only_that_model_dimension
+  episode_exclusion: only_when_every_model_dimension_is_masked
+  implementation_reuse: model_score_chain_v1._aggregate_pair
+audit_contract:
+  comparison_arm_a: relevance_blind
+  comparison_arm_b: hinted_existing_model_score_chain_v1
+  required_outputs:
+    - dimension_rows
+    - by_model_rows
+    - by_episode_rows
+    - summary
+    - audit_manifest
+sealed_test_visible: false

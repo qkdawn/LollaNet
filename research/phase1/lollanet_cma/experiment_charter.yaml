@@ -1,0 +1,38 @@
+version: lollanet-cma-stage0-v0.1.0
+paper_draft: 07-Docs/papers/causal-model-activation/01-cladder-oracle-model-activation-draft.md
+source:
+  dataset_name: causalNLP/CLadder
+  dataset_version: cladder-v1
+  upstream_repository: https://github.com/causalNLP/cladder
+  upstream_commit: 3d2d1169b4b939a09048a6a75956c8972a93cc38
+  archive_sha256: 1a13ef750a123a2fa214ed4d77774b2f61c77a056d18d99d3a5bf069e01e5380
+  license: MIT
+  meta_model_file: cladder-v1-meta-models.json
+  sha256:
+    main: 7ca1e3c0aa3d0e3ab7f0a31d469c9a7ce738526c7a78b2e5649d17670c27b699
+    ood_anticommonsense: 026541452ea3481419f69a4c987fa09ed7985b8f55a3d519254e0ecbccc0759d
+    ood_nonsense: 7a22b2a516c1b29106b240a729e24d1f181fa66a3aaaff054fee46e1830a600a
+    meta_models: f288ed9046a1ef5e39c0dbf6b971b8a3a485887130b7831dc5da4fe2af5d64b5
+split:
+  seed: 20260724
+  group_key: model_id
+  main_family_targets:
+    qualification: 50
+    vector_train: 200
+    development: 100
+    sealed_test: 250
+  ood_family_target: 100
+  balance_diagnostics: [query_type, graph_id, rung, answer]
+  prohibit_model_id_overlap_across_all_splits: true
+oracle_visibility:
+  prompt_fields: [background, given_info, question]
+  controller_fields: [query_type, model_family]
+  evaluator_fields: [answer, rung, graph_id, model_id, groundtruth]
+  forbidden_in_prompt: [answer, reasoning, query_type, rung, graph_id, model_id, groundtruth]
+stage_gate:
+  status: stage0_data_only
+  model_qualification_complete: false
+  vectors_fitted: false
+  development_selection_frozen: false
+  sealed_test_run: false
+

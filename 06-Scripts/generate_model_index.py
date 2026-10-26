@@ -1,9 +1,10 @@
-"""Generate the static model index from canonical model metadata."""
+"""Preview the frozen legacy index; persistent Markdown generation is retired."""
 
 from __future__ import annotations
 
 import argparse
 import re
+import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -55,7 +56,7 @@ def render_index(vault_root: Path, today: str | None = None) -> str:
         "",
         "# LollaNet Model Index",
         "",
-        "> 本索引由 `06-Scripts/generate_model_index.py` 根据模型 Frontmatter 生成。它用于导航，不是固定模型路由。",
+        "> 冻结的 legacy 导航预览；PostgreSQL `lollanet` schema 是模型库唯一事实来源。",
         "",
     ]
     seen_categories = set()
@@ -82,22 +83,24 @@ def render_index(vault_root: Path, today: str | None = None) -> str:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Generate the static LollaNet model index.")
+    parser = argparse.ArgumentParser(description="Preview the frozen legacy LollaNet model index.")
     parser.add_argument("--root", default=".", help="Vault root path")
-    parser.add_argument("--apply", action="store_true", help="Write 00-Start/Model Index.md")
+    parser.add_argument("--apply", action="store_true", help="Retired write mode; always refused")
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
     root = Path(args.root)
-    rendered = render_index(root)
     if args.apply:
-        target = root / "00-Start" / "Model Index.md"
-        target.write_text(rendered, encoding="utf-8")
-        print(target)
-    else:
-        print(rendered, end="")
+        print(
+            "ERROR: --apply is retired after the PostgreSQL cutover; query "
+            "lollanet.current_model_versions instead.",
+            file=sys.stderr,
+        )
+        return 2
+    rendered = render_index(root)
+    print(rendered, end="")
     return 0
 
 

@@ -1,0 +1,84 @@
+version: lollanet-cma-directions-v0.1.0
+paper_section: 7
+prerequisites:
+  qualification_type: lollanet_cma_base_model_qualification_v1
+  qualification_status: frozen_before_vector_training
+  access_view_type: lollanet_cma_split_access_view_v1
+  source_stage0_type: lollanet_cma_stage0_bundle_v1
+data:
+  allowed_split: vector_train
+  access_view: D:\LollaNetData\lollanet-cma\access-views\vector-train-v1
+  expected_records: 800
+  expected_records_per_family: 200
+  forbidden_splits: [qualification, development, sealed_test, ood_anticommonsense, ood_nonsense]
+families: [cm-associational, cm-interventional, cm-counterfactual, cm-mediation]
+contrast_mapping:
+  cm-associational: cm-mediation
+  cm-interventional: cm-associational
+  cm-counterfactual: cm-interventional
+  cm-mediation: cm-counterfactual
+filtering:
+  require_positive_parse: true
+  require_positive_correct: true
+  require_positive_gold_margin_above_negative: true
+  require_finite_hidden_states: true
+  minimum_balanced_records_per_family: 100
+  balance_after_filtering: true
+  balance_key: gold_answer
+  labels: ["yes", "no"]
+  sampling: deterministic_hash_order
+  seed: 20260726
+direction:
+  activation_position: final_input_token
+  activation_source: teacher_forced_canonical_answer_scoring
+  layer_fractions: [0.25, 0.5, 0.75]
+  normalize_each_family_mean: true
+  general_direction: normalized_pooled_mean_of_all_selected_record_contrasts
+development_selection:
+  allowed_split: development
+  shared_layer_across_families: true
+  alpha_candidates: [0.25, 0.5, 1.0, 1.5, 2.0]
+  shared_alpha_across_families: true
+  forbidden_split: sealed_test
+prompt_contract:
+  mechanism_instruction_role: system
+  question_role: user
+  append_question_unchanged: true
+  include_gold_reasoning: false
+  include_gold_answer: false
+  require_same_answer_protocol: true
+  maximum_token_length_difference_fraction: 0.10
+  answer_protocol: "End with exactly one line: Final answer: yes or Final answer: no."
+  margin_scoring:
+    method: canonical_completion_mean_token_log_probability
+    positive_completion: "Final answer: yes"
+    negative_completion: "Final answer: no"
+    add_special_tokens: false
+    include_eos: false
+  instructions:
+    cm-associational: >-
+      Use observational association reasoning. Distinguish marginal and conditional probabilities,
+      track dependence created by common causes or conditioning, and use only distributions stated
+      in the hypothetical world. Do not replace observation with intervention or a unit-level
+      counterfactual.
+    cm-interventional: >-
+      Use intervention-identification reasoning. Distinguish observing X from setting X, check
+      backdoor adjustment and collider bias, and use only causal relations stated in the
+      hypothetical world. Do not answer from observational association alone.
+    cm-counterfactual: >-
+      Use unit-level counterfactual reasoning. Keep the same unit across factual and hypothetical
+      worlds, use the stated structural relations to infer the alternate outcome, and do not replace
+      the counterfactual with a population intervention effect.
+    cm-mediation: >-
+      Use mediation-decomposition reasoning. Separate direct and mediator-carried paths, hold the
+      required treatment or mediator state fixed for the requested effect, and do not replace the
+      decomposition with a total association or total intervention effect.
+execution:
+  quantization: inherit_selected_qualification_run
+  batch_size: 1
+  maximum_input_tokens: 2048
+  maximum_new_tokens: 512
+  sampling: greedy
+  seed: 20260726
+  persist_after_each_record: true
+  contrast_dtype: float32

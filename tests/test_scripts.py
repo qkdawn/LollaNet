@@ -644,12 +644,95 @@ def test_formalism_regression_checks_cover_all_formal_model_cards():
 
     report = module.run_checks(ROOT)
 
-    assert report["formal_card_count"] == 59
-    assert report["defined_check_count"] == 59
+    assert report["formal_card_count"] == 61
+    assert report["defined_check_count"] == 61
     assert report["passed"]
     assert report["errors"] == []
-    assert len(report["results"]) == 59
+    assert len(report["results"]) == 61
     assert all(result["passed"] for result in report["results"])
+
+
+def test_compact_model_migration_is_versioned_relation_safe_and_idempotent(tmp_path):
+    module = load_script("migrate_model_cards_v3.py")
+    model_dir = tmp_path / "01-Models"
+    model_dir.mkdir()
+
+    def legacy_card(model_id: str, name: str, relation: str = "") -> str:
+        relation_block = relation or "model_relations: []"
+        return f"""---
+type: mental_model
+id: {model_id}
+name: {name}
+english_name: Test
+discipline: 测试
+source_category: 学科知识
+subdiscipline: 测试
+formalism: false
+kind: reasoning
+status: candidate
+version: 1
+created: 2026-07-01
+updated: 2026-07-01
+related: []
+conflicts: []
+{relation_block}
+supersedes: []
+---
+
+# {name}
+
+## 一句话定义
+
+输入改变输出。
+
+## 核心机制
+
+变量进入机制后产生可观察结果。
+
+## 适用边界
+
+- 适用：变量可观察。
+
+## 支持证据
+
+- 来源：[Fixture](https://example.com/source)
+
+## 反证
+
+- 削弱模型的观察：输出不随变量变化。
+
+## 可观察预测
+
+- 预测对象与时间窗：下一次测试。
+- 与主要替代解释可区分的结果：只有目标变量改变输出。
+
+## 修订历史
+
+| 日期 | 版本 | 状态 | 变更 | 提案 |
+| --- | --- | --- | --- | --- |
+| 2026-07-01 | 1 | candidate | 创建 | fixture |
+"""
+
+    (model_dir / "a.md").write_text(
+        legacy_card(
+            "mm-test-a",
+            "测试 A",
+            "model_relations:\n  - type: composes\n    target: mm-test-b@1\n    rationale: A feeds B.",
+        ),
+        encoding="utf-8",
+    )
+    (model_dir / "b.md").write_text(legacy_card("mm-test-b", "测试 B"), encoding="utf-8")
+
+    assert module.main(tmp_path) == 0
+    first = {path.name: path.read_text(encoding="utf-8") for path in model_dir.glob("*.md")}
+    assert "version: 2" in first["a.md"]
+    assert "target: mm-test-b@2" in first["a.md"]
+    assert "## 机制接口" in first["a.md"]
+    assert "### 反证" in first["a.md"]
+
+    assert module.main(tmp_path) == 0
+    second = {path.name: path.read_text(encoding="utf-8") for path in model_dir.glob("*.md")}
+    assert second == first
 
 
 
@@ -861,6 +944,7 @@ def test_scripts_expose_help():
         "check_blind_mapping_consistency.py",
         "migrate_model_taxonomy.py",
         "generate_model_index.py",
+        "model_graph.py",
     ]:
         completed = subprocess.run(
             [sys.executable, str(ROOT / "06-Scripts" / script), "--help"],
@@ -872,8 +956,8 @@ def test_scripts_expose_help():
         assert "usage:" in completed.stdout.lower()
 
 
-def test_all_model_cards_use_callable_ai_function_structure():
-    required_sections = [
+def test_all_model_cards_use_supported_model_card_structure():
+    legacy_sections = [
         "## 一句话定义",
         "## 核心机制",
         "## 耐久机制",
@@ -911,19 +995,35 @@ def test_all_model_cards_use_callable_ai_function_structure():
     weak_questions: list[tuple[str, str]] = []
     for path in model_paths:
         text = path.read_text(encoding="utf-8")
+        compact = "## 机制接口" in text
+        required_sections = [
+            "## 一句话定义",
+            "## 核心机制",
+            "## 机制接口",
+            "### 输入",
+            "### 转化",
+            "### 输出",
+            "### 反证",
+            "## 适用边界",
+            "## 证据",
+            "## 可观察预测",
+            "## 正式关系",
+            "## 修订历史",
+        ] if compact else legacy_sections
         for section in required_sections:
             if section not in text:
                 missing.append((path.name, section))
         if "formalism: true" in text:
-            for section in [
-                "## 形式化内容",
-                "### 定义与符号",
-                "### 公式或算法",
-                "### 成立前提",
-                "### 推导或证明来源",
-                "### 反例与边界",
-                "### 跨域转译",
-            ]:
+            formal_sections = ["## 形式化内容"] if compact else [
+                    "## 形式化内容",
+                    "### 定义与符号",
+                    "### 公式或算法",
+                    "### 成立前提",
+                    "### 推导或证明来源",
+                    "### 反例与边界",
+                    "### 跨域转译",
+                ]
+            for section in formal_sections:
                 if section not in text:
                     missing.append((path.name, section))
         for heading in ["### 职业方向", "### 创业/产品", "### 投资/商业", "### 合作/组织"]:

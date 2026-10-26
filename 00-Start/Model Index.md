@@ -6,7 +6,7 @@ updated: 2026-07-16
 
 # LollaNet Model Index
 
-> 本索引由 `06-Scripts/generate_model_index.py` 根据模型 Frontmatter 生成。它用于导航，不是固定模型路由。
+> 本页是切换时冻结的 legacy 导航快照。PostgreSQL `lollanet` schema 是模型库唯一事实来源。
 
 ## 哲学模型
 

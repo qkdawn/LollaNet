@@ -1,0 +1,76 @@
+import { test, expect } from '@playwright/test';
+
+test('classification, filtering, model detail and history', async ({ page }, info) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: '模型与变化的目录' })).toBeVisible();
+  await expect(page.locator('.mode-card')).toHaveCount(7);
+  await expect(page.locator('.mode-card .chart svg path').first()).toHaveAttribute('d', /^M.+L/);
+  await page.screenshot({ path: `test-results/${info.project.name}-overview.png`, fullPage: true });
+  await page.locator('.taxonomy-group').getByRole('button', { name: /物理学/ }).click();
+  await expect(page.locator('.result-count')).toHaveText('19 个结果');
+  await page.getByRole('combobox', { name: '模型状态' }).selectOption('candidate');
+  await expect(page.locator('.model-row .badge').first()).toHaveText('候选');
+  await page.getByRole('navigation').getByRole('button', { name: '模型库', exact: true }).click();
+  await page.getByRole('textbox', { name: '搜索', exact: true }).fill('基础概率');
+  await page.getByRole('textbox', { name: '搜索', exact: true }).press('Enter');
+  await expect(page.locator('.model-row')).toHaveCount(1);
+  await page.locator('.model-row').click();
+  await expect(page.locator('.reading-header h2')).toContainText('基础概率');
+  await expect(page.locator('.relation-row').first()).toBeVisible();
+  await page.locator('.relation-row').first().click();
+  await expect(page).toHaveURL(/model=mm-bayesian-updating/);
+  await expect(page.locator('.reading-header h2')).toContainText('贝叶斯更新');
+  await page.goBack();
+  await expect(page.locator('.reading-header h2')).toContainText('基础概率');
+  await page.reload();
+  await expect(page.locator('.reading-header h2')).toContainText('基础概率');
+  await page.screenshot({ path: `test-results/${info.project.name}-model.png`, fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+});
+
+test('curve parameters, comparison, unknown states and mobile drawer', async ({ page }, info) => {
+  await page.goto('/?view=curves&mode=sigmoid');
+  await expect(page.locator('.plot-panel h2')).toHaveText('Logistic 增长');
+  const before = await page.locator('.plot-panel svg path').getAttribute('d');
+  await page.getByRole('spinbutton', { name: 'Logistic 增长-变化率', exact: true }).fill('2');
+  await expect(page.locator('.plot-panel svg path')).not.toHaveAttribute('d', before!);
+  await page.getByRole('button', { name: '重置参数', exact: true }).click();
+  await expect(page.locator('.plot-panel svg path')).toHaveAttribute('d', before!);
+  await page.locator('.compare-add').click();
+  await page.getByRole('combobox', { name: '选择比较变体' }).selectOption('oscillation-damped');
+  await page.locator('.comparison-toolbar button').click();
+  await expect(page.locator('.compare-item')).toHaveCount(2);
+  await page.getByRole('checkbox').uncheck();
+  await page.getByRole('combobox', { name: '选择比较变体' }).selectOption('single-peak');
+  await page.locator('.comparison-toolbar button').click();
+  await expect(page.locator('.compare-item')).toHaveCount(3);
+  await expect(page.locator('.comparison-toolbar select')).toBeDisabled();
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.screenshot({ path: `test-results/${info.project.name}-comparison.png`, fullPage: true });
+  await page.getByRole('button', { name: '移除单峰', exact: true }).click();
+  await expect(page.locator('.compare-item')).toHaveCount(2);
+  await page.getByRole('tab', { name: 'Gompertz 增长', exact: true }).click();
+  await expect(page).toHaveURL(/variant=gompertz-growth/);
+  await page.reload(); await expect(page.locator('.plot-panel h2')).toHaveText('Gompertz 增长');
+  await page.screenshot({ path: `test-results/${info.project.name}-curve.png`, fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  const coloredPixels = await page.locator('.plot-panel .chart svg').evaluate(async el => {
+    const svg = new XMLSerializer().serializeToString(el);
+    const img = new Image(); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    await img.decode(); const canvas = document.createElement('canvas'); canvas.width = 600; canvas.height = 300;
+    const context = canvas.getContext('2d')!; context.drawImage(img, 0, 0, 600, 300);
+    const pixels = context.getImageData(0, 0, 600, 300).data; let count = 0;
+    for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 3] > 100 && pixels[i + 1] > pixels[i] * 1.4 && pixels[i + 2] > pixels[i] * 1.3) count++;
+    return count;
+  });
+  expect(coloredPixels).toBeGreaterThan(200);
+  if (info.project.name === 'mobile') { await page.getByRole('button', { name: '分类导航', exact: true }).click(); await expect(page.locator('.sidebar.open')).toBeVisible(); await page.getByRole('button', { name: '关闭导航', exact: true }).click(); await expect(page.locator('.sidebar.open')).toHaveCount(0); }
+  await page.goto('/?view=models&model=unknown'); await expect(page.locator('.model-detail')).toContainText('条目不存在');
+  await page.goto('/?view=models&q=__missing__'); await expect(page.getByRole('heading', { name: '没有匹配的模型' })).toBeVisible();
+  await page.getByRole('button', { name: '清空筛选' }).click(); await expect(page.locator('.model-row').first()).toBeVisible();
+  await page.goto('/?view=curves&mode=oscillation');
+  await page.getByRole('textbox', { name: '搜索', exact: true }).fill('Gompertz');
+  await page.getByRole('textbox', { name: '搜索', exact: true }).press('Enter');
+  await expect(page.locator('.mode-card')).toHaveCount(1);
+  await expect(page.locator('.mode-card h3')).toHaveText('S 型变化');
+});

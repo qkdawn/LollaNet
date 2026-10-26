@@ -86,8 +86,9 @@ def test_all_seed_cards_use_evolvable_model_schema():
         assert int(scalar(block, "version")) >= 1
         assert "conflicts:" in block
         assert "supersedes:" in block
-        for section in validator.MODEL_SECTIONS:
-            assert section in text, (path.name, section)
+        assert all(section in text for section in validator.MODEL_SECTIONS) or all(
+            section in text for section in validator.LEGACY_MODEL_SECTIONS
+        ), path.name
         assert "## 使用记录" not in text
         assert "当前个人使用线索" not in text
 
@@ -297,8 +298,9 @@ def test_engineering_core_formalism_amendment_is_accepted():
         assert "discipline: 工程学" in text
         assert "formalism: true" in text
         assert "status: active" in text
-        assert "version: 3" in text
+        assert "version: 4" in text
         assert proposal_id in text
+        assert "mp-2026-07-31-compact-model-card-batch-2" in text
         assert all(section in text for section in formal_sections)
 
 
@@ -660,7 +662,7 @@ def test_validator_rejects_incomplete_formal_model(tmp_path):
     creator = load_script("create_model.py")
     make_vault(tmp_path, validator)
     proposal_id = write_accepted_new_model_proposal(tmp_path)
-    creator.create_model(
+    path = creator.create_model(
         tmp_path,
         "不完整形式化模型",
         source_category="学科知识",
@@ -670,6 +672,8 @@ def test_validator_rejects_incomplete_formal_model(tmp_path):
         proposal_id=proposal_id,
         today="2026-07-12",
     )
+    text = path.read_text(encoding="utf-8").replace("## 形式化内容", "## 已删除形式化内容")
+    path.write_text(text, encoding="utf-8")
 
     result = validator.validate_vault(tmp_path)
     errors = "\n".join(result["errors"])

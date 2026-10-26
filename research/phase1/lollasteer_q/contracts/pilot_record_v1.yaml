@@ -1,0 +1,26 @@
+type: lollasteer_q_pilot_record_v1
+required_prompt_fields:
+  - record_id
+  - base_item_id
+  - split
+  - category
+  - template_family
+  - reward_lure
+  - social_lure
+  - certainty_pressure
+  - control_type
+  - question
+  - options
+  - prompt
+  - option_order_sha256
+  - token_budget
+required_evaluator_fields:
+  - record_id
+  - base_item_id
+  - gold_index
+  - lure_index
+  - gold_label
+  - lure_label
+forbidden_prompt_fields: [gold_index, lure_index, gold_label, lure_label, answer, answer_index, cot_content, src]
+main_conditions_per_item: 8
+valid_controls: [valid_reward, valid_social, calibration]

@@ -1,0 +1,172 @@
+version: lollanet-cma-sealed-evaluation-v0.1.0
+paper_sections: [8, 9, 10, 11]
+prerequisites:
+  evaluation_release_type: lollanet_cma_evaluation_release_v1
+  evaluation_release_status: released_after_development_freeze
+  development_manifest_type: lollanet_cma_development_selection_v1
+  development_status: frozen
+  require_all_development_hard_gates: true
+  require_direction_specificity: true
+  require_general_and_equal_all_distinct: true
+  general_equal_all_max_cosine_similarity: 0.999999
+data:
+  views:
+    sealed_test:
+      path: D:\LollaNetData\lollanet-cma\access-views\sealed-test-v1
+      expected_records: 1000
+      expected_records_per_family: 250
+    ood_anticommonsense:
+      path: D:\LollaNetData\lollanet-cma\access-views\ood-anticommonsense-v1
+      expected_records: 400
+      expected_records_per_family: 100
+    ood_nonsense:
+      path: D:\LollaNetData\lollanet-cma\access-views\ood-nonsense-v1
+      expected_records: 400
+      expected_records_per_family: 100
+  evaluator_process_must_receive_only_released_views: true
+families: [cm-associational, cm-interventional, cm-counterfactual, cm-mediation]
+conditions:
+  deterministic_model_runs:
+    - base
+    - causal_cot
+    - general_caa
+    - family_direction__cm-associational
+    - family_direction__cm-interventional
+    - family_direction__cm-counterfactual
+    - family_direction__cm-mediation
+    - equal_all
+  derived_from_family_direction_runs:
+    - oracle_correct
+    - oracle_wrong
+    - shuffled_mapping
+  random_primary: random_norm_matched__draw_1
+  random_sensitivity:
+    - random_norm_matched__draw_2
+    - random_norm_matched__draw_3
+  wrong_mapping:
+    cm-associational: cm-mediation
+    cm-interventional: cm-associational
+    cm-counterfactual: cm-interventional
+    cm-mediation: cm-counterfactual
+  shuffled_mapping_seed: 20260731
+  shuffled_mapping:
+    cm-associational: cm-mediation
+    cm-interventional: cm-counterfactual
+    cm-counterfactual: cm-associational
+    cm-mediation: cm-interventional
+  random_direction_seeds:
+    random_norm_matched__draw_1: 20260729
+    random_norm_matched__draw_2: 20260730
+    random_norm_matched__draw_3: 20260731
+prompt_only:
+  condition: causal_cot
+  template: causal_cot_prompt.txt
+  template_sha256: 0803e7e5fb3f99225781590a5a75f84cb2194d8e1db381a5a4c2a0ca7a22fce0
+  source_repository: https://github.com/causalNLP/cladder
+  source_commit: 3d2d1169b4b939a09048a6a75956c8972a93cc38
+  source_path: causalbenchmark/eval/run_gpt_v1.5_gpt4_1106_cot.py
+  source_git_blob_sha: cee158e498832c4c9af508c332e4c560536bbb48
+  source_sha256: 89e45ac90874a3cf1f4a20c78eb066be380a81c842d9a78b7d3a0a1d7d6b9d5a
+  adaptation: single_turn_without_query_type_or_variable_mapping_oracle_fields
+  append_to_user_prompt: true
+  no_internal_steering: true
+execution:
+  quantization: inherit_development
+  compute_dtype: inherit_development
+  selected_layer: inherit_development
+  selected_alpha: inherit_development
+  maximum_input_tokens: 2048
+  maximum_new_tokens: 512
+  sampling: greedy
+  temperature: 0
+  record_batch_size: 1
+  kl_forward_batch_size: 1
+  paired_decode_rule: sequential_batch_one_forwards_with_identical_text_prefixes_and_separate_condition_caches
+  seed: 20260728
+  deterministic_conditions_run_once: true
+  persist_after_each_record: true
+metrics:
+  primary: [overall_accuracy, macro_family_accuracy, query_type_accuracy, rung_accuracy, parse_failure_rate]
+  secondary:
+    - gold_answer_margin
+    - brier_score
+    - expected_calibration_error
+    - output_tokens
+    - latency_seconds
+    - peak_gpu_memory_bytes
+    - token_level_kl
+    - unrelated_control_accuracy_delta
+  ece_bins: 10
+token_level_kl:
+  scope: activation_intervention_conditions_only
+  prompt_only_causal_cot: not_applicable
+  trajectory: greedy_trajectory_generated_by_the_intervention_condition
+  alignment: each_decode_decision_uses_identical_prompt_and_generated_token_prefixes
+  intervention_distribution: steering_enabled_at_the_selected_layer_and_alpha
+  reference_distribution: same_model_with_steering_disabled_end_to_end_on_the_identical_text_prefix
+  cache_rule: separate_condition_consistent_kv_caches_in_sequential_batch_one_forwards
+  next_token_rule: steered_row_greedy_token_is_copied_to_both_rows
+  direction: "KL(steered || unsteered_same_text_prefix)"
+  vocabulary: complete_tokenizer_vocabulary
+  numerical_evaluation: float64_log_softmax
+  per_record_reduction: arithmetic_mean_over_all_emitted_token_decisions_including_eos_when_emitted
+  derived_conditions: inherit_hash_linked_per_record_values_from_their_family_direction_source
+hidden_state_probe:
+  target: gold_yes_no_label
+  classifier: l2_regularized_linear_ridge_probe
+  train_split: vector_train
+  regularization_selection_split: development
+  evaluation_split: sealed_test
+  train_condition: base_only
+  regularization_selection_condition: base_only
+  evaluation_conditions: [base, oracle_correct, oracle_wrong, random_norm_matched__draw_1]
+  selected_layer: inherit_development
+  activation_position: selected_layer_residual_output_at_last_nonpadding_normal_prompt_token
+  activation_timing: after_condition_intervention_at_that_layer_for_steered_evaluation_conditions
+  activation_batch_rule: batch_one_for_train_development_and_evaluation
+  generated_text_or_gold_answer_tokens_forbidden: true
+  feature_scaling: vector_train_feature_mean_and_population_standard_deviation
+  standard_deviation_floor: 1.0e-6
+  l2_grid: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  selection_rule: highest_development_accuracy_then_auroc_then_gold_margin_then_larger_l2
+  reported_metrics: [accuracy, auroc, mean_gold_margin]
+  interpretation: diagnostic_mechanism_evidence_not_a_substitute_for_generation_accuracy
+statistics:
+  paired_bootstrap_samples: 10000
+  confidence_level: 0.95
+  bootstrap_seed: 20260735
+  faithfulness_bootstrap_seed_offset: 100
+  faithfulness_family_seed_rule: bootstrap_seed_plus_offset_plus_frozen_family_index
+  resampling_unit: record_id_stratified_by_model_family
+  deterministic_repeats_are_not_independent_replications: true
+  random_primary_draw_used_for_registered_comparison: random_norm_matched__draw_1
+  random_sensitivity_draws_are_diagnostic: true
+success_gates:
+  registered_comparisons:
+    - [oracle_correct, base]
+    - [oracle_correct, causal_cot]
+    - [oracle_correct, oracle_wrong]
+    - [oracle_correct, shuffled_mapping]
+    - [oracle_correct, random_norm_matched__draw_1]
+  comparison_pass_rule: paired_macro_family_accuracy_difference_confidence_interval_lower_bound_above_zero
+  minimum_significant_diagonal_families: 3
+  ood_nonreversal_rule: oracle_correct_macro_family_accuracy_minus_base_greater_than_or_equal_to_zero_on_each_ood_split
+  random_sensitivity_rule: oracle_correct_point_estimate_exceeds_each_diagnostic_random_draw
+  query_type_robustness_rule: leave_each_query_type_out_oracle_correct_minus_base_macro_family_accuracy_delta_above_zero
+  parser_robustness_rule: common_parse_success_oracle_correct_minus_base_macro_family_accuracy_delta_above_zero
+  maximum_oracle_parse_failure_rate_increase: 0.01
+  unrelated_control_rule: worst_family_direction_accuracy_loss_not_more_than_0.02
+readiness_blockers:
+  unrelated_control_dataset:
+    status: resolved
+    artifact: D:\LollaNetData\lollanet-cma\controls\mmlu-pro-v1\manifest.json
+    artifact_sha256: 46758e608b8a94e4f14f2665e8340bd6eeb4c0d20f54cb14515edae99e3f18af
+    content_sha256: ef51e923c2010f31454c84874995378fd30470ebb02ec09de1c0e8db32f17c7f
+    source_revision: b189ec765aa7ed75c8acfea42df31fdae71f97be
+    source_license: MIT
+  token_level_kl:
+    status: resolved
+    contract: token_level_kl
+  hidden_state_probe:
+    status: resolved
+    contract: hidden_state_probe

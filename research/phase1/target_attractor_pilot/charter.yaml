@@ -1,0 +1,48 @@
+experiment: target-attractor-smoke-v1
+status: frozen_before_generation
+scope: discovery_only
+formal_evaluation_access: forbidden
+model:
+  checkpoint: D:/LollaNetData/lollasteer-q/models/Qwen3-1.7B
+  loading: nf4
+construct:
+  target: object-specific, independently reasoned, non-formulaic answers
+  non_claim: consciousness, intention, or a training-stage cause
+direction:
+  source_split: train
+  sign: target_minus_control
+  candidate_relative_layers: [0.25, 0.5, 0.75]
+  smoke_layer_fraction: 0.5
+  monitor_layer_fraction: 0.75
+generation:
+  decoding: greedy
+  maximum_new_tokens: 80
+  target_pulse_tokens: 16
+  release_tokens_before_perturbation: 16
+  perturbation_tokens: 8
+  strengths: [1.0, 2.0, 4.0]
+conditions:
+  - baseline
+  - continuous_target
+  - target_pulse_release
+  - target_pulse_release_perturb
+  - random_pulse_release
+controls:
+  random_direction: norm_matched_and_orthogonalized
+  perturbation: negative_target_direction
+attractor_evidence:
+  persistence: target projection remains above matched baseline after target intervention is zero
+  recovery: target projection rises after the negative perturbation ends without renewed target intervention
+  convergence: persistence is not confined to one prompt
+  selectivity: relevance, anchor coverage, length, and degeneration remain acceptable
+interpretation:
+  continuous_effect_only: steering_not_attractor
+  persistence_only: candidate_memory_not_full_attractor
+  persistence_and_recovery: candidate_attractor_evidence
+  confirmatory_claim: prohibited_in_smoke_pilot
+stop_conditions:
+  - non_finite_hidden_state
+  - empty_generation
+  - repeated_token_degeneration
+  - anchor_coverage_collapse
+  - no_persistence_at_any_frozen_strength

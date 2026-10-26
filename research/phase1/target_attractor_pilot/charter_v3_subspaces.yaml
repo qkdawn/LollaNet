@@ -1,0 +1,46 @@
+experiment: target-subspaces-causal-smoke-v1
+status: frozen_before_generation
+scope: discovery_only
+formal_evaluation_access: forbidden
+question: can separately fitted low-rank target subspaces causally improve their corresponding behaviours?
+model:
+  checkpoint: D:/LollaNetData/lollasteer-q/models/Qwen3-1.7B
+  loading: nf4
+factorial_design:
+  axes: [specificity, independence, non_template]
+  levels_per_axis: 2
+  versions_per_case: 8
+  fitting_cases: 16
+  development_cases: 4
+  evaluation_cases: 0
+subspaces:
+  layer_fraction: 0.5
+  windows: [early_4, early_8, early_16]
+  variance_threshold: 0.80
+  maximum_rank: 8
+  overlap: allowed_and_reported
+controller:
+  type: projected_contraction_to_positive_centroid
+  gain: 0.25
+  maximum_delta_norm: 4.0
+  begins_after_generated_tokens: 4
+generation:
+  decoding: greedy
+  maximum_new_tokens: 384
+  development_case_limit: 2
+conditions:
+  - baseline
+  - specificity_only
+  - independence_only
+  - non_template_only
+  - combined
+  - rank_and_norm_matched_random
+stage_boundary:
+  current_stage: continuous_causal_validation
+  persistence_and_recovery: not_tested_until_behavioral_gate_passes
+behavioral_gate:
+  specificity: anchor coverage improves over baseline and random control
+  independence: alternative-explanation and discriminating-test evidence improves without factual loss
+  non_template: formulaic structure decreases without length collapse
+  combined: improves at least two axes without worse anchor coverage
+

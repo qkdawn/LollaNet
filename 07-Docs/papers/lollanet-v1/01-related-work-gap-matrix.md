@@ -1,4 +1,14 @@
+---
+type: research_note
+title: LollaNet v1：相关工作与贡献缺口矩阵
+status: superseded
+superseded_by: ../../trainable-cognitive-model-network.md
+updated: 2026-07-28
+---
+
 # LollaNet v1：相关工作与贡献缺口矩阵
+
+> 历史研究稿，保留作路线比较；不代表当前 LollaNet 运行时。
 
 > 研究阶段：第一步——系统文献探索与贡献缺口判断  
 > 检索截止：2026-07-18  

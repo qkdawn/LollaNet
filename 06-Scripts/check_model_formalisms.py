@@ -21,6 +21,9 @@ TOL = 1e-9
 # One distinctive formula/algorithm marker per card.  The executable case below
 # checks the same narrow relation, not a claimed cross-domain interpretation.
 FORMALISM_CHECKS: dict[str, dict[str, object]] = {
+    # Probability and statistics
+    "mm-base-rate": {"fragment": "P(Y\\mid R,T)", "case": "base_rate"},
+    "mm-bayesian-updating": {"fragment": "posterior odds = prior odds × likelihood ratio", "case": "bayes_odds"},
     # Chemistry
     "mm-4d9545b9b6af": {"fragment": "Δ_rG=Δ_rG°+RTlnQ", "case": "gibbs"},
     "mm-cdde2a4024f0": {"fragment": "ln(P2/P1)", "case": "clausius"},
@@ -93,6 +96,12 @@ def close(actual: float, expected: float, tol: float = TOL) -> bool:
 
 def run_case(case: str) -> tuple[bool, str]:
     """Return a deliberately narrow canonical calculation and premise/boundary check."""
+    if case == "base_rate":
+        successes, reference_class_size = 20, 100
+        return close(successes / reference_class_size, .2), "empirical base rate is the reference-class frequency"
+    if case == "bayes_odds":
+        prior_odds, likelihood_ratio = .25, 8.0
+        return close(prior_odds * likelihood_ratio, 2.0), "posterior odds equal prior odds times likelihood ratio"
     if case == "gibbs":
         r, temp, k = 8.314, 298.15, 10.0
         dg0 = -r * temp * math.log(k)

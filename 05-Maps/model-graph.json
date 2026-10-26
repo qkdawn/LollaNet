@@ -1,0 +1,2935 @@
+{
+  "schema_version": 2,
+  "nodes": [
+    {
+      "id": "mm-00ebc72c737f",
+      "version": 2,
+      "name": "酸碱平衡、缓冲与容量",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/酸碱平衡、缓冲与容量.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-0df41f6ddc45",
+      "version": 2,
+      "name": "退相干与经典涌现",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/退相干与经典涌现.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-10e7946e8f78",
+      "version": 2,
+      "name": "速率律与控速步骤",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/速率律与控速步骤.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-1dafd97598ea",
+      "version": 3,
+      "name": "导数与局部敏感度",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/导数与局部敏感度.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-24c2078ff362",
+      "version": 2,
+      "name": "误差预算、不确定性传播与容差链",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/误差预算、不确定性传播与容差链.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-267e488ed00d",
+      "version": 2,
+      "name": "线性与叠加",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/线性与叠加.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-2ae0022c377f",
+      "version": 2,
+      "name": "溶解、分配与选择性",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/溶解、分配与选择性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-2b1d22093700",
+      "version": 2,
+      "name": "波动与传播",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/波动与传播.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-3069a490b994",
+      "version": 2,
+      "name": "鲁棒设计、敏感度与最坏情形",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/鲁棒设计、敏感度与最坏情形.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-30d197d6a613",
+      "version": 2,
+      "name": "极限与连续",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/极限与连续.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-3e810805f0a1",
+      "version": 2,
+      "name": "反应商、平衡常数与扰动响应",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/反应商、平衡常数与扰动响应.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-4517776d4319",
+      "version": 2,
+      "name": "数值近似与误差传播",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/数值近似与误差传播.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-46e0dd26760b",
+      "version": 2,
+      "name": "场与势",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/场与势.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-46fbd9f6f875",
+      "version": 2,
+      "name": "功能分解、需求分配与层级",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/功能分解、需求分配与层级.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-4827493462f8",
+      "version": 2,
+      "name": "氧化还原、电势与电子转移",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/氧化还原、电势与电子转移.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-4d9545b9b6af",
+      "version": 2,
+      "name": "Gibbs 自由能、化学势与自发性",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/Gibbs 自由能、化学势与自发性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-57e628333aee",
+      "version": 2,
+      "name": "纠缠与 Bell 相关",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/纠缠与 Bell 相关.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-5dc7789f1f61",
+      "version": 2,
+      "name": "费米玻色统计与泡利不相容",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/费米玻色统计与泡利不相容.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-5f8905afab9c",
+      "version": 2,
+      "name": "量纲分析与尺度律",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/量纲分析与尺度律.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-620ba4e2365a",
+      "version": 2,
+      "name": "接口、耦合与集成顺序",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/接口、耦合与集成顺序.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-68e9a2e0d68d",
+      "version": 2,
+      "name": "组合与计数",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/组合与计数.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-71cbb455982b",
+      "version": 2,
+      "name": "能量守恒与功",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/能量守恒与功.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-7a960f6b4ce1",
+      "version": 2,
+      "name": "图与网络结构",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/图与网络结构.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-7d542558a1b1",
+      "version": 2,
+      "name": "原子结构与周期趋势",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/原子结构与周期趋势.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-8ab6e7bc3c83",
+      "version": 2,
+      "name": "生命周期成本、技术债与可演化性",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/生命周期成本、技术债与可演化性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-8ff5c64be854",
+      "version": 2,
+      "name": "扩散与梯度驱动",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/扩散与梯度驱动.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-90310164e606",
+      "version": 2,
+      "name": "反应焓与 Hess 路径",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/反应焓与 Hess 路径.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-91a96d14ace5",
+      "version": 2,
+      "name": "动量与冲量",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/动量与冲量.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-941bf971e56b",
+      "version": 2,
+      "name": "积分与累积",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/积分与累积.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-954c263ec767",
+      "version": 2,
+      "name": "不确定性关系",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/不确定性关系.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-977f6dda93d9",
+      "version": 2,
+      "name": "活化能、催化与替代路径",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/活化能、催化与替代路径.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-a28acfbc6882",
+      "version": 2,
+      "name": "哈密顿量与时间演化",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/哈密顿量与时间演化.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-acdf35a8fee3",
+      "version": 2,
+      "name": "优化与约束",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/优化与约束.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-authority-bias",
+      "version": 3,
+      "name": "权威偏差",
+      "kind": "world",
+      "status": "contested",
+      "path": "01-Models/学科知识/心理学/权威偏差.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-availability-bias",
+      "version": 3,
+      "name": "可得性偏差",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/可得性偏差.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-b451e4404335",
+      "version": 2,
+      "name": "失效模式、故障树与危害路径",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/失效模式、故障树与危害路径.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-base-rate",
+      "version": 3,
+      "name": "基础概率",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/基础概率.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-bayesian-updating",
+      "version": 3,
+      "name": "贝叶斯更新",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/贝叶斯更新.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-bfcb11b439f1",
+      "version": 2,
+      "name": "可靠度、失效率与寿命分布",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/可靠度、失效率与寿命分布.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-bottleneck",
+      "version": 4,
+      "name": "瓶颈",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/工程学/瓶颈.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-c057bde8c027",
+      "version": 2,
+      "name": "验证、确认与双向可追溯性",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/验证、确认与双向可追溯性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-c14f8b1ce070",
+      "version": 2,
+      "name": "需求、约束与可验证指标",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/需求、约束与可验证指标.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-c6c55641b8a5",
+      "version": 2,
+      "name": "权衡空间、Pareto 前沿与决策记录",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/权衡空间、Pareto 前沿与决策记录.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-c7864295cc14",
+      "version": 2,
+      "name": "力与平衡",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/力与平衡.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-ca5cdb8acd22",
+      "version": 2,
+      "name": "函数与映射",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/函数与映射.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-cc3991975703",
+      "version": 2,
+      "name": "量子化与离散能级",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/量子化与离散能级.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-cdde2a4024f0",
+      "version": 2,
+      "name": "分子间作用力与相态",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/分子间作用力与相态.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-circle-of-competence",
+      "version": 3,
+      "name": "能力圈",
+      "kind": "action",
+      "status": "active",
+      "path": "01-Models/哲学模型/哲学/能力圈.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-commitment-consistency",
+      "version": 3,
+      "name": "承诺一致性",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/承诺一致性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-compounding",
+      "version": 3,
+      "name": "复利",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/经济学/复利.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-confirmation-bias",
+      "version": 3,
+      "name": "确认偏误",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/确认偏误.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-d2fbdcb18acf",
+      "version": 2,
+      "name": "稳定性与相变",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/稳定性与相变.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-d4edb4a5a85c",
+      "version": 2,
+      "name": "熵与不可逆性",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/熵与不可逆性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-d8045dd0996f",
+      "version": 2,
+      "name": "不变量与对称",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/不变量与对称.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-d81cf96b1419",
+      "version": 2,
+      "name": "系统边界、运行环境与利益相关者",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/系统边界、运行环境与利益相关者.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-ded821acce72",
+      "version": 2,
+      "name": "状态向量与叠加",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/状态向量与叠加.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-economies-of-scale",
+      "version": 3,
+      "name": "规模经济",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/商学/规模经济.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-edf8b2dc7724",
+      "version": 2,
+      "name": "可维护性、可诊断性与恢复时间",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/工程学/可维护性、可诊断性与恢复时间.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-envy-comparison",
+      "version": 3,
+      "name": "嫉妒与比较",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/嫉妒与比较.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-expected-value",
+      "version": 3,
+      "name": "期望值",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/期望值.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-f0584264021d",
+      "version": 2,
+      "name": "振荡与共振",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/振荡与共振.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-f15e784415c2",
+      "version": 2,
+      "name": "递归与迭代",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/递归与迭代.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-f856988a2c82",
+      "version": 2,
+      "name": "线性代数",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/数学/线性代数.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-fb4dec93d1f0",
+      "version": 2,
+      "name": "隧穿与势垒",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/隧穿与势垒.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-fbc90bff5839",
+      "version": 2,
+      "name": "物质守恒、化学计量与限制试剂",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/物质守恒、化学计量与限制试剂.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-fec74c600590",
+      "version": 2,
+      "name": "测量与 Born 规则",
+      "kind": "reasoning",
+      "status": "candidate",
+      "path": "01-Models/学科知识/物理学/测量与 Born 规则.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-feedback-loop",
+      "version": 4,
+      "name": "反馈回路",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/工程学/反馈回路.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-fffd2837e608",
+      "version": 2,
+      "name": "化学键、分子几何与极性",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/化学/化学键、分子几何与极性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-geico-core-excision",
+      "version": 2,
+      "name": "GEICO式核心切除（癌症手术法）",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/商学/GEICO式核心切除（癌症手术法）.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-incentive-caused-bias",
+      "version": 3,
+      "name": "激励导致的偏见",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/激励导致的偏见.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-incentives",
+      "version": 3,
+      "name": "激励机制",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/激励机制.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-inversion",
+      "version": 3,
+      "name": "反向思考",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/哲学模型/哲学/反向思考.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-loss-aversion",
+      "version": 3,
+      "name": "损失厌恶",
+      "kind": "world",
+      "status": "contested",
+      "path": "01-Models/学科知识/心理学/损失厌恶.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-man-with-a-hammer",
+      "version": 2,
+      "name": "铁锤人倾向",
+      "kind": "world",
+      "status": "candidate",
+      "path": "01-Models/学科知识/心理学/铁锤人倾向.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-margin-of-safety",
+      "version": 4,
+      "name": "安全边际",
+      "kind": "action",
+      "status": "active",
+      "path": "01-Models/学科知识/工程学/安全边际.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-marginal-analysis",
+      "version": 2,
+      "name": "边际分析",
+      "kind": "action",
+      "status": "candidate",
+      "path": "01-Models/学科知识/经济学/边际分析.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-moat",
+      "version": 3,
+      "name": "护城河",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/商学/护城河.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-network-effects",
+      "version": 3,
+      "name": "网络效应",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/商学/网络效应.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-niche",
+      "version": 3,
+      "name": "生态位",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/生物学/生态位.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-nonlinearity",
+      "version": 3,
+      "name": "非线性",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/非线性.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-opportunity-cost",
+      "version": 3,
+      "name": "机会成本",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/学科知识/经济学/机会成本.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-overconfidence",
+      "version": 3,
+      "name": "过度自信",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/过度自信.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-path-dependence",
+      "version": 3,
+      "name": "路径依赖",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/历史机制/制度演化/路径依赖.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-principal-agent",
+      "version": 3,
+      "name": "代理问题",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/商学/代理问题.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-redundancy",
+      "version": 4,
+      "name": "冗余",
+      "kind": "action",
+      "status": "active",
+      "path": "01-Models/学科知识/工程学/冗余.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-regression-to-mean",
+      "version": 3,
+      "name": "均值回归",
+      "kind": "reasoning",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/均值回归.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-social-proof",
+      "version": 3,
+      "name": "社会认同",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/心理学/社会认同.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    },
+    {
+      "id": "mm-tipping-point",
+      "version": 3,
+      "name": "临界点",
+      "kind": "world",
+      "status": "active",
+      "path": "01-Models/学科知识/概率与统计/临界点.md",
+      "mechanism_readiness": "ready",
+      "missing_interface_sections": [],
+      "empty_interface_sections": []
+    }
+  ],
+  "edges": [
+    {
+      "source_model": "mm-00ebc72c737f@2",
+      "relation": "related",
+      "target_model": "mm-2ae0022c377f@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-00ebc72c737f@2",
+      "relation": "related",
+      "target_model": "mm-3e810805f0a1@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-00ebc72c737f@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-00ebc72c737f@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-0df41f6ddc45@2",
+      "relation": "related",
+      "target_model": "mm-57e628333aee@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-0df41f6ddc45@2",
+      "relation": "related",
+      "target_model": "mm-954c263ec767@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-0df41f6ddc45@2",
+      "relation": "related",
+      "target_model": "mm-a28acfbc6882@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-0df41f6ddc45@2",
+      "relation": "related",
+      "target_model": "mm-d2fbdcb18acf@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-0df41f6ddc45@2",
+      "relation": "related",
+      "target_model": "mm-ded821acce72@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-10e7946e8f78@2",
+      "relation": "related",
+      "target_model": "mm-4517776d4319@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-10e7946e8f78@2",
+      "relation": "related",
+      "target_model": "mm-4d9545b9b6af@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-10e7946e8f78@2",
+      "relation": "related",
+      "target_model": "mm-977f6dda93d9@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-10e7946e8f78@2",
+      "relation": "related",
+      "target_model": "mm-bottleneck@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-10e7946e8f78@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-1dafd97598ea@3",
+      "relation": "related",
+      "target_model": "mm-30d197d6a613@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-1dafd97598ea@3",
+      "relation": "related",
+      "target_model": "mm-marginal-analysis@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-1dafd97598ea@3",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-24c2078ff362@2",
+      "relation": "related",
+      "target_model": "mm-3069a490b994@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-24c2078ff362@2",
+      "relation": "related",
+      "target_model": "mm-4517776d4319@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-24c2078ff362@2",
+      "relation": "related",
+      "target_model": "mm-base-rate@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-24c2078ff362@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-267e488ed00d@2",
+      "relation": "related",
+      "target_model": "mm-90310164e606@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-267e488ed00d@2",
+      "relation": "related",
+      "target_model": "mm-ca5cdb8acd22@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-267e488ed00d@2",
+      "relation": "related",
+      "target_model": "mm-d8045dd0996f@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-267e488ed00d@2",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2ae0022c377f@2",
+      "relation": "related",
+      "target_model": "mm-3e810805f0a1@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2ae0022c377f@2",
+      "relation": "related",
+      "target_model": "mm-acdf35a8fee3@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2ae0022c377f@2",
+      "relation": "related",
+      "target_model": "mm-cdde2a4024f0@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2b1d22093700@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2b1d22093700@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-2b1d22093700@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3069a490b994@2",
+      "relation": "related",
+      "target_model": "mm-c6c55641b8a5@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3069a490b994@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3069a490b994@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3069a490b994@2",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-30d197d6a613@2",
+      "relation": "related",
+      "target_model": "mm-941bf971e56b@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-30d197d6a613@2",
+      "relation": "related",
+      "target_model": "mm-tipping-point@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3e810805f0a1@2",
+      "relation": "related",
+      "target_model": "mm-4d9545b9b6af@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3e810805f0a1@2",
+      "relation": "related",
+      "target_model": "mm-d2fbdcb18acf@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-3e810805f0a1@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4517776d4319@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4517776d4319@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4517776d4319@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46e0dd26760b@2",
+      "relation": "related",
+      "target_model": "mm-4827493462f8@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46e0dd26760b@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46e0dd26760b@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46e0dd26760b@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46fbd9f6f875@2",
+      "relation": "related",
+      "target_model": "mm-620ba4e2365a@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46fbd9f6f875@2",
+      "relation": "related",
+      "target_model": "mm-bottleneck@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46fbd9f6f875@2",
+      "relation": "related",
+      "target_model": "mm-c057bde8c027@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46fbd9f6f875@2",
+      "relation": "related",
+      "target_model": "mm-c14f8b1ce070@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-46fbd9f6f875@2",
+      "relation": "related",
+      "target_model": "mm-d81cf96b1419@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4827493462f8@2",
+      "relation": "related",
+      "target_model": "mm-4d9545b9b6af@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4827493462f8@2",
+      "relation": "related",
+      "target_model": "mm-71cbb455982b@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4827493462f8@2",
+      "relation": "related",
+      "target_model": "mm-fbc90bff5839@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4d9545b9b6af@2",
+      "relation": "related",
+      "target_model": "mm-90310164e606@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4d9545b9b6af@2",
+      "relation": "related",
+      "target_model": "mm-977f6dda93d9@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-4d9545b9b6af@2",
+      "relation": "related",
+      "target_model": "mm-d4edb4a5a85c@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-57e628333aee@2",
+      "relation": "related",
+      "target_model": "mm-ded821acce72@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-57e628333aee@2",
+      "relation": "related",
+      "target_model": "mm-fec74c600590@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5dc7789f1f61@2",
+      "relation": "related",
+      "target_model": "mm-71cbb455982b@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5dc7789f1f61@2",
+      "relation": "related",
+      "target_model": "mm-7d542558a1b1@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5dc7789f1f61@2",
+      "relation": "related",
+      "target_model": "mm-cc3991975703@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5dc7789f1f61@2",
+      "relation": "related",
+      "target_model": "mm-ded821acce72@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5f8905afab9c@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5f8905afab9c@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-5f8905afab9c@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-8ab6e7bc3c83@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-bottleneck@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-c057bde8c027@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-d81cf96b1419@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-edf8b2dc7724@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-620ba4e2365a@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-68e9a2e0d68d@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-68e9a2e0d68d@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-68e9a2e0d68d@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-90310164e606@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-fb4dec93d1f0@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-fbc90bff5839@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-71cbb455982b@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7a960f6b4ce1@2",
+      "relation": "related",
+      "target_model": "mm-b451e4404335@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7a960f6b4ce1@2",
+      "relation": "related",
+      "target_model": "mm-fffd2837e608@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7a960f6b4ce1@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7a960f6b4ce1@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7a960f6b4ce1@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7d542558a1b1@2",
+      "relation": "related",
+      "target_model": "mm-cc3991975703@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7d542558a1b1@2",
+      "relation": "related",
+      "target_model": "mm-d8045dd0996f@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-7d542558a1b1@2",
+      "relation": "related",
+      "target_model": "mm-fffd2837e608@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ab6e7bc3c83@2",
+      "relation": "related",
+      "target_model": "mm-bottleneck@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ab6e7bc3c83@2",
+      "relation": "related",
+      "target_model": "mm-c6c55641b8a5@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ab6e7bc3c83@2",
+      "relation": "related",
+      "target_model": "mm-compounding@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ab6e7bc3c83@2",
+      "relation": "related",
+      "target_model": "mm-edf8b2dc7724@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ff5c64be854@2",
+      "relation": "related",
+      "target_model": "mm-cdde2a4024f0@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ff5c64be854@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ff5c64be854@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-8ff5c64be854@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-90310164e606@2",
+      "relation": "related",
+      "target_model": "mm-path-dependence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-91a96d14ace5@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-91a96d14ace5@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-91a96d14ace5@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-941bf971e56b@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-941bf971e56b@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-941bf971e56b@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-954c263ec767@2",
+      "relation": "related",
+      "target_model": "mm-ded821acce72@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-954c263ec767@2",
+      "relation": "related",
+      "target_model": "mm-fec74c600590@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-977f6dda93d9@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-977f6dda93d9@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-a28acfbc6882@2",
+      "relation": "related",
+      "target_model": "mm-fb4dec93d1f0@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-a28acfbc6882@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-a28acfbc6882@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-a28acfbc6882@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-c6c55641b8a5@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-ca5cdb8acd22@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-marginal-analysis@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-acdf35a8fee3@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-circle-of-competence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-confirmation-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-incentive-caused-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-principal-agent@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-authority-bias@3",
+      "relation": "related",
+      "target_model": "mm-social-proof@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "competes",
+      "target_model": "mm-base-rate@3",
+      "formal": true,
+      "rationale": "显著性和提取容易度与总体频率会对同一概率判断给出不同预测。"
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "contrasts",
+      "target_model": "mm-base-rate@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-base-rate@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-bayesian-updating@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-confirmation-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-man-with-a-hammer@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-regression-to-mean@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-availability-bias@3",
+      "relation": "related",
+      "target_model": "mm-social-proof@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-b451e4404335@2",
+      "relation": "related",
+      "target_model": "mm-bfcb11b439f1@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-b451e4404335@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-b451e4404335@2",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "composes",
+      "target_model": "mm-bayesian-updating@3",
+      "formal": true,
+      "rationale": "参考类别分布提供先验，贝叶斯更新再用区分性证据形成后验。"
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-bayesian-updating@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-bfcb11b439f1@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-circle-of-competence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-expected-value@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-geico-core-excision@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-base-rate@3",
+      "relation": "related",
+      "target_model": "mm-regression-to-mean@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bayesian-updating@3",
+      "relation": "contrasts",
+      "target_model": "mm-commitment-consistency@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bayesian-updating@3",
+      "relation": "related",
+      "target_model": "mm-confirmation-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bayesian-updating@3",
+      "relation": "related",
+      "target_model": "mm-expected-value@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bayesian-updating@3",
+      "relation": "related",
+      "target_model": "mm-regression-to-mean@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bfcb11b439f1@2",
+      "relation": "related",
+      "target_model": "mm-edf8b2dc7724@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bfcb11b439f1@2",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-d81cf96b1419@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-economies-of-scale@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-edf8b2dc7724@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-fbc90bff5839@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-bottleneck@4",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c057bde8c027@2",
+      "relation": "related",
+      "target_model": "mm-c14f8b1ce070@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c057bde8c027@2",
+      "relation": "related",
+      "target_model": "mm-d81cf96b1419@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c14f8b1ce070@2",
+      "relation": "related",
+      "target_model": "mm-c6c55641b8a5@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c14f8b1ce070@2",
+      "relation": "related",
+      "target_model": "mm-d81cf96b1419@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c14f8b1ce070@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c6c55641b8a5@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c7864295cc14@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c7864295cc14@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-c7864295cc14@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-ca5cdb8acd22@2",
+      "relation": "related",
+      "target_model": "mm-d8045dd0996f@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cc3991975703@2",
+      "relation": "related",
+      "target_model": "mm-fb4dec93d1f0@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cc3991975703@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cc3991975703@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cc3991975703@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cdde2a4024f0@2",
+      "relation": "related",
+      "target_model": "mm-d2fbdcb18acf@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-cdde2a4024f0@2",
+      "relation": "related",
+      "target_model": "mm-fffd2837e608@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "contrasts",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-geico-core-excision@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-man-with-a-hammer@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-niche@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-circle-of-competence@3",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-commitment-consistency@3",
+      "relation": "related",
+      "target_model": "mm-confirmation-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-commitment-consistency@3",
+      "relation": "related",
+      "target_model": "mm-loss-aversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-commitment-consistency@3",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-commitment-consistency@3",
+      "relation": "related",
+      "target_model": "mm-path-dependence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-compounding@3",
+      "relation": "related",
+      "target_model": "mm-economies-of-scale@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-compounding@3",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-compounding@3",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-compounding@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "contrasts",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "related",
+      "target_model": "mm-incentive-caused-bias@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "related",
+      "target_model": "mm-man-with-a-hammer@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-confirmation-bias@3",
+      "relation": "related",
+      "target_model": "mm-social-proof@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d2fbdcb18acf@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d2fbdcb18acf@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d2fbdcb18acf@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d4edb4a5a85c@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d4edb4a5a85c@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d4edb4a5a85c@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d8045dd0996f@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d8045dd0996f@2",
+      "relation": "related",
+      "target_model": "mm-fffd2837e608@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-d81cf96b1419@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-ded821acce72@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-ded821acce72@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-ded821acce72@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-economies-of-scale@3",
+      "relation": "related",
+      "target_model": "mm-moat@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-economies-of-scale@3",
+      "relation": "related",
+      "target_model": "mm-network-effects@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-economies-of-scale@3",
+      "relation": "related",
+      "target_model": "mm-niche@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-economies-of-scale@3",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-edf8b2dc7724@2",
+      "relation": "related",
+      "target_model": "mm-feedback-loop@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-edf8b2dc7724@2",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-envy-comparison@3",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-envy-comparison@3",
+      "relation": "related",
+      "target_model": "mm-loss-aversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-envy-comparison@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-envy-comparison@3",
+      "relation": "related",
+      "target_model": "mm-social-proof@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-expected-value@3",
+      "relation": "contrasts",
+      "target_model": "mm-loss-aversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-expected-value@3",
+      "relation": "related",
+      "target_model": "mm-loss-aversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-expected-value@3",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-expected-value@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-expected-value@3",
+      "relation": "related",
+      "target_model": "mm-regression-to-mean@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f0584264021d@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f0584264021d@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f0584264021d@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f15e784415c2@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f15e784415c2@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f15e784415c2@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f856988a2c82@2",
+      "relation": "related",
+      "target_model": "mm-fbc90bff5839@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f856988a2c82@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f856988a2c82@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-f856988a2c82@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-fbc90bff5839@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-fec74c600590@2",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-fec74c600590@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-fec74c600590@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-geico-core-excision@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-network-effects@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-feedback-loop@4",
+      "relation": "related",
+      "target_model": "mm-tipping-point@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-geico-core-excision@2",
+      "relation": "related",
+      "target_model": "mm-inversion@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-geico-core-excision@2",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-geico-core-excision@2",
+      "relation": "related",
+      "target_model": "mm-moat@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-geico-core-excision@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-geico-core-excision@2",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-incentive-caused-bias@3",
+      "relation": "related",
+      "target_model": "mm-incentives@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-incentive-caused-bias@3",
+      "relation": "related",
+      "target_model": "mm-principal-agent@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-incentives@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-incentives@3",
+      "relation": "related",
+      "target_model": "mm-principal-agent@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-inversion@3",
+      "relation": "related",
+      "target_model": "mm-man-with-a-hammer@2",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-inversion@3",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-inversion@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-inversion@3",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-loss-aversion@3",
+      "relation": "contrasts",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-loss-aversion@3",
+      "relation": "related",
+      "target_model": "mm-margin-of-safety@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-loss-aversion@3",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-loss-aversion@3",
+      "relation": "related",
+      "target_model": "mm-path-dependence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-man-with-a-hammer@2",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-margin-of-safety@4",
+      "relation": "contrasts",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-margin-of-safety@4",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-margin-of-safety@4",
+      "relation": "related",
+      "target_model": "mm-overconfidence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-margin-of-safety@4",
+      "relation": "related",
+      "target_model": "mm-principal-agent@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-margin-of-safety@4",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-marginal-analysis@2",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-marginal-analysis@2",
+      "relation": "related",
+      "target_model": "mm-opportunity-cost@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-moat@3",
+      "relation": "related",
+      "target_model": "mm-network-effects@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-moat@3",
+      "relation": "related",
+      "target_model": "mm-niche@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-moat@3",
+      "relation": "related",
+      "target_model": "mm-path-dependence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-network-effects@3",
+      "relation": "related",
+      "target_model": "mm-nonlinearity@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-network-effects@3",
+      "relation": "related",
+      "target_model": "mm-social-proof@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-network-effects@3",
+      "relation": "related",
+      "target_model": "mm-tipping-point@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-niche@3",
+      "relation": "related",
+      "target_model": "mm-path-dependence@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-nonlinearity@3",
+      "relation": "related",
+      "target_model": "mm-redundancy@4",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-nonlinearity@3",
+      "relation": "related",
+      "target_model": "mm-tipping-point@3",
+      "formal": false,
+      "rationale": ""
+    },
+    {
+      "source_model": "mm-path-dependence@3",
+      "relation": "related",
+      "target_model": "mm-tipping-point@3",
+      "formal": false,
+      "rationale": ""
+    }
+  ]
+}

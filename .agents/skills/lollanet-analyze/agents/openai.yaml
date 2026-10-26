@@ -1,6 +1,7 @@
 interface:
   display_name: "LollaNet Analyze"
-  short_description: "Auditable mental-model retrieval for durable decisions"
-  default_prompt: "Use $lollanet-analyze to examine this decision with auditable model retrieval and long-horizon checks."
+  short_description: "Build competing mechanism programs from LollaNet"
+  default_prompt: "Use $lollanet-analyze to construct and compare falsifiable mechanism programs for this question."
+
 policy:
   allow_implicit_invocation: true

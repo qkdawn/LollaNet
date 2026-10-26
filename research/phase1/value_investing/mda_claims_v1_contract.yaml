@@ -1,0 +1,36 @@
+version: 1.0.0
+record_type: mda_claim_v1
+source_taxonomy: research/phase1/microconcepts/qualitative_claim_types.yaml
+raw_text_policy: external_only
+required:
+  claim_key: {type: sha256_hex, description: "Deterministic instance ID from accession, type, evidence bounds, and evidence hash."}
+  claim_id: {enum_source: qualitative_claim_types.yaml/claims[].id}
+  polarity: {enum_source: "claim_id-specific qualitative_claim_types.yaml/claims[].polarity"}
+  time_horizon: {enum_source: "claim_id-specific qualitative_claim_types.yaml/claims[].time_horizon"}
+  strength: {enum_source: "claim_id-specific qualitative_claim_types.yaml/claims[].strength"}
+  confidence: {type: number, minimum: 0, maximum: 1, description: "Confidence in deterministic mapping, not factual probability."}
+  accession: {type: string}
+  available_at: {type: rfc3339_utc, description: "Must exactly match locator public availability time."}
+  section: {type: string, description: "Must exactly match the MD&A locator section."}
+  start_char: {type: integer, minimum: 0, description: "Absolute normalized-document evidence start."}
+  end_char: {type: integer, exclusive_minimum_of: start_char, description: "Absolute normalized-document evidence end."}
+  text_sha256: {type: sha256_hex, description: "Full locator-section hash, not copied source text."}
+  evidence_sha256: {type: sha256_hex, description: "Hash of normalized text[start_char:end_char]."}
+  extractor_version: {type: string, description: "Existing MD&A locator version; must match index."}
+  claim_extractor_version: {const: mda-claims-rule-extractor-v1.0.1}
+  label_source: {const: deterministic_mda_rule_label_v1}
+forbidden_fields:
+  - text
+  - raw_mda_text
+  - route_labels
+  - exploratory_outcome
+  - market_state
+  - financial_features
+  - issuer_name
+  - ticker_at_collection
+validation:
+  - claim_id and attributes must be allowed by the source taxonomy
+  - accession must resolve to a high-confidence MD&A locator
+  - public available time must exist on the source locator
+  - raw HTML SHA-256, locator section SHA-256, evidence bounds, and evidence SHA-256 must all match
+  - a deterministic random audit must recover every audited evidence interval from external raw text

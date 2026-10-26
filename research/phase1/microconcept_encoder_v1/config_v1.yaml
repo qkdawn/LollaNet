@@ -1,0 +1,31 @@
+version: microconcept-encoder-v1.0.0
+seed: 20260719
+architecture:
+  fixed_microconcept_nodes: 11
+  hidden_dim: 128
+  text_encoder: frozen_hash_ngram_v1
+  text_dim: 96
+  claim_set_pooling: masked_mean
+  dynamic_edges: false
+  static_candidate_relations: microconcept_index.yaml_metadata_only
+  raw_mda_text: false
+  llm_hidden_states: false
+  steering_vectors: false
+split:
+  train_years: [2017, 2018, 2019, 2020]
+  development_year: 2021
+  sealed_test_years: [2022, 2023]
+  issuer_holdout_fraction: 0.2
+  split_seed: microconcept-encoder-v1-issuer-20260719
+training:
+  pretrain_tiers: [Weak, Silver]
+  finetune_tiers: [Gold]
+  epochs: 24
+  batch_size: 64
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  loss_profiles:
+    - {name: balanced, intensity: 0.6, direction: 0.7, applicability: 0.8, relevance: 0.8}
+    - {name: ordinal_focused, intensity: 1.0, direction: 0.7, applicability: 0.8, relevance: 1.0}
+calibration:
+  temperature_grid: [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]

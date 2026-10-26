@@ -1,0 +1,7 @@
+selector:
+  id: replace-with-independent-selector-id
+  frozen_at: 'YYYY-MM-DDTHH:MM:SSZ'
+  method: blinded_human_ranking_or_frozen_independent_model
+  uses_target_model_outputs: false
+items:
+  replace-with-question-id: 1

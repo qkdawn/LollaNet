@@ -1,4 +1,4 @@
-"""Create a candidate LollaNet mental model card."""
+"""Legacy model-card rendering helpers; the Markdown writer CLI is retired."""
 
 from __future__ import annotations
 
@@ -408,7 +408,9 @@ def create_model(
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Create a candidate LollaNet mental model card.")
+    parser = argparse.ArgumentParser(
+        description="Retired legacy model-card writer; use the PostgreSQL model library."
+    )
     parser.add_argument("name", help="Model name, for example: 激励机制")
     parser.add_argument("--source-category", default="学科知识", help="Canonical source category")
     parser.add_argument("--discipline", default="心理学", help="Canonical field; legacy English aliases are accepted")
@@ -430,23 +432,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
-    args = build_parser().parse_args()
-    path = create_model(
-        Path(args.root),
-        args.name,
-        args.discipline,
-        args.importance,
-        args.frequency,
-        args.english_name,
-        model_id=args.model_id,
-        kind=args.kind,
-        proposal_id=args.proposal_id,
-        source_category=args.source_category,
-        subdiscipline=args.subdiscipline,
-        formalism=args.formalism,
+    build_parser().parse_args()
+    print(
+        "ERROR: create_model.py is retired after the PostgreSQL cutover; "
+        "apply accepted changes with ModelRepository.apply_model_change.",
+        file=sys.stderr,
     )
-    print(path)
-    return 0
+    return 2
 
 
 if __name__ == "__main__":

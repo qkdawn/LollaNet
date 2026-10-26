@@ -1,0 +1,158 @@
+[
+  {
+    "batch": 1,
+    "date": "2026-10-09",
+    "topic": "首批讲解与阅读页",
+    "modelIds": ["mm-circle-of-competence", "mm-inversion", "mm-economies-of-scale", "mm-base-rate", "mm-feedback-loop", "mm-f0584264021d"]
+  },
+  {
+    "batch": 2,
+    "date": "2026-10-09",
+    "topic": "判断、随机波动与长期积累",
+    "modelIds": ["mm-bayesian-updating", "mm-expected-value", "mm-regression-to-mean", "mm-compounding"]
+  },
+  {
+    "batch": 3,
+    "date": "2026-10-09",
+    "topic": "替代用途、增量判断与风险余量",
+    "modelIds": ["mm-opportunity-cost", "mm-marginal-analysis", "mm-margin-of-safety"]
+  },
+  {
+    "batch": 4,
+    "date": "2026-10-09",
+    "topic": "信息显著性、参照点与证据判断",
+    "modelIds": ["mm-availability-bias", "mm-loss-aversion", "mm-authority-bias", "mm-confirmation-bias"]
+  },
+  {
+    "batch": 5,
+    "date": "2026-10-09",
+    "topic": "行动回报、委托关系与利益对判断的影响",
+    "modelIds": ["mm-incentives", "mm-principal-agent", "mm-incentive-caused-bias"]
+  },
+  {
+    "batch": 6,
+    "date": "2026-10-09",
+    "topic": "自我判断、群体线索与先前承诺",
+    "modelIds": ["mm-overconfidence", "mm-social-proof", "mm-commitment-consistency", "mm-envy-comparison"]
+  },
+  {
+    "batch": 7,
+    "date": "2026-10-09",
+    "topic": "历史积累、参与者增值与竞争优势",
+    "modelIds": ["mm-path-dependence", "mm-network-effects", "mm-moat"]
+  },
+  {
+    "batch": 8,
+    "date": "2026-10-09",
+    "topic": "备用功能、整体约束与解题定势",
+    "modelIds": ["mm-redundancy", "mm-bottleneck", "mm-man-with-a-hammer"]
+  },
+  {
+    "batch": 9,
+    "date": "2026-10-09",
+    "topic": "关系形状、集体阈值与生存条件",
+    "modelIds": ["mm-nonlinearity", "mm-tipping-point", "mm-niche"]
+  },
+  {
+    "batch": 10,
+    "date": "2026-10-09",
+    "topic": "输入规则、趋近过程与局部变化",
+    "modelIds": ["mm-ca5cdb8acd22", "mm-30d197d6a613", "mm-1dafd97598ea"]
+  },
+  {
+    "batch": 11,
+    "date": "2026-10-09",
+    "topic": "累计总量、叠加条件与可行选择",
+    "modelIds": ["mm-941bf971e56b", "mm-267e488ed00d", "mm-acdf35a8fee3"]
+  },
+  {
+    "batch": 12,
+    "date": "2026-10-13",
+    "topic": "计数规则、重复计算与独立信息",
+    "modelIds": ["mm-68e9a2e0d68d", "mm-f15e784415c2", "mm-f856988a2c82"]
+  },
+  {
+    "batch": 13,
+    "date": "2026-10-13",
+    "topic": "连接结构、保持量与计算误差",
+    "modelIds": ["mm-7a960f6b4ce1", "mm-d8045dd0996f", "mm-4517776d4319"]
+  },
+  {
+    "batch": 14,
+    "date": "2026-10-13",
+    "topic": "受力、动量、能量与尺度",
+    "modelIds": ["mm-c7864295cc14", "mm-91a96d14ace5", "mm-71cbb455982b", "mm-5f8905afab9c"]
+  },
+  {
+    "batch": 15,
+    "date": "2026-10-13",
+    "topic": "场、传播与状态变化",
+    "modelIds": ["mm-46e0dd26760b", "mm-8ff5c64be854", "mm-2b1d22093700", "mm-d4edb4a5a85c", "mm-d2fbdcb18acf"]
+  },
+  {
+    "batch": 16,
+    "date": "2026-10-13",
+    "topic": "量子态、测量与时间演化",
+    "modelIds": ["mm-ded821acce72", "mm-fec74c600590", "mm-954c263ec767", "mm-cc3991975703", "mm-a28acfbc6882"]
+  },
+  {
+    "batch": 17,
+    "date": "2026-10-13",
+    "topic": "量子相关、统计与环境",
+    "modelIds": ["mm-57e628333aee", "mm-5dc7789f1f61", "mm-0df41f6ddc45", "mm-fb4dec93d1f0"]
+  },
+  {
+    "batch": 18,
+    "date": "2026-10-13",
+    "topic": "反应配比、周期性与分子结构",
+    "modelIds": ["mm-fbc90bff5839", "mm-7d542558a1b1", "mm-fffd2837e608"]
+  },
+  {
+    "batch": 19,
+    "date": "2026-10-13",
+    "topic": "物态、热量与自由能",
+    "modelIds": ["mm-cdde2a4024f0", "mm-90310164e606", "mm-4d9545b9b6af"]
+  },
+  {
+    "batch": 20,
+    "date": "2026-10-13",
+    "topic": "平衡、速率与催化路径",
+    "modelIds": ["mm-3e810805f0a1", "mm-10e7946e8f78", "mm-977f6dda93d9"]
+  },
+  {
+    "batch": 21,
+    "date": "2026-10-13",
+    "topic": "缓冲、分配与电子转移",
+    "modelIds": ["mm-00ebc72c737f", "mm-2ae0022c377f", "mm-4827493462f8"]
+  },
+  {
+    "batch": 22,
+    "date": "2026-10-13",
+    "topic": "系统边界、要求与功能分解",
+    "modelIds": ["mm-d81cf96b1419", "mm-c14f8b1ce070", "mm-46fbd9f6f875"]
+  },
+  {
+    "batch": 23,
+    "date": "2026-10-13",
+    "topic": "寿命、恢复与危害路径",
+    "modelIds": ["mm-bfcb11b439f1", "mm-edf8b2dc7724", "mm-b451e4404335"]
+  },
+  {
+    "batch": 24,
+    "date": "2026-10-13",
+    "topic": "接口、验证与方案取舍",
+    "modelIds": ["mm-620ba4e2365a", "mm-c057bde8c027", "mm-c6c55641b8a5"]
+  },
+  {
+    "batch": 25,
+    "date": "2026-10-13",
+    "topic": "误差、鲁棒性与全寿命成本",
+    "modelIds": ["mm-24c2078ff362", "mm-3069a490b994", "mm-8ab6e7bc3c83"]
+  },
+  {
+    "batch": 26,
+    "date": "2026-10-13",
+    "topic": "困境企业的独立经营核心",
+    "modelIds": ["mm-geico-core-excision"]
+  }
+]

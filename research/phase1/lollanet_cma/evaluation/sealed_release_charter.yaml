@@ -1,0 +1,35 @@
+version: lollanet-cma-sealed-release-v0.1.0
+paper_sections: [5.3, 8, 9, 10, 11]
+source_stage0:
+  path: D:\LollaNetData\lollanet-cma\stage0\bundle-v4
+  manifest_sha256: 151afa620ec109ac6784e24ca3ee51e7f7a1ee0e0908692a253da996eb210f6d
+  bundle_content_sha256: 4fe13353359e5a29b20ea52e259a40edd687afd61538dbb98cd29cc596809129
+prerequisites:
+  development_manifest: D:\LollaNetData\lollanet-cma\development\run-v1\run_manifest.json
+  development_manifest_type: lollanet_cma_development_selection_v1
+  development_status: frozen
+  require_all_hard_gates: true
+  require_direction_specificity: true
+release:
+  splits:
+    sealed_test:
+      expected_records: 1000
+      expected_records_per_family: 250
+      output: D:\LollaNetData\lollanet-cma\access-views\sealed-test-v1
+    ood_anticommonsense:
+      expected_records: 400
+      expected_records_per_family: 100
+      output: D:\LollaNetData\lollanet-cma\access-views\ood-anticommonsense-v1
+    ood_nonsense:
+      expected_records: 400
+      expected_records_per_family: 100
+      output: D:\LollaNetData\lollanet-cma\access-views\ood-nonsense-v1
+  families: [cm-associational, cm-interventional, cm-counterfactual, cm-mediation]
+  prohibit_cross_split_model_id_overlap: true
+  evaluator_process_must_receive_only_released_views: true
+  preserve_source_order: true
+authorization:
+  require_ready_preflight: true
+  revalidate_stage0_after_development_gate: true
+  bind_every_view_to_development_manifest: true
+  refuse_partial_untracked_output: true

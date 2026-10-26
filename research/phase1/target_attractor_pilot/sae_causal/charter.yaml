@@ -1,0 +1,76 @@
+experiment_id: qwen3_8b_sae_causal_discovery_v1
+status: frozen_discovery_only
+frozen_at: 2026-07-26
+evidence_boundary:
+  allowed_splits: [train, development]
+  forbidden_splits: [evaluation]
+  model_assisted_labels_are_human_validation: false
+  causal_claim_requires_generation_intervention: true
+source:
+  trajectories: F:/LollaNetData/template-attractor-pilot/natural-v4-600-discovery/trajectories.jsonl
+  existing_labels: F:/LollaNetData/template-attractor-pilot/natural-v4-600-discovery/labels-codex-5.6/model_assisted_labels.jsonl
+  expected_records: 600
+  expected_splits: {train: 400, development: 200}
+labels:
+  axes: [specificity, independence, non_template]
+  non_template_transform: "4 - formulaic"
+  independence_scale: [0, 4]
+  preservation_outcomes: [usefulness, validity]
+model:
+  path: F:/LollaNetData/lollanet-cma/qualification/checkpoints/qwen3-8b
+  id: Qwen/Qwen3-8B
+  revision: b968826d9c46dd6066d109eabc6255188de91218
+  quantization: nf4
+  resource_contingency:
+    status: allowed_discovery_only_after_os_1455
+    repo: unsloth/Qwen3-8B-bnb-4bit
+    revision: 1deaf68f694c40dbce295da300851729d759b21a
+    quantization: nf4_prequantized_double_quant
+    reason: original_15_26_gb_shards_exceed_windows_commit_headroom_during_nf4_conversion
+    replication_required_on_frozen_original_revision: true
+sae:
+  repo: Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_50
+  layer: 18
+  filename: layer18.sae.pt
+  width: 65536
+  top_k: 50
+  artifact: F:/LollaNetData/target-attractor-pilot/qwen-scope/topk50/layer18.sae.pt
+activation:
+  site: residual_stream_layer_18
+  window: early_16
+  pooling: mean_first_16_generated_tokens
+confounds:
+  numeric: [response_tokens, response_characters, generation_finished]
+  categorical: [case_id, domain]
+  visible_markers: [heading_count, bullet_count, numbered_count, paragraph_count]
+  residualize_other_axes: true
+  fit_split: train
+candidate_screen:
+  candidates_per_axis: 24
+  minimum_active_train: 12
+  grouped_by: case_id
+  rank_metric: development_spearman
+intervention:
+  prescreen_features_per_axis: 4
+  prescreen_development_prompts: 10
+  prescreen_strengths: [2.0, 4.0]
+  confirm_only_after_prescreen: true
+  signs: [-1, 1]
+  strengths: [0.5, 1.0, 2.0, 4.0]
+  start_generated_token: 0
+  stop_generated_token: 32
+  matched_random_controls_per_feature: 3
+  require_monotonic_direction: true
+  require_axis_specificity: true
+  require_quality_preservation: true
+gates:
+  causal_feature:
+    minimum_development_prompts: 40
+    minimum_target_effect: 0.2
+    maximum_other_axis_effect_ratio: 0.5
+    maximum_usefulness_drop: 0.25
+    maximum_validity_drop: 0.25
+    require_better_than_random: true
+  sparse_feature_circuits: causal_feature
+  sae_targeted_steering: sparse_feature_circuits
+  das: causal_feature_screen_complete

@@ -1,0 +1,6 @@
+The following is a multiple-choice question from the {category} category. Choose exactly one answer. Respond with only the option letter.
+
+Question: {question}
+
+Options:
+{options}

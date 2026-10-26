@@ -1,0 +1,194 @@
+version: mechanism-question-set-v1.1.0
+name: lollanet_cross_domain_mechanism_questions_v1
+status: research_contract
+runtime_artifact_root: D:\LollaNetData\mechanism-question-set-v1
+scope:
+  fixed_microconcept_count: 11
+  fixed_model_count: 20
+  case_packs: 160
+  episodes_per_case: 4
+  total_episodes: 640
+  domains:
+    business_finance: 40
+    software_engineering: 40
+    product_organization: 40
+    science_public_systems: 40
+  splits:
+    train: {case_packs: 112, episodes: 448}
+    development: {case_packs: 24, episodes: 96}
+    sealed_test: {case_packs: 24, episodes: 96}
+question_kinds:
+  - mechanism_diagnosis
+  - decision_tradeoff
+  - evidence_discrimination
+  - conditional_or_counterfactual
+required_fact_pack_fields:
+  - case_id
+  - domain
+  - as_of
+  - public_available_at
+  - source_refs
+  - facts
+  - factual_uncertainties
+  - structured_evidence
+  - microconcept_states
+  - question_variants
+required_episode_fields:
+  - episode_id
+  - case_id
+  - domain
+  - split
+  - question_kind
+  - question
+  - goal
+  - constraints
+  - public_available_at
+  - as_of
+  - source_refs
+  - facts
+  - factual_uncertainties
+  - structured_evidence
+  - fact_microconcept_states
+  - task_relevance_profile
+  - task_focus_microconcept_id
+  - task_relevance_basis
+  - microconcept_states
+  - candidate_subgraph
+  - cross_domain_transfer
+  - transfer_rationale
+  - counterfactual_delta
+cross_domain_transfer:
+  when_true_requires: [distinct_source_domain, structural_mapping, fact_evidence_refs]
+  when_false_transfer_rationale: null
+forbidden_fact_or_router_fields:
+  - route_labels
+  - thought_model_routing
+  - primary_model
+  - auxiliary_models
+  - near_miss_models
+  - exploratory_outcome
+  - outcome
+  - future_outcome
+  - issuer_name
+  - ticker_at_collection
+  - raw_mda_text
+episode_state_boundary:
+  fact_microconcept_states: evidence-derived factual baseline; identical across a case's four variants
+  microconcept_states: question-conditioned Router state
+  task_relevance: combines the explicit question profile/focus with evidence-derived fact-state salience; all four variants must differ
+  task_relevance_basis: records profile, factual salience, focus bonus, and final per-concept relevance for audit
+  controlled_counterfactual: declared microconcept_state_changes are applied after task conditioning to task and non-task state axes
+artifact_materialization_boundary:
+  default_open_splits: [train, development]
+  default_output_prohibits:
+    - sealed_fact_packs
+    - sealed_source_ledger_rows
+    - sealed_episodes
+    - sealed_teacher_packets
+  sealed_materialization_requires_both_flags: [include_sealed, confirm_sealed]
+  sealed_artifact_root: distinct isolated directory; never mixed into the open artifact root
+  public_case_generation: open train/development fact packs only
+route_input_boundary:
+  router_allowlisted:
+    - episode_id_for_join_only
+    - microconcept_states.status
+    - microconcept_states.intensity
+    - microconcept_states.direction
+    - microconcept_states.temporal_persistence
+    - microconcept_states.task_relevance
+    - candidate_subgraph
+  router_prohibited:
+    - question
+    - goal
+    - constraints
+    - fact_microconcept_states
+    - facts
+    - structured_evidence
+    - source_refs
+    - case_id
+    - issuer_name
+    - ticker_at_collection
+    - route_labels
+    - outcomes
+teacher_packet_boundary:
+  teacher_visible:
+    - episode_id
+    - question
+    - goal
+    - constraints
+    - microconcept_states
+    - candidate_subgraph
+  teacher_prohibited:
+    - facts
+    - structured_evidence
+    - source_refs
+    - case_id
+    - issuer_name
+    - ticker_at_collection
+    - outcomes
+  clarification: question, goal, and constraints are teacher-visible task semantics; they remain Router-prohibited
+teacher_label_boundary:
+  label_tier: Weak
+  gold_claim_prohibited: true
+  initial_and_review_passes_required: true
+  initial_teacher: external_llm_route_blind_packet
+  review_teacher: independent_external_llm_audit
+  initial_and_review_model_identifiers_must_differ: true
+  heuristic_or_hash_label_generation: prohibited
+  local_contract_validation: required
+counterfactual:
+  max_modified_facts: 2
+  unchanged_fields:
+    - case_id
+    - domain
+    - source_refs
+    - public_available_at
+    - question_kind
+quality_gates:
+  minimum_primary_examples_per_supported_model: 20
+  minimum_total_examples_per_supported_model: 40
+  minimum_domains_per_supported_model: 3
+  minimum_abstain_rate: 0.15
+  minimum_cross_domain_transfer_rate: 0.10
+
+public_evidence_cutoff:
+  source_published_at_lte_as_of: true
+  fact_available_at_lte_as_of: true
+  public_available_at_lte_as_of: true
+controlled_counterfactual_requirements:
+  explicit_fact_changes_min: 1
+  explicit_fact_changes_max: 2
+  allowed_microconcept_state_change_axes: [status, intensity, direction, temporal_persistence, task_relevance]
+  requires_at_least_one_non_task_state_axis: true
+  before_value_basis: question_conditioned_microconcept_state
+  unchanged_case_context:
+    - domain
+    - as_of
+    - source_refs
+    - public_available_at
+full_v1_prohibitions:
+  fictional_or_example_fact_packs: true
+teacher_label_required_fields:
+  - label_id
+  - episode_id
+  - label_pass
+  - teacher_model
+  - teacher_version
+  - prompt_version
+  - label_timestamp
+  - label_tier
+  - confidence
+  - provenance
+  - abstain
+  - cited_microconcept_ids
+  - cited_evidence_refs
+  - near_miss_models
+  - near_miss_exclusions
+  - challenge_assessment
+  - addressed_challenge_microconcept_ids
+  - next_verification
+label_review_rules:
+  initial_review_status: proposed
+  review_statuses: [accepted, review_required]
+  accepted_review_route_must_match_initial: true
+  only_accepted_reviews_trainable: true

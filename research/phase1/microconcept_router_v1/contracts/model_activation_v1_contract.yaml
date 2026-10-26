@@ -1,0 +1,71 @@
+schema_version: microconcept-model-activation-contract-v1
+status: exploratory
+updated: 2026-07-20
+
+input:
+  visible_fields:
+    - microconcept_states.status
+    - microconcept_states.intensity
+    - microconcept_states.direction
+    - microconcept_states.temporal_persistence
+    - microconcept_states.task_relevance
+  prohibited_fields:
+    - raw_facts
+    - evidence_text
+    - source_refs
+    - question_text
+    - hard_route_labels
+
+output:
+  semantics: independent_degree_of_task_usefulness
+  model_count: 20
+  model_order: fixed_semantic_graph_model_ids
+  transform: sigmoid
+  range: [0.0, 1.0]
+  normalization: independent_not_softmax
+  roles:
+    primary: not_a_training_target
+    auxiliary: not_a_training_target
+    no_model_above_threshold: inference_only_not_a_teacher_abstain_label
+
+teacher_supervision:
+  teacher_count: 2
+  raw_scale:
+    minimum: 0
+    maximum: 4
+    anchors:
+      0: not_applicable_or_prerequisite_contradicted
+      1: weak_background_relevance
+      2: useful_supporting_lens
+      3: strongly_applicable
+      4: essential
+  score_every_model: true
+  multiple_high_scores_allowed: true
+  aggregation:
+    per_model: true
+    maximum_gap_for_mean: 1
+    accepted_target: arithmetic_mean_divided_by_4
+    wide_gap: mask_only_that_model_dimension
+  mask_semantics: unknown_or_disputed_never_negative
+  effective_weight: teacher_confidence_times_agreement_weight
+  label_tier: Weak
+
+training:
+  loss: masked_confidence_weighted_huber
+  all_models_remain_in_output_layer: true
+  support_counts_do_not_remove_models: true
+  factual_state_path_independent_of_task_relevance: true
+  task_relevance_role: bounded_attention_and_focused_residual_modulation
+  task_relevance_can_zero_factual_path: false
+  attention_alignment_loss_weight: 0.0
+
+coverage:
+  report_per_model:
+    - supervised_dimensions
+    - disputed_masked_dimensions
+    - useful_or_higher_targets
+    - strong_or_higher_targets
+  warning: low_score_supervision_does_not_replace_positive_activation_examples
+
+sealed_test:
+  default_read: false

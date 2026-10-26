@@ -1,0 +1,13 @@
+Guidance: Address the question by following the steps below:
+
+Step 1) Extract the causal graph: Identify the causal graph represented by the hypothetical world. State the directed edges needed for the query.
+
+Step 2) Determine the query type: Decide whether the question requires observational association, intervention identification, unit-level counterfactual reasoning, or mediation decomposition.
+
+Step 3) Formalize the query: Translate the question into a causal estimand, using intervention or counterfactual notation when required.
+
+Step 4) Gather all relevant data: List only the probabilities, structural relations, and factual conditions stated in the prompt that are needed for the estimand.
+
+Step 5) Solve the estimand: Use the causal graph, the identified query type, causal inference, and arithmetic to derive the answer. Do not add unstated assumptions.
+
+End the response with exactly one line in the form `Final answer: yes` or `Final answer: no`.

@@ -1,12 +1,15 @@
 ---
 type: research_protocol
 title: Phase 1 Microconcept State Encoder Training Protocol
-status: draft
+status: superseded
 version: 0.1.0
-updated: 2026-07-20
+superseded_by: ../../trainable-cognitive-model-network.md
+updated: 2026-07-28
 ---
 
 # Phase 1 Microconcept State Encoder Training Protocol
+
+> Historical research protocol. It is not part of the current V4 context-engineering runtime.
 
 ## 1. Scope
 
@@ -219,4 +222,3 @@ If concept boundaries remain unreliable, revise the annotation contract before
 adding model capacity. If deterministic rules match the complete encoder, report
 an interpretable rule baseline rather than claiming a learned microconcept
 network.
-

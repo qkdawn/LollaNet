@@ -1,0 +1,31 @@
+experiment: target-subspaces-causal-smoke-v2
+status: frozen_before_generation
+supersedes: target-subspaces-causal-smoke-v1
+reason: v1 intervened before specificity/independence separation emerged and all controllers saturated at delta norm 4.0
+scope: discovery_only
+formal_evaluation_access: forbidden
+reuse_frozen_activation_cache: qwen3-1.7b-subspaces-v1/cache
+subspaces:
+  layer: 14
+  active_window: early_16
+  fitted_from: 16 train cases in the frozen factorial design
+controller:
+  type: projected_contraction_to_positive_centroid
+  begins_after_generated_tokens: 16
+  gain: 0.02
+  maximum_delta_norm: 1.0
+generation:
+  maximum_new_tokens: 384
+  development_case_limit: 2
+conditions:
+  - baseline
+  - specificity_only
+  - independence_only
+  - non_template_only
+  - combined
+  - rank_and_norm_matched_random
+decision_rule:
+  pass: corresponding behavioural axis improves over both baseline and random without completion or relevance loss
+  fail: no axis-specific behavioural increment under unsaturated control
+  persistence_testing: forbidden_until_pass
+

@@ -1,0 +1,52 @@
+version: lollanet-cma-development-v0.1.0
+paper_sections: [7.4, 7.5, 8]
+prerequisites:
+  direction_manifest_type: lollanet_cma_direction_fit_v1
+  direction_status: fitted
+  require_direction_hard_gate: true
+data:
+  allowed_split: development
+  access_view: D:\LollaNetData\lollanet-cma\access-views\development-v1
+  expected_records: 400
+  expected_records_per_family: 100
+  forbidden_splits: [qualification, vector_train, sealed_test, ood_anticommonsense, ood_nonsense]
+families: [cm-associational, cm-interventional, cm-counterfactual, cm-mediation]
+grid:
+  layer_source: direction_manifest_target_layers
+  alpha_candidates: [0.25, 0.5, 1.0, 1.5, 2.0]
+  primary_condition: oracle_correct
+  metric: macro_family_accuracy
+  tie_break: [lower_alpha, shallower_layer]
+  joint_layer_alpha_scan: true
+controls:
+  evaluate_only_at_selected_setting: true
+  no_fallback_to_next_grid_setting: true
+  wrong_condition: oracle_wrong
+  wrong_mapping:
+    cm-associational: cm-mediation
+    cm-interventional: cm-associational
+    cm-counterfactual: cm-interventional
+    cm-mediation: cm-counterfactual
+  random_condition: random_norm_matched
+  random_distribution: standard_normal
+  random_seed: 20260727
+  random_unit_norm: true
+specificity_gate:
+  rule: correct_delta_strictly_greater_than_each_control_delta
+  baseline: base
+  failure_status: failed_direction_specificity
+execution:
+  inherit_selected_checkpoint_and_runtime: true
+  maximum_input_tokens: 2048
+  maximum_new_tokens: 512
+  sampling: greedy
+  seed: 20260727
+  batch_size: 1
+  persist_after_each_record: true
+injection:
+  prefill_position: final_input_token
+  decoding_position: current_final_token
+  apply_every_generation_step: true
+  vector_cast: residual_device_and_dtype
+  clipping: none
+  norm_rescaling: none

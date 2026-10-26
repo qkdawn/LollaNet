@@ -1,0 +1,37 @@
+version: microconcept-encoder-v1.0.0
+runtime_artifact_root: D:\LollaNetData\runs\microconcept-encoder-v1
+input_boundary:
+  allowlisted:
+    - availability.public_available_at
+    - filing.accession
+    - filing.form
+    - financial_features
+    - market_state
+    - cik_for_split_only
+    - structured_claim_id_polarity_time_horizon_strength_confidence
+    - question
+    - goal
+  prohibited:
+    - route_labels
+    - exploratory_outcome
+    - issuer_name
+    - ticker_at_collection
+    - raw_mda_text
+    - llm_hidden_states
+    - steering_vectors
+fixed_nodes: 11
+labels:
+  status: [supported, contradicted, unknown]
+  intensity: [0, 1, 2, 3]
+  direction: [increasing, decreasing, stable, mixed, unknown]
+  applicability: [applicable, not_applicable, unknown]
+  relevance: [0, 1, 2, 3]
+  unknown_policy: masked_not_negative
+splits:
+  train_years: [2017, 2018, 2019, 2020]
+  development_year: 2021
+  sealed_years: [2022, 2023]
+  issuer_identity: grouping_only
+sealed_test:
+  at_most_once: true
+  gold_required_for_effectiveness_claim: true

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from datetime import date
@@ -14,6 +15,12 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from model_taxonomy import CATEGORY_FIELDS, SOURCE_CATEGORIES, canonicalize
+
+try:
+    from model_graph import validate_graph
+except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from model_graph import validate_graph
 
 
 REQUIRED_DIRS = [
@@ -50,32 +57,25 @@ MODEL_FIELDS = [
 MODEL_SECTIONS = [
     "## 一句话定义",
     "## 核心机制",
+    "## 机制接口",
+    "## 适用边界",
+    "## 证据",
+    "## 可观察预测",
+    "## 正式关系",
+    "## 修订历史",
+]
+LEGACY_MODEL_SECTIONS = [
+    "## 一句话定义",
+    "## 核心机制",
     "## 耐久机制",
     "## 时代性表现",
     "## 适用边界",
-    "## AI 调用条件",
-    "## 不应调用",
-    "## 场景化决策提问",
-    "## 典型误用",
-    "## 反向思考",
-    "## 经典案例",
     "## 支持证据",
     "## 反证",
-    "## 失效条件",
     "## 可观察预测",
-    "## 关联模型",
-    "## AI 输出要求",
     "## 修订历史",
 ]
-FORMAL_MODEL_SECTIONS = [
-    "## 形式化内容",
-    "### 定义与符号",
-    "### 公式或算法",
-    "### 成立前提",
-    "### 推导或证明来源",
-    "### 反例与边界",
-    "### 跨域转译",
-]
+FORMAL_MODEL_SECTIONS = ["## 形式化内容"]
 
 MODEL_KINDS = {"world", "reasoning", "action"}
 MODEL_STATUSES = {"candidate", "active", "contested", "deprecated"}
@@ -250,9 +250,12 @@ def validate_model_card(
         if values[key] == "":
             errors.append(f"{rel}: required model field {key} must not be empty")
 
-    for section in MODEL_SECTIONS:
-        if section not in text:
-            errors.append(f"{rel}: missing required model section {section}")
+    if not all(section in text for section in MODEL_SECTIONS) and not all(
+        section in text for section in LEGACY_MODEL_SECTIONS
+    ):
+        for section in MODEL_SECTIONS:
+            if section not in text:
+                errors.append(f"{rel}: missing required model section {section}")
 
     if "## 使用记录" in text or "当前个人使用线索" in text:
         errors.append(f"{rel}: public model cards must not contain personal usage records")
@@ -299,12 +302,9 @@ def validate_model_card(
     if warnings is not None and status in {"active", "contested"}:
         quality_issues: list[str] = []
         evidence_text = "\n".join(
-            [
-                markdown_section(text, "## 经典案例"),
-                markdown_section(text, "## 支持证据"),
-            ]
+            [markdown_section(text, "## 证据"), markdown_section(text, "## 经典案例"), markdown_section(text, "## 支持证据")]
         )
-        counterevidence_text = markdown_section(text, "## 反证")
+        counterevidence_text = markdown_section(text, "## 反证") or markdown_section(text, "## 证据")
         prediction_text = markdown_section(text, "## 可观察预测")
         if not ATTRIBUTABLE_SOURCE_RE.search(evidence_text):
             quality_issues.append("no attributable source in case or supporting evidence")
@@ -522,6 +522,9 @@ def validate_vault(vault_root: Path, include_private: bool = False) -> dict[str,
     model_count = len(list((root / "01-Models").rglob("*.md"))) if (root / "01-Models").exists() else 0
     if model_count < 30:
         warnings.append(f"model card count is {model_count}; first-step target is 30")
+
+    if (root / "01-Models").exists():
+        errors.extend(f"model graph: {error}" for error in validate_graph(root))
 
     return {
         "error_count": len(errors),

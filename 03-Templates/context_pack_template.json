@@ -1,0 +1,58 @@
+{
+  "question": "Why did the fictional judgment change?",
+  "as_of": "2026-01-01",
+  "observations": [
+    {
+      "id": "obs-1",
+      "statement": "Comparable fictional projects succeeded 20% of the time.",
+      "source": "fixture://reference-class",
+      "status": "fact"
+    },
+    {
+      "id": "obs-2",
+      "statement": "A vivid new result appeared.",
+      "source": "fixture://new-result",
+      "status": "fact"
+    }
+  ],
+  "programs": [
+    {
+      "id": "evidence-update",
+      "claim": "Diagnostic evidence changed a low prior.",
+      "models": [
+        {"ref": "mm-base-rate@3", "role": "prior", "evidence": ["obs-1"]},
+        {"ref": "mm-bayesian-updating@3", "role": "update", "evidence": ["obs-2"]}
+      ],
+      "edges": [
+        {"source": "mm-base-rate@3", "relation": "composes", "target": "mm-bayesian-updating@3"}
+      ],
+      "prediction": {
+        "statement": "Non-diagnostic evidence changes the judgment little.",
+        "horizon": "next test",
+        "distinguishes_from": "salience"
+      },
+      "falsifier": "Judgment shifts equally when diagnosticity is removed."
+    },
+    {
+      "id": "salience",
+      "claim": "Vividness displaced the reference-class signal.",
+      "models": [
+        {"ref": "mm-base-rate@3", "role": "benchmark", "evidence": ["obs-1"]},
+        {"ref": "mm-availability-bias@3", "role": "salience", "evidence": ["obs-2"]}
+      ],
+      "edges": [
+        {
+          "source": "mm-base-rate@3",
+          "relation": "competes",
+          "target": "mm-availability-bias@3"
+        }
+      ],
+      "prediction": {
+        "statement": "Equally vivid non-diagnostic evidence causes a similar shift.",
+        "horizon": "next test",
+        "distinguishes_from": "evidence-update"
+      },
+      "falsifier": "Judgment follows diagnosticity when vividness is held constant."
+    }
+  ]
+}

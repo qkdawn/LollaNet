@@ -1,11 +1,14 @@
 ---
 type: research_proposal
 title: LollaNet：显式认知模型网络与大语言模型内部神经控制的联合学习
-status: draft
-updated: 2026-07-18
+status: superseded
+superseded_by: ../trainable-cognitive-model-network.md
+updated: 2026-07-28
 ---
 
 # LollaNet：显式认知模型网络与大语言模型内部神经控制的联合学习
+
+> 历史研究稿，已被 V4 机制程序上下文工程取代，不代表当前 LollaNet 架构。
 
 **英文暂定题目：** *LollaNet: Joint Learning of Explicit Cognitive Model Networks and Internal Neural Control for Large Language Models*
 

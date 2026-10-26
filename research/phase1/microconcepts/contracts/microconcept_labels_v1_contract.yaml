@@ -1,0 +1,67 @@
+version: 1.0.0
+name: episode_microconcept_labels_v1
+scope: Episode-level evidence-state and q/g-conditioned relevance pilot only
+forbidden_inputs:
+  - route_labels
+  - exploratory_outcome
+  - issuer_name
+  - ticker_at_collection
+  - raw_mda_text
+  - thought_model_routing
+  - llm_steering
+allowed_microconcepts_source: cards/*.md
+required_outputs:
+  evidence_labels:
+    - label_id
+    - episode_id
+    - microconcept_id
+    - status
+    - intensity
+    - direction
+    - evidence_refs
+    - available_at
+    - label_tier
+    - label_source
+    - annotator_id
+    - annotation_version
+    - annotated_at
+    - review_status
+    - dispute_status
+  task_relevance_labels:
+    - task_label_id
+    - state_label_id
+    - episode_id
+    - microconcept_id
+    - question
+    - goal
+    - applicability
+    - relevance
+    - label_tier
+    - label_source
+    - annotator_id
+    - annotation_version
+    - annotated_at
+    - review_status
+    - dispute_status
+allowed_statuses: [supported, contradicted, unknown]
+allowed_intensities: [0, 1, 2, 3]
+allowed_directions: [increasing, decreasing, stable, mixed, unknown]
+allowed_applicability: [applicable, not_applicable, unknown]
+allowed_relevance: [0, 1, 2, 3]
+allowed_label_tiers: [Silver, Weak, Gold]
+gold_promotion:
+  allowed_only_when:
+    - human_confirmation
+    - two_person_arbitration
+  automatic_builder_output: [Silver, Weak]
+unknown_policy: Unknown and missing are never negative examples and must never be converted to contradicted solely because an input is absent.
+evidence_ref_contract:
+  factor:
+    required: [kind, episode_id, factor_id, source_field, value, available_at, rule_id, signal]
+  mda_claim:
+    required: [kind, claim_key, claim_id, accession, section, start_char, end_char, text_sha256, extractor_version, available_at, polarity, strength, confidence, signal]
+leakage_controls:
+  - Freeze temporal test Episode identifiers before annotation.
+  - Do not generate labels for frozen temporal test Episodes in this pilot.
+  - Every referenced claim and factor must be available no later than the Episode public availability time.
+  - Do not read route labels, outcomes, or issuer identity as annotation inputs.

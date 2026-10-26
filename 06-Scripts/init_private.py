@@ -18,6 +18,7 @@ PRIVATE_DIRS = [
     "private/model-proposals/rejected",
     "private/model-proposals/deferred",
     "private/evaluations",
+    "private/evaluations/episodes",
     "private/projects/inbox/decisions/open",
     "private/projects/inbox/decisions/reviewed",
     "private/projects/inbox/decisions/archived",

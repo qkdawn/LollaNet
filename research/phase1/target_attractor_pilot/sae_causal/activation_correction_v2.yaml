@@ -1,0 +1,11 @@
+type: sae_activation_extraction_correction_v2
+status: frozen_before_intervention
+invalidated_artifacts:
+  - features/layer18_early16_activations.npz
+  - features/layer18_early16_sparse_codes.npz
+  - association_candidates.json
+  - association_candidates_v2.json
+reason: v1 tokenized the raw prompt while natural generation used the system-and-user chat template
+corrected_prompt_rendering: template_attractor_pilot.pilot.render_prompt
+thinking_mode: disabled
+valid_artifact_directory: features_v2

@@ -41,6 +41,7 @@ def test_init_private_adds_cognitive_assets_without_overwrite(tmp_path):
     for status in ["proposed", "accepted", "rejected", "deferred"]:
         assert (tmp_path / "private" / "model-proposals" / status).is_dir()
     assert (tmp_path / "private" / "evaluations").is_dir()
+    assert (tmp_path / "private" / "evaluations" / "episodes").is_dir()
 
     principles.write_text("my private principles", encoding="utf-8")
     value_function.write_text("my private values", encoding="utf-8")

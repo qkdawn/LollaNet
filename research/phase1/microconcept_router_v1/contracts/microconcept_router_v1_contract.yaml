@@ -1,0 +1,63 @@
+version: microconcept-router-v1.1.0
+runtime_artifact_root: D:\LollaNetData\runs\microconcept-router-v1
+purpose: Train a thinking-model router from question-conditioned microconcept states.
+semantic_mutation: prohibited
+router_input:
+  allowlisted:
+    - microconcept_states.microconcept_id
+    - microconcept_states.status
+    - microconcept_states.intensity
+    - microconcept_states.direction
+    - microconcept_states.temporal_persistence
+    - microconcept_states.task_relevance
+    - static_microconcept_model_relation_index
+  prohibited:
+    - facts
+    - structured_evidence
+    - source_refs
+    - case_id
+    - domain
+    - question
+    - goal
+    - constraints
+    - primary_model
+    - auxiliary_models
+    - route_labels
+    - outcomes
+supervision:
+  allowed_targets:
+    - accepted_review.primary_model
+    - accepted_review.auxiliary_models
+    - accepted_review.abstain
+  label_tier: Weak
+  label_source: mechanism-question-set-v1 accepted review only
+selection:
+  non_abstain:
+    primary_models: exactly_one
+    auxiliary_models: zero_to_two
+  abstain: supported
+fixed_semantics:
+  microconcept_count: 11
+  relation_index: research/phase1/microconcepts/microconcept_index.yaml
+  candidate_edges: hard_mask
+  model_semantics: read_only
+input_target_identifiability:
+  exact_router_input_with_conflicting_route_target: prohibited
+  required_remediation: question_conditioned_task_relevance_in_microconcept_states
+training_split:
+  train: episodes/train.jsonl
+  development: episodes/development.jsonl
+  sealed_test: opt_in_only_with_explicit_confirmation
+unsupported_policy:
+  primary: null
+  auxiliary: null
+  never_negative: true
+
+question_conditioning:
+  factual_path:
+    reads_task_relevance: false
+    always_reachable: true
+  task_relevance_path:
+    role: bounded_modulation_only
+    may_erase_factual_representation: false
+  attention_alignment_auxiliary_loss: disabled

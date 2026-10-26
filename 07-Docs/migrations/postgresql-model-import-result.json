@@ -1,0 +1,79 @@
+{
+  "source_files": 88,
+  "models": 88,
+  "versions": 88,
+  "statuses": {
+    "candidate": 58,
+    "active": 28,
+    "contested": 2,
+    "deprecated": 0
+  },
+  "claims": 792,
+  "evidence": 266,
+  "claim_evidence": 266,
+  "formal_relations": 2,
+  "categories": 91,
+  "discovery_hints_skipped": 278,
+  "skipped_items": [
+    "related/conflicts discovery hints were not imported as formal relations",
+    "Markdown revision rows without historical bodies were not materialized as versions",
+    "private proposals, cases, project records, Runtime, Context Packs, and research assets were not read"
+  ],
+  "warnings": [
+    "mm-path-dependence@3: premise classified from the existing applicable-boundary text",
+    "mm-inversion@3: premise classified from the existing applicable-boundary text",
+    "mm-circle-of-competence@3: premise classified from the existing applicable-boundary text",
+    "mm-geico-core-excision@2: premise classified from the existing applicable-boundary text",
+    "mm-principal-agent@3: premise classified from the existing applicable-boundary text",
+    "mm-moat@3: premise classified from the existing applicable-boundary text",
+    "mm-network-effects@3: premise classified from the existing applicable-boundary text",
+    "mm-economies-of-scale@3: premise classified from the existing applicable-boundary text",
+    "mm-availability-bias@3: premise classified from the existing applicable-boundary text",
+    "mm-envy-comparison@3: premise classified from the existing applicable-boundary text",
+    "mm-commitment-consistency@3: premise classified from the existing applicable-boundary text",
+    "mm-loss-aversion@3: premise classified from the existing applicable-boundary text",
+    "mm-authority-bias@3: premise classified from the existing applicable-boundary text",
+    "mm-incentive-caused-bias@3: premise classified from the existing applicable-boundary text",
+    "mm-incentives@3: premise classified from the existing applicable-boundary text",
+    "mm-confirmation-bias@3: premise classified from the existing applicable-boundary text",
+    "mm-social-proof@3: premise classified from the existing applicable-boundary text",
+    "mm-overconfidence@3: premise classified from the existing applicable-boundary text",
+    "mm-man-with-a-hammer@2: premise classified from the existing applicable-boundary text",
+    "mm-tipping-point@3: premise classified from the existing applicable-boundary text",
+    "mm-regression-to-mean@3: premise classified from the existing applicable-boundary text",
+    "mm-base-rate@3: premise classified from the existing applicable-boundary text",
+    "mm-expected-value@3: premise classified from the existing applicable-boundary text",
+    "mm-bayesian-updating@3: premise classified from the existing applicable-boundary text",
+    "mm-nonlinearity@3: premise classified from the existing applicable-boundary text",
+    "mm-niche@3: premise classified from the existing applicable-boundary text",
+    "mm-compounding@3: premise classified from the existing applicable-boundary text",
+    "mm-opportunity-cost@3: premise classified from the existing applicable-boundary text",
+    "mm-marginal-analysis@2: premise classified from the existing applicable-boundary text"
+  ],
+  "errors": [],
+  "inserted": {
+    "models": 88,
+    "versions": 88,
+    "claims": 792,
+    "evidence": 266,
+    "relations": 2,
+    "categories": 91,
+    "mappings": 354,
+    "details": {}
+  },
+  "database": {
+    "models": 88,
+    "versions": 88,
+    "claims": 792,
+    "evidence": 266,
+    "claim_evidence": 266,
+    "formal_relations": 2,
+    "categories": 91,
+    "statuses": {
+      "active": 28,
+      "candidate": 58,
+      "contested": 2,
+      "deprecated": 0
+    }
+  }
+}

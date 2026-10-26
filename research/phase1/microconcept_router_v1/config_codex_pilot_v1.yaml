@@ -1,0 +1,19 @@
+version: microconcept-router-v1.0.0-codex-pilot
+seed: 20260720
+architecture:
+  node_hidden_dim: 48
+  relation_embedding_dim: 12
+  model_embedding_dim: 24
+training:
+  epochs: 30
+  batch_size: 8
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  primary_loss_weight: 1.0
+  auxiliary_loss_weight: 0.7
+  abstain_loss_weight: 0.5
+  minimum_train_primary_support: 1
+  minimum_train_auxiliary_support: 1
+inference:
+  auxiliary_threshold: 0.5
+  abstain_threshold: 0.5

@@ -1,0 +1,41 @@
+version: mechanism-question-selection-contract-v1.0.0
+semantic_source:
+  microconcept_cards: research/phase1/microconcepts/cards
+  model_assets: research/phase1/models
+  relation_index: research/phase1/microconcepts/microconcept_index.yaml
+semantic_mutation: prohibited
+microconcept_selection_contract:
+  invariant_definition: Read from the fixed microconcept card; question wording and model labels must not alter it.
+  support_signature: Evidence references whose fact or claim types match the fixed card evidence fields and support the stated state.
+  counter_signature: Evidence references that oppose the stated state, trigger a card falsifier, or make the state contradicted.
+  unknown_boundary: Missing, conflicting, unavailable, or non-comparable evidence remains unknown and is never converted to a negative state.
+  state_axes:
+    - status
+    - intensity
+    - direction
+    - temporal_persistence
+    - task_relevance
+  eligible_models: Derived only from the fixed relation index.
+relation_semantics:
+  requires: A selected primary model needs every required microconcept to be supported and cited.
+  supports: A supported and cited microconcept provides positive eligibility evidence for the connected model.
+  modulates: The microconcept can change model priority, horizon, confidence, or output framing but is not alone sufficient.
+  challenges: The microconcept must be addressed in the route rationale; unresolved challenge evidence requires downgrade or abstention.
+model_selection_contract:
+  primary_model: Exactly one selected mechanism model for a non-abstaining Episode.
+  auxiliary_models: Zero to two models; at most one may use the epistemic_guard role.
+  roles:
+    mechanism_support: Complements the primary mechanism without replacing it.
+    epistemic_guard: Audits evidence quality, uncertainty, numerical fragility, or sensitivity.
+  near_miss_models: At least one legal, unselected candidate with an explicit exclusion reason.
+  expected_output: A mechanism explanation, conditional prediction, discriminating observation, or action implication grounded in the selected model asset.
+  question_keyword_routing: prohibited
+
+derived_model_selection_contract:
+  primary_condition: Derived from fixed model positive_task_signals.
+  required_microconcepts: Derived only from fixed card relations with relation requires; every such state must be active and cited.
+  supporting_microconcepts: Derived only from fixed card relations with relation supports.
+  modulators: Derived only from fixed card relations with relation modulates; never independently select a primary model.
+  challenge_conditions: Derived from fixed card relation challenges plus model negative_task_signals and failure_conditions; active challenges require explicit assessment.
+  near_miss_models: Derived from models sharing a legal candidate microconcept; teacher must record a non-empty exclusion reason.
+  expected_output: Derived from fixed model prediction_targets and action_affordances.

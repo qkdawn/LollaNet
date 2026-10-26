@@ -1,0 +1,49 @@
+version: lollasteer-q-pilot-v0.3.0
+seed: 20260723
+data:
+  dataset: TIGER-Lab/MMLU-Pro
+  revision: b189ec765aa7ed75c8acfea42df31fdae71f97be
+  source_split: test
+  categories: [math, physics, chemistry, engineering, computer science, economics]
+  items_per_category: 15
+  annotation_candidates_per_category: 20
+  discovery_per_category: 10
+  holdout_per_category: 5
+  token_budget: 160
+  option_order_policy: sha256_seeded_per_base_item_v1
+model:
+  primary_checkpoint: Qwen/Qwen3-1.7B
+  checkpoint_revision: 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+  local_checkpoint: D:/LollaNetData/lollasteer-q/models/Qwen3-1.7B
+  license: Apache-2.0
+  gated: false
+  fallback_checkpoint: null
+  fallback_policy: no_fallback
+  dtype: bfloat16
+  batch_size: 1
+  max_new_tokens: 160
+  do_sample: false
+  layer_fractions: [0.25, 0.5, 0.75]
+  strength_grid: [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5]
+  low_rank_grid: [1, 2, 3, 4]
+comparison_budget:
+  normalize_intervention_l2: true
+  same_discovery_items: true
+  same_candidate_layers: true
+  same_strength_grid: true
+  same_hyperparameter_trials: false
+  unequal_trial_reason: low_rank_has_a_preregistered_rank_axis_absent_from_caa
+report:
+  bootstrap_samples: 10000
+  confidence_level: 0.95
+  gate_family_alpha: 0.05
+  minimum_harmful_effect: 0.03
+  maximum_preservation_loss: 0.02
+  minimum_steering_improvement: 0.02
+  minimum_low_rank_increment: 0.01
+  minimum_internal_over_prompt_only: 0.0
+  required_internal_factors: [reward, social, certainty]
+  required_prompt_only_factors: [reward, social, certainty]
+  target_power: 0.8
+paths:
+  output_root: D:/LollaNetData/lollasteer-q

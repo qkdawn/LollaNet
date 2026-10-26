@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blind Response Annotation</title>
+  <style>
+    :root { color-scheme: light; --ink:#17202a; --muted:#64717d; --line:#d7dde2; --paper:#ffffff; --wash:#f4f6f7; --accent:#176b5b; --accent-soft:#e6f2ef; --warn:#9a5a12; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter, "Segoe UI", "Microsoft YaHei", sans-serif; color:var(--ink); background:var(--wash); letter-spacing:0; }
+    header { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:18px; min-height:58px; padding:10px 24px; background:var(--paper); border-bottom:1px solid var(--line); }
+    header h1 { margin:0; font-size:17px; font-weight:650; }
+    .progress { flex:1; max-width:420px; height:7px; background:#e5e9ec; overflow:hidden; border-radius:3px; }
+    .progress span { display:block; width:0; height:100%; background:var(--accent); transition:width .2s ease; }
+    #counter { min-width:86px; color:var(--muted); font-variant-numeric:tabular-nums; }
+    main { display:grid; grid-template-columns:minmax(0, 1fr) 360px; min-height:calc(100vh - 58px); }
+    .document { padding:28px clamp(20px, 4vw, 64px) 48px; background:var(--paper); border-right:1px solid var(--line); }
+    .eyebrow { color:var(--muted); font-size:12px; font-weight:650; text-transform:uppercase; }
+    .prompt { margin:10px 0 24px; font-size:18px; line-height:1.65; font-weight:600; }
+    .response { white-space:pre-wrap; font-family:"Noto Serif SC", "Songti SC", SimSun, serif; font-size:17px; line-height:1.9; max-width:900px; }
+    aside { padding:22px 20px 36px; background:var(--wash); overflow:auto; }
+    fieldset { padding:0 0 18px; margin:0 0 18px; border:0; border-bottom:1px solid var(--line); }
+    legend { width:100%; margin-bottom:9px; font-size:14px; font-weight:650; }
+    .scale { display:grid; grid-template-columns:repeat(5, 1fr); gap:5px; }
+    .scale input { position:absolute; opacity:0; pointer-events:none; }
+    .scale label { display:flex; align-items:center; justify-content:center; min-height:34px; border:1px solid #c8d0d6; background:var(--paper); cursor:pointer; font-size:13px; }
+    .scale label:first-of-type { border-radius:4px 0 0 4px; }
+    .scale label:last-of-type { border-radius:0 4px 4px 0; }
+    .scale input:checked + label { color:#fff; background:var(--accent); border-color:var(--accent); }
+    .half { display:grid; grid-template-columns:repeat(4, 1fr); gap:5px; margin-top:5px; }
+    .half input { position:absolute; opacity:0; pointer-events:none; }
+    .half label { display:flex; align-items:center; justify-content:center; min-height:30px; border:1px solid #c8d0d6; background:var(--paper); cursor:pointer; font-size:12px; border-radius:3px; }
+    .half input:checked + label { color:#fff; background:var(--accent); border-color:var(--accent); }
+    textarea { width:100%; min-height:72px; resize:vertical; padding:9px; border:1px solid #c8d0d6; border-radius:4px; background:var(--paper); font:inherit; }
+    .check { display:flex; gap:9px; align-items:flex-start; color:var(--warn); font-size:13px; line-height:1.45; }
+    .actions { display:grid; grid-template-columns:42px 1fr 42px; gap:8px; position:sticky; bottom:0; padding-top:12px; background:var(--wash); }
+    button { min-height:40px; border:1px solid #bfc8ce; border-radius:4px; background:var(--paper); color:var(--ink); cursor:pointer; font-weight:650; }
+    button.primary { color:#fff; background:var(--accent); border-color:var(--accent); }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    details { margin-top:18px; padding-top:14px; border-top:1px solid var(--line); }
+    summary { cursor:pointer; font-weight:650; font-size:14px; }
+    #rubric { white-space:pre-wrap; margin-top:12px; color:#394550; font-size:12px; line-height:1.6; }
+    #status { min-height:20px; margin:9px 0 0; color:var(--muted); font-size:12px; }
+    @media (max-width:900px) { main { grid-template-columns:1fr; } .document { border-right:0; border-bottom:1px solid var(--line); } aside { overflow:visible; } header { padding:10px 14px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blind Response Annotation</h1>
+    <div class="progress" aria-label="progress"><span id="bar"></span></div>
+    <div id="counter">0 / 0</div>
+  </header>
+  <main>
+    <section class="document">
+      <div class="eyebrow" id="itemId"></div>
+      <div class="prompt" id="prompt"></div>
+      <div class="response" id="response"></div>
+    </section>
+    <aside>
+      <form id="form"></form>
+      <label class="check"><input type="checkbox" id="exclude">无法评分：空答、损坏或截断严重</label>
+      <label for="notes" class="eyebrow" style="display:block;margin:18px 0 7px">Notes</label>
+      <textarea id="notes"></textarea>
+      <div id="status"></div>
+      <div class="actions">
+        <button id="previous" type="button" title="Previous">←</button>
+        <button id="save" class="primary" type="button">保存并继续</button>
+        <button id="next" type="button" title="Next">→</button>
+      </div>
+      <details><summary>评分规则</summary><div id="rubric"></div></details>
+    </aside>
+  </main>
+  <script>
+    const dimensions = [
+      ["formulaic_0_4", "模板化表达"], ["specificity_0_4", "对象特异性"],
+      ["usefulness_0_4", "有用性"], ["validity_0_4", "有效性"]
+    ];
+    let state = null, index = 0;
+    function scoreGroup(name, label) {
+      const integer = [0,1,2,3,4].map(v => `<input id="${name}-${v}" type="radio" name="${name}" value="${v}"><label for="${name}-${v}">${v}</label>`).join("");
+      const half = [0.5,1.5,2.5,3.5].map(v => `<input id="${name}-${v}" type="radio" name="${name}" value="${v}"><label for="${name}-${v}">${v}</label>`).join("");
+      return `<fieldset><legend>${label}</legend><div class="scale">${integer}</div><div class="half">${half}</div></fieldset>`;
+    }
+    document.getElementById("form").innerHTML = dimensions.map(d => scoreGroup(...d)).join("");
+    function selected(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ""; }
+    function show(position) {
+      index = Math.max(0, Math.min(position, state.items.length - 1));
+      const item = state.items[index];
+      document.getElementById("itemId").textContent = item.item_id;
+      document.getElementById("prompt").textContent = item.prompt;
+      document.getElementById("response").textContent = item.response;
+      dimensions.forEach(([name]) => { document.querySelectorAll(`input[name="${name}"]`).forEach(el => el.checked = el.value === item.scores[name]); });
+      document.getElementById("exclude").checked = item.scores.exclude_0_1 === "1";
+      document.getElementById("notes").value = item.scores.notes || "";
+      document.getElementById("counter").textContent = `${state.completed_count} / ${state.total_count}`;
+      document.getElementById("bar").style.width = `${100 * state.completed_count / state.total_count}%`;
+      document.getElementById("previous").disabled = index === 0;
+      document.getElementById("next").disabled = index === state.items.length - 1;
+      document.getElementById("status").textContent = item.complete ? "已保存" : "";
+      window.scrollTo({top:0, behavior:"instant"});
+    }
+    async function save() {
+      const item = state.items[index];
+      const payload = {item_id:item.item_id, exclude_0_1:document.getElementById("exclude").checked ? 1 : 0, notes:document.getElementById("notes").value};
+      for (const [name] of dimensions) { payload[name] = selected(name); if (payload[name] === "") { document.getElementById("status").textContent = "四项评分均需填写"; return; } }
+      const response = await fetch("/api/save", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
+      const result = await response.json();
+      if (!response.ok) { document.getElementById("status").textContent = result.error; return; }
+      item.scores = {...item.scores, ...payload, exclude_0_1:String(payload.exclude_0_1)}; item.complete = true;
+      state.completed_count = result.completed_count;
+      show(index < state.items.length - 1 ? index + 1 : index);
+    }
+    document.getElementById("save").onclick = save;
+    document.getElementById("previous").onclick = () => show(index - 1);
+    document.getElementById("next").onclick = () => show(index + 1);
+    fetch("/api/state").then(r => r.json()).then(value => { state=value; document.getElementById("rubric").textContent=value.rubric; const first=value.items.findIndex(x => !x.complete); show(first < 0 ? 0 : first); });
+  </script>
+</body>
+</html>
+

@@ -2,5 +2,8 @@
   "promptDelete": false,
   "alwaysUpdateLinks": true,
   "newFileLocation": "folder",
-  "newFileFolderPath": "99-Inbox/to_process"
+  "newFileFolderPath": "99-Inbox/to_process",
+  "userIgnoreFilters": [
+    "tmp/"
+  ]
 }

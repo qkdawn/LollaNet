@@ -1,0 +1,9 @@
+type: sae_candidate_selection_correction_v2
+status: frozen_before_intervention
+supersedes_field: charter.yaml#candidate_screen.rank_metric
+invalidated_value: development_spearman
+corrected_value: absolute_train_spearman
+development_role: untouched_validation_only
+reason: selecting by development association leaks validation labels and inflates reported association
+invalidated_artifact: association_candidates.json
+valid_artifact: association_candidates_v2.json

@@ -1,84 +1,44 @@
 ---
 type: dashboard
 title: LollaNet Dashboard
-updated: 2026-07-14
+updated: 2026-10-09
 ---
 
-# LollaNet Dashboard
+# LollaNet 模型库
 
-## 开始一次分析
+总结模型，说明机制与边界，保留来源，便于查找和比较。
 
-- [[LollaNet Analysis Protocol]]：厂商无关的现行分析协议。
-- Codex：使用 `$lollanet-analyze <当前任务>` 调用参考 Skill。
-- 简单事实、格式转换或低风险执行任务可直接完成，不必启动多路召回。
+## 浏览与查询
 
-真实任务默认留在当前聊天、仓库或应用中。完成任务不等于必须创建项目、决策或长期记录。
+- [[Model Index]]：既有模型分类导航，属于冻结的 legacy 快照。
+- [[Model Relationship Index]]：既有模型关系与学科分布导航。
+- [[Model Graph]]：切换时保留的关系快照。
+- [数据库文档](../db/README.md)：当前模型、分类和正式关系的查询方式。
 
-## 认知资产
+正式内容以 PostgreSQL `lollanet` schema 为准，静态导航不代表数据库最新状态。
 
-- [[Model Index]]：按来源大类和具体领域浏览现有公共模型；由 `06-Scripts/generate_model_index.py` 从 Frontmatter 生成。
-- [[Model Relationship Index]]：查看模型关系与学科分布。
-- [Public Case Library](../09-Cases/README.md)：浏览基于公开可核验来源的真实案例。
-- [[Private Workspace]]：了解本地身份、价值、准则、目标、提案和可选项目空间。
-- `private/me/dashboard.md`：进入本地个人资料层。
-- `private/me/User Profile.md`：事实性的“我是谁”。
-- `private/me/Value Function.md`：用户确认的终极价值、硬约束和内部张力。
-- `private/me/Principles.md`：规范性的“在这些条件下我愿意怎样行动”。
-- `private/me/Long-term Goals.md`：服务价值、但可替换的目标状态。
-- `private/me/Current Focus.md`：当前短周期资源配置和实验。
-- `private/models/`：私人模型补充、候选或适用边界。
-- `private/model-proposals/`：由人审议的模型修改建议。
-- `private/evaluations/`：盲评与 30/90 天延迟复盘。
-
-模型应按当前问题的结构选择。一次分析只保留 3–7 个能改变假设、预测或行动的非重复模型，不设固定“高频模型”清单。
-
-## 分析与复盘
-
-- [[Analysis Quality Checklist]]：检查证据、替代解释、行动和不确定性。
-- [[Decision Checklist]]：重大且需要完整检查时使用。
-- [[投资视角检查清单]]：配置时间、注意力、金钱、信誉和选择权前，检查风险、准备、仓位、复利、改变与退出。
-- [[Weekly Review]]：用户选择沉淀后再进行周期复盘。
-- [[Inbox Processing Report]]：处理用户主动放入长期层的材料。
-- [[PROJECT_SPEC]]：查看未来外部认知输入闭环的边界与数据契约。
-- [External Input Loop Plan](../07-Docs/plans/external-input-loop.md)：RSS、内容转换与模型迭代意见日报的实验方案。
-- [Daily Model Iteration Report Template](../03-Templates/daily-model-iteration-report_template.md)：私人日报模板。
-
-## 可选沉淀
-
-初始化私人层：
-
-```bash
-python 06-Scripts/init_private.py
+```powershell
+python 06-Scripts/model_db.py search "基础概率"
+python 06-Scripts/model_db.py neighbors mm-base-rate@3
+python 06-Scripts/model_db.py traverse mm-base-rate@3 --max-depth 3
 ```
 
-只有用户希望长期保留时才创建项目、决策或私人案例；公开来源真实案例与虚构示例使用各自独立入口：
+命令在仓库根目录执行，需配置 `LOLLANET_DATABASE_URL`。
 
-```bash
-python 06-Scripts/create_project.py <project_id> --name "<项目名称>"
-python 06-Scripts/create_decision.py "<决策标题>" --project <project_id>
-python 06-Scripts/create_case.py "<私人案例标题>" --project <project_id>
-python 06-Scripts/create_case.py "<公开案例标题>" --public-case --source "<可核验来源>"
-python 06-Scripts/create_case.py "<虚构示例标题>" --public-example
-```
+## 模型整理标准
 
-三个案例目标互斥：公开来源真实案例进入 `09-Cases/<domain>/`，必须保留非空来源、`as_of`、事实/推断边界和时代条件；私人或未公开案例进入 `private/projects/<project_id>/evidence/cases/`；纯虚构示例进入 `08-Examples/cases/`，并标记 `example: true`、`fictional: true`。公开可见不等于个人数据可任意收录，仍须最小化并确认合法性；引用来源，不复制受版权保护的全文。
+- 定义明确：说清模型解释的对象或问题。
+- 机制清楚：说明关键变量及其关系。
+- 边界明确：列出前提、适用条件、误用情境和反例。
+- 来源可查：区分原始观点、研究证据与整理者推断。
+- 组织有效：分类与关系帮助查找和比较，避免重复模型。
 
-## 模型治理
+## 维护与验证
 
-- 模型状态：`candidate`、`active`、`contested`、`deprecated`。
-- 修改类型：`new`、`amend`、`split`、`merge`、`contest`、`deprecate`。
-- AI 默认只读；建议先展示，明确批准后才写入私人提案。
-- 接受提案后才创建候选模型、递增版本或改变状态；废弃模型保留历史。
+- [项目规格](../PROJECT_SPEC.md)：模型库职责与解耦边界。
+- [代理规则](../AGENTS.md)：隐私、来源和正式内容维护要求。
+- [数据库架构决策](../07-Docs/architecture-decisions/0001-postgresql-model-library.md)：存储与版本规则。
 
-## 项目与验证
+## 历史兼容内容
 
-- [[PROJECT_SPEC]]：现行产品、数据和兼容性规格。
-- `07-Docs/`：历史研究和旧计划；`superseded` 文档不可作为当前实现依据。
-
-```bash
-pytest -q
-python 06-Scripts/validate_vault.py
-python 06-Scripts/validate_vault.py --include-private
-```
-
-LollaNet 的三个目标仍是待验证假设。短期价值通过 10 个盲测任务比较，短视问题必须等待 30/90 天复盘，不能提前宣称已经改善。
+分析协议、私人认知层、项目与决策记录、分析 Skill 和研究实验仍保留在原目录。它们不属于当前模型库主流程，维护模型库无需初始化私人工作区或运行任务分析。

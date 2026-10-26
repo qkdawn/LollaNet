@@ -1,0 +1,39 @@
+version: lollanet-cma-unrelated-control-v0.1.0
+purpose: detect_negative_transfer_on_an_independent_non_cladder_general_competence_task
+source:
+  dataset: TIGER-Lab/MMLU-Pro
+  repository: https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro
+  revision: b189ec765aa7ed75c8acfea42df31fdae71f97be
+  split: test
+  test_records: 12032
+  license: MIT
+  dataset_card_sha256: 4bd710f67da3fa359a33edce1b4b5816b3de416c823c2624ba5e89c2557d2a47
+  test_file_sha256: 0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8
+selection:
+  method: ascending_sha256_of_selection_seed_and_complete_normalized_source_record
+  seed: 20260736
+  categories: [math, physics, chemistry, computer science]
+  records_per_category: 50
+  total_records: 200
+  category_level_rationale: independent_STEM_general_competence_control_not_a_claim_that_each_item_is_noncausal
+prompt:
+  template: control_prompt.txt
+  template_sha256: feb72f91e70c8d5a4ff7d637b80be4ad587032aa39b551bec91bd55277f2e52c
+  system_instruction: "Solve the multiple-choice problem. Respond with exactly one option letter from A through J and no other text."
+  evaluator_fields_excluded_from_prompt_artifact: [answer, answer_index, cot_content, source_record_sha256]
+evaluation:
+  conditions:
+    - base
+    - family_direction__cm-associational
+    - family_direction__cm-interventional
+    - family_direction__cm-counterfactual
+    - family_direction__cm-mediation
+  accuracy_definition: exact_option_letter_after_frozen_parser
+  parser:
+    priority: [consistent_final_answer_marker, exact_last_nonempty_line]
+    allowed_letters: [A, B, C, D, E, F, G, H, I, J]
+    conflicting_or_missing_answer: parse_failure_and_incorrect
+  negative_transfer_definition: minimum_family_direction_accuracy_minus_base_accuracy
+  maximum_allowed_accuracy_loss: 0.02
+  numerical_tolerance: 1.0e-12
+  pass_rule: minimum_family_direction_accuracy_minus_base_accuracy_greater_than_or_equal_to_minus_0.02

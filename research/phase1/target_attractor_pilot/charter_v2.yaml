@@ -1,0 +1,41 @@
+experiment: target-attractor-smoke-v2
+status: frozen_before_generation
+supersedes: target-attractor-smoke-v1
+reason: v1 stopped because all development generations had zero anchor coverage at 80 tokens
+scope: discovery_only
+formal_evaluation_access: forbidden
+model:
+  checkpoint: D:/LollaNetData/lollasteer-q/models/Qwen3-1.7B
+  loading: nf4
+construct:
+  target: object-specific, independently reasoned, non-formulaic answers
+direction:
+  source_split: train
+  intervention_layer_fraction: 0.5
+  downstream_monitor_layer_fraction: 0.75
+generation:
+  decoding: greedy
+  maximum_new_tokens: 192
+  target_pulse_tokens: 16
+  release_tokens_before_perturbation: 16
+  perturbation_tokens: 8
+  frozen_strength: 4.0
+conditions:
+  - baseline
+  - continuous_target
+  - target_pulse_release
+  - target_pulse_release_perturb
+  - random_pulse_release
+controls:
+  random_direction: norm_matched_and_orthogonalized
+  perturbation: negative_target_direction
+success_requires:
+  - positive post-release projection relative to matched baseline on both development prompts
+  - positive post-perturbation recovery change without renewed target intervention
+  - behavior differs from norm-matched random direction
+  - nonzero anchor coverage without refusal or degeneration
+interpretation:
+  persistence_without_recovery: candidate_memory_not_attractor
+  persistence_and_recovery: candidate_attractor_evidence_only
+  confirmatory_claim: prohibited
+

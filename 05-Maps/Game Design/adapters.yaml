@@ -1,0 +1,882 @@
+version: 1
+updated: 2026-08-01
+adapters:
+  - source_model_id: mm-path-dependence
+    transfer_mode: direct
+    design_lenses: [progression, live-ops]
+    translation: "把早期奖励、解锁顺序和玩家投入视为会改变后续可行策略的路径塑造器，检查初期选择是否造成有趣分化或不可逆锁死。"
+    decision: "哪些早期选择应留下长期差异，哪些成本必须允许玩家重置或追赶？"
+    prototype: "制作两条前期成长路径，在相同中期关卡比较可用构筑、切换成本和追赶时间。"
+    measure: "构筑多样性、转流派成本、中途退出率、不同开局的中期胜率。"
+    falsifier: "改变前期顺序后，中期策略空间和玩家行为没有稳定差异。"
+    boundary: "不要把一切历史差异都叫路径依赖；必须出现递增收益、互补资产或切换成本。"
+
+  - source_model_id: mm-bayesian-updating
+    transfer_mode: direct
+    design_lenses: [player-behavior, core-loop]
+    translation: "把线索、敌人行为和奖励结果设计成可更新的证据，使玩家能逐步修正对规则、风险和隐藏状态的判断。"
+    decision: "新信息应让玩家更新哪个假设，其诊断性是否足以改变行动？"
+    prototype: "给同一遭遇配置高诊断线索与高显著但无诊断线索，比较玩家路线选择。"
+    measure: "线索出现前后的选择变化、预测准确率、错误信念持续时间。"
+    falsifier: "玩家选择只随视觉显著性变化，与线索诊断性无关。"
+    boundary: "不要假定玩家会进行规范贝叶斯计算；本卡用于设计证据结构，不用于宣称实际认知算法。"
+
+  - source_model_id: mm-nonlinearity
+    transfer_mode: direct
+    design_lenses: [combat, economy, progression]
+    translation: "检查属性、资源或人数变化是否在阈值、协同和饱和区产生突变，避免把局部线性调参外推到整个游戏。"
+    decision: "哪个变量跨过什么区间后会改变最优策略或系统状态？"
+    prototype: "对关键参数做全区间扫描，并在阈值两侧运行自动战斗或经济模拟。"
+    measure: "边际收益曲线、策略切换点、胜率斜率、资源通胀拐点。"
+    falsifier: "全工作区间内输出近似线性且不存在稳定交互或阈值。"
+    boundary: "图形变陡不等于存在结构性非线性，需排除采样稀疏和口径变化。"
+
+  - source_model_id: mm-base-rate
+    transfer_mode: direct
+    design_lenses: [player-behavior, production]
+    translation: "先用同类关卡、功能或玩家分群的历史分布建立基线，再判断当前设计为何可能例外。"
+    decision: "这个设计应与哪类既有内容比较，当前证据足以偏离基线多少？"
+    prototype: "选择三个同类内容建立完成率和留存基线，再小流量测试新方案。"
+    measure: "基线分布、新方案相对提升、置信区间、分群差异。"
+    falsifier: "参考类与当前机制不可比，或独立证据稳定解释了显著偏离。"
+    boundary: "不要用过宽或过时的参考类压掉真正的新机制。"
+
+  - source_model_id: mm-regression-to-mean
+    transfer_mode: direct
+    design_lenses: [live-ops, player-behavior]
+    translation: "识别极端胜率、付费或留存后的自然回落，避免把回落误判为热修复、活动或运营动作的效果。"
+    decision: "指标异常后应立即改动，还是先用对照组和重复窗口分离随机波动？"
+    prototype: "对极端分群保留未干预对照，观察下一周期是否同样回归。"
+    measure: "连续窗口指标、对照差分、样本选择规则、玩家稳定均值。"
+    falsifier: "在随机选择样本和稳定环境中，极端变化仍由干预方向可靠预测。"
+    boundary: "趋势反转不自动是均值回归，必须存在重复测量、噪声和按极端值选择。"
+
+  - source_model_id: mm-tipping-point
+    transfer_mode: direct
+    design_lenses: [economy, social, live-ops]
+    translation: "寻找玩家密度、资源供给或匹配质量跨过边界后导致生态跃迁的控制变量，并设计预警与回退阈值。"
+    decision: "哪个可控参数可能把系统从健康状态推入通胀、空服或单一策略统治？"
+    prototype: "在仿真中逐步升降控制参数，记录状态切换、恢复时间和滞回。"
+    measure: "状态占比、恢复时间、波动幅度、升降参数时的不同切换点。"
+    falsifier: "状态变化可由连续趋势充分解释，且不存在可重复的跃迁或滞回。"
+    boundary: "一次尖峰或陡峭曲线不是临界点证据。"
+
+  - source_model_id: mm-expected-value
+    transfer_mode: direct
+    design_lenses: [economy, combat]
+    translation: "用完整结果分布评估随机奖励、伤害和风险选择，同时把期望、方差、破产风险与玩家效用分开。"
+    decision: "随机选项的平均回报、尾部损失和可承受下注是否共同支持该设计？"
+    prototype: "模拟十万次奖励或战斗结算，并让玩家在等期望不同方差的选项间选择。"
+    measure: "期望收益、方差、最坏分位、破产率、实际选择率。"
+    falsifier: "结果分布和风险约束加入后，决策与简单均值判断完全相同。"
+    boundary: "不要用期望值替代单局体验、公平感或不可承受损失。"
+
+  - source_model_id: mm-margin-of-safety
+    transfer_mode: direct
+    design_lenses: [combat, economy, production]
+    translation: "在预计工作点与不可接受失败之间保留显式余量，用于吸收玩家水平、设备性能、数值误差和内容组合的不确定性。"
+    decision: "难度、性能或经济系统距离失效边界至少需要多少余量？"
+    prototype: "在标称配置之外加入低帧率、新手操作和极端构筑三种压力条件。"
+    measure: "失败率、帧时间尾部、软锁率、通胀上界与恢复空间。"
+    falsifier: "压力条件变化不影响失败边界，或余量只增加成本而不降低关键风险。"
+    boundary: "安全边际不是把所有数值调低；必须对应明确失效后果和不确定来源。"
+
+  - source_model_id: mm-feedback-loop
+    transfer_mode: direct
+    design_lenses: [core-loop, economy, live-ops]
+    translation: "把输出如何回到输入画成回路，识别滚雪球、负反馈、延迟振荡和可自我校正的玩法结构。"
+    decision: "成功或失败会如何改变下一轮资源、难度和选择空间，回路是否会失控？"
+    prototype: "让同一批模拟玩家从小优势和小劣势出发运行多轮，比较差距演化。"
+    measure: "领先差距、收敛时间、振荡幅度、翻盘概率、资源增速。"
+    falsifier: "切断回授通道后，系统轨迹和策略分布没有变化。"
+    boundary: "相关的连续事件不一定构成反馈，必须证明输出回流为后续输入。"
+
+  - source_model_id: mm-46fbd9f6f875
+    transfer_mode: direct
+    design_lenses: [core-loop, production]
+    translation: "把目标体验逐层分解为玩家动作、规则反馈、内容支持和技术能力，并为每层定义可验证责任。"
+    decision: "目标体验依赖哪些必要功能，每项由哪个系统实现和验证？"
+    prototype: "从一个三十秒体验目标建立功能树，只实现最短闭环并逐项验收。"
+    measure: "需求覆盖率、未分配功能、跨系统依赖、体验目标通过率。"
+    falsifier: "删除某个所谓必要功能后，目标体验仍稳定成立且验证证据不变。"
+    boundary: "功能树不能替代玩家体验验证，也不要把组织分工误当功能分解。"
+
+  - source_model_id: mm-620ba4e2365a
+    transfer_mode: direct
+    design_lenses: [production, combat, economy]
+    translation: "把战斗、物品、任务、UI 和存档间的数据与控制交换写成接口，再按依赖和可观测性安排集成。"
+    decision: "哪些系统契约必须先稳定，怎样的集成顺序最早暴露高风险耦合？"
+    prototype: "用假数据贯通一次拾取、装备、战斗和存档闭环，再替换真实子系统。"
+    measure: "接口变更次数、集成阻塞、跨模块缺陷、回归定位时间。"
+    falsifier: "改变集成顺序和接口契约后，缺陷发现时间与返工没有差异。"
+    boundary: "接口文档数量不代表低耦合，需观察变更传播和故障隔离。"
+
+  - source_model_id: mm-bfcb11b439f1
+    transfer_mode: direct
+    design_lenses: [production, live-ops]
+    translation: "把服务器、内容管线和关键玩法组件视为随时间失效的系统，设计可接受的可用性与寿命目标。"
+    decision: "哪些故障会终止核心体验，其发生概率和时间分布是否可接受？"
+    prototype: "对关键服务注入超时、断线和资源耗尽，运行长时稳定性测试。"
+    measure: "会话失败率、无故障时长、故障率随时间变化、内容损坏率。"
+    falsifier: "规定环境内的持续运行数据与所建寿命或失效率模型系统性不符。"
+    boundary: "平均在线时间不能替代尾部故障和具体运行条件。"
+
+  - source_model_id: mm-edf8b2dc7724
+    transfer_mode: direct
+    design_lenses: [production, live-ops]
+    translation: "将发现、定位、隔离、修复和复验串成恢复链，缩短线上事故与内容故障对玩家的影响。"
+    decision: "发生故障后，团队能否在目标时间内知道哪里坏了、止损并恢复？"
+    prototype: "演练一次配置错误和一次存档异常，记录从报警到复验的完整时间线。"
+    measure: "发现时间、定位时间、恢复时间、误诊率、回滚成功率。"
+    falsifier: "增加诊断和恢复能力后，真实演练的恢复时间没有改善。"
+    boundary: "可修复不等于可维护；必须包含可观测、隔离和复验能力。"
+
+  - source_model_id: mm-3069a490b994
+    transfer_mode: direct
+    design_lenses: [combat, economy, production]
+    translation: "选择在玩家水平、随机种子、设备和参数扰动下都保持可玩性的方案，而非只优化理想样本。"
+    decision: "哪个设计在正常波动和最坏合理条件下仍满足体验底线？"
+    prototype: "对候选方案做参数扰动、极端构筑、低端设备和新手输入的组合测试。"
+    measure: "最坏分位体验指标、敏感度、失败区域大小、方案排名稳定性。"
+    falsifier: "扰动范围内所有候选表现近似，鲁棒方案没有额外收益。"
+    boundary: "鲁棒不等于保守无趣；目标是维持关键体验而非消除变化。"
+
+  - source_model_id: mm-bottleneck
+    transfer_mode: direct
+    design_lenses: [core-loop, production, economy]
+    translation: "找出限制整体体验吞吐、内容产能或资源循环的当前约束，避免优化非瓶颈环节。"
+    decision: "缓解哪个单一约束最可能提高整体产出或减少等待，而不是只让局部更忙？"
+    prototype: "只提高候选瓶颈容量，保持其他条件不变，观察整体吞吐是否上升。"
+    measure: "队列长度、等待时间、整体吞吐、在制内容、瓶颈迁移。"
+    falsifier: "缓解候选约束后整体吞吐不变，且没有暴露新的相邻瓶颈。"
+    boundary: "最慢、最贵或最显眼的环节不一定是瓶颈。"
+
+  - source_model_id: mm-c6c55641b8a5
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "在乐趣、可读性、深度、成本和性能之间展示 Pareto 前沿，明确不可同时最大化的目标及取舍依据。"
+    decision: "哪些方案被支配，剩余方案牺牲了什么，又为何值得？"
+    prototype: "制作三个刻意位于不同取舍位置的版本，按同一组指标盲测。"
+    measure: "各目标指标、被支配关系、偏好分群、决策对假设的敏感度。"
+    falsifier: "存在一个方案在全部关键目标上稳定优于其他方案。"
+    boundary: "不要把不可交换的伦理或平台硬约束压成一个总分。"
+
+  - source_model_id: mm-redundancy
+    transfer_mode: direct
+    design_lenses: [production, live-ops]
+    translation: "为存档、服务和关键内容路径配置独立且可切换的备用能力，避免单点故障终止体验。"
+    decision: "哪些关键功能需要备用，备用是否共享同一故障源，切换是否演练过？"
+    prototype: "主动关闭主服务或损坏主存档副本，验证备用路径能否在目标时间内接管。"
+    measure: "切换成功率、共因故障、恢复点损失、备用容量和演练频率。"
+    falsifier: "主路径故障时备用同时失效，或备用从未能完成实际接管。"
+    boundary: "复制数量不等于冗余，独立性和可切换性是必要条件。"
+
+  - source_model_id: mm-8ab6e7bc3c83
+    transfer_mode: direct
+    design_lenses: [production, live-ops]
+    translation: "同时评估功能的开发、运营、维护、内容扩展、迁移和退役成本，以及未来改变规则的难度。"
+    decision: "这个系统的首发收益是否值得其长期维护负担和被锁死的演化路径？"
+    prototype: "模拟一次新增角色、数值重构和存档迁移，估算端到端改动范围。"
+    measure: "变更文件与团队数量、回归成本、迁移失败率、每季维护工时。"
+    falsifier: "长期变更成本与架构选择无关，且不同方案保留的调整路径相同。"
+    boundary: "技术债不是所有旧代码；必须连接到未来变更成本或风险。"
+
+  - source_model_id: mm-b451e4404335
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "从软锁、崩溃、作弊或体验崩坏向下拆解原因组合，再从局部失效向上追踪玩家后果。"
+    decision: "哪些局部错误能组合成不可接受事故，最早可在哪个节点阻断？"
+    prototype: "为一个顶层事故建立故障树，并对高优先级叶节点逐一注入故障。"
+    measure: "事故路径覆盖率、检测覆盖率、风险优先级、阻断成功率。"
+    falsifier: "所列失效注入无法复现顶层事故，或遗漏路径持续主导真实故障。"
+    boundary: "故障树不是缺陷清单，必须连接原因组合、后果和可干预点。"
+
+  - source_model_id: mm-24c2078ff362
+    transfer_mode: direct
+    design_lenses: [combat, economy, production]
+    translation: "把最终伤害、掉落、命中反馈或性能偏差分配到各参数与数据来源，追踪误差如何叠加。"
+    decision: "总体验容差由哪些来源占用，相关误差会不会在极端组合中同时偏向一侧？"
+    prototype: "为一个伤害结算或输入延迟链建立误差预算，测试统计与最坏情形组合。"
+    measure: "各来源误差占比、相关性、最终偏差分布、超限频率。"
+    falsifier: "实测总偏差无法由已列来源解释，或预算分配不预测超限位置。"
+    boundary: "独立误差不能默认简单相加，相关性和单位必须明确。"
+
+  - source_model_id: mm-d81cf96b1419
+    transfer_mode: direct
+    design_lenses: [production, player-behavior]
+    translation: "明确游戏系统内外、玩家类型、设备、会话环境和受影响主体，防止在错误边界内优化。"
+    decision: "当前策划结论适用于哪些玩家和环境，哪些外部影响必须纳入？"
+    prototype: "用三种代表性玩家与两种设备环境运行同一核心循环，记录边界失效。"
+    measure: "场景覆盖、分群差异、外部依赖、未定义责任和边界外副作用。"
+    falsifier: "扩大或缩小边界后，因果解释、风险和设计动作均不改变。"
+    boundary: "利益相关者不是名单；只有会改变需求、风险或责任者才进入分析。"
+
+  - source_model_id: mm-c14f8b1ce070
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "把好玩、流畅和公平等模糊目标转成对象、条件、阈值和验证方法，并区分硬约束与优化目标。"
+    decision: "这个体验目标在什么条件下算达成，由什么证据验证？"
+    prototype: "将一个模糊目标改写成三条可测要求，并为每条指定试玩或遥测方法。"
+    measure: "需求可测率、验证覆盖率、阈值争议、目标与实现的追溯完整性。"
+    falsifier: "指标达标却反复无法代表目标体验，说明需求或代理指标错误。"
+    boundary: "可测不等于正确；指标必须能代表玩家用途而非方便统计。"
+
+  - source_model_id: mm-c057bde8c027
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "分别确认功能按规格实现，以及它在代表性玩家和场景中确实满足预期用途，并保持证据可追溯。"
+    decision: "我们证明的是做对了规格，还是证明了规格本身能产生目标体验？"
+    prototype: "为一个玩法同时运行规则单测与玩家任务测试，并追溯到同一体验要求。"
+    measure: "规格通过率、用途通过率、需求到证据覆盖、未追溯变更。"
+    falsifier: "规格测试通过但代表性场景持续失败，或体验成功却无法定位实现原因。"
+    boundary: "自动化测试不能替代确认，主观试玩也不能替代规则验证。"
+
+  - source_model_id: mm-90310164e606
+    transfer_mode: structural
+    design_lenses: [core-loop, production]
+    translation: "把复杂目标拆成可组合步骤，并检查某些总效果是否只取决于初末状态，从而允许替换中间实现路径。"
+    decision: "玩家体验或制作成本中，哪些总量可由分段效果相加，哪些依赖具体路径？"
+    prototype: "为同一目标制作两条步骤不同但总资源变化相同的路线，比较最终状态与过程体验。"
+    measure: "总资源差、过程峰值、完成率、路径偏好和中间风险。"
+    falsifier: "所谓状态量随路径系统变化，分段相加无法预测总效果。"
+    boundary: "只有满足可加与状态量前提时才能使用 Hess 式拆解，不能把所有体验分数相加。"
+
+  - source_model_id: mm-3e810805f0a1
+    transfer_mode: structural
+    design_lenses: [economy, world-rules]
+    translation: "区分系统当前库存构成与长期稳定比例，判断扰动后资源流向，并把达到稳定的方向与速度分开。"
+    decision: "注入或回收资源后，经济会朝哪个稳态移动，多久到达？"
+    prototype: "建立双向兑换和资源池模拟，分别改变供给、需求与调整速度。"
+    measure: "库存比例、净流向、收敛时间、超调和新稳态。"
+    falsifier: "当前状态与目标比值不能预测净流向，或速度和方向被同一参数错误混同。"
+    boundary: "必须定义可逆流和稳态；不要把任何供需变化直接称作化学平衡。"
+
+  - source_model_id: mm-cdde2a4024f0
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于设计温度、压力和相互作用共同决定物质状态的模拟玩法，让状态变化具有可推理规则。"
+    decision: "哪些环境变量应改变材料的流动、挥发、凝聚与可交互性？"
+    prototype: "制作一种材料在三个温压区间的状态机，并让玩家用环境操作解谜。"
+    measure: "规则预测正确率、状态切换可读性、解法多样性、异常状态数量。"
+    falsifier: "玩家无法由反馈推断状态规则，或规则简化后体验不受影响。"
+    boundary: "不要混淆分子内键与分子间作用，也不要从材料隐喻推断玩家群体行为。"
+
+  - source_model_id: mm-fffd2837e608
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于构造基于几何、极性和相互作用的材料组合、炼金或解谜规则。"
+    decision: "玩家能否通过形状与电荷线索预测材料会结合、排斥或溶解？"
+    prototype: "设计六种具有明确几何和极性提示的材料，测试玩家能否迁移规则。"
+    measure: "首次预测准确率、规则迁移率、试错次数、配方空间利用率。"
+    falsifier: "玩家只能背配方，无法根据几何与极性预测新组合。"
+    boundary: "科学简化必须内部一致并标注虚构层，不要把视觉相似当真实化学机制。"
+
+  - source_model_id: mm-977f6dda93d9
+    transfer_mode: structural
+    design_lenses: [progression, core-loop, world-rules]
+    translation: "把进入玩法、掌握技能或完成合成的门槛视为势垒，并寻找降低启动成本但不改变最终价值结构的替代路径。"
+    decision: "哪个步骤阻止玩家进入有效循环，提示、工具或捷径能否降低门槛而不破坏深度？"
+    prototype: "为同一挑战制作原路径和低门槛替代路径，保持终局奖励不变。"
+    measure: "首次成功时间、放弃率、路径选择、后续技能保持和终局分布。"
+    falsifier: "降低门槛不改变启动或完成率，或替代路径同时改变了核心目标。"
+    boundary: "催化只描述替代路径和速率，不等于免费奖励或改变长期平衡。"
+
+  - source_model_id: mm-2ae0022c377f
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, economy]
+    translation: "用于设计资源在不同区域、容器或形态间的分配与选择性提取，形成可预测的采集和分离玩法。"
+    decision: "资源偏好进入哪个相，玩家如何利用选择性而非纯随机获得目标物？"
+    prototype: "制作两相容器与三种资源，让玩家通过改变条件选择性提取目标。"
+    measure: "目标纯度、回收率、规则理解、不同策略的资源成本。"
+    falsifier: "资源分配与条件无稳定关系，或玩家无法利用选择性改善结果。"
+    boundary: "不要把角色偏好或市场分群随意解释为溶解与分配。"
+
+  - source_model_id: mm-10e7946e8f78
+    transfer_mode: structural
+    design_lenses: [core-loop, economy, production]
+    translation: "把系统通量写成对关键变量的速率关系，寻找真正控制整体节奏的步骤，而非表面耗时最长步骤。"
+    decision: "改变哪个步骤或变量最能加快完整循环，而不会只堆积中间产物？"
+    prototype: "分别加速三个候选步骤，比较完整产出、队列和副作用。"
+    measure: "循环通量、中间库存、弹性、步骤敏感度和新瓶颈。"
+    falsifier: "候选控速步骤变化不影响总体通量，或影响由其他未建模变量主导。"
+    boundary: "结构转译需明确通量和步骤依赖，不能只用控速步骤替代瓶颈分析。"
+
+  - source_model_id: mm-00ebc72c737f
+    transfer_mode: structural
+    design_lenses: [economy, combat]
+    translation: "用有限储备吸收资源、难度或伤害扰动，设计有工作区间和耗尽上限的缓冲，而非无限稳定器。"
+    decision: "系统需要多大缓冲吸收普通波动，何时应允许缓冲耗尽并暴露后果？"
+    prototype: "给资源循环加入有限库存缓冲，测试小、中、大三种冲击。"
+    measure: "输出波动、缓冲余量、耗尽时间、恢复时间和超限频率。"
+    falsifier: "缓冲容量与波动吸收或恢复无关，或只改变当前读数不改变系统轨迹。"
+    boundary: "必须定义工作区间与容量，不要把任何保底机制都称为缓冲。"
+
+  - source_model_id: mm-fbc90bff5839
+    transfer_mode: structural
+    design_lenses: [economy, progression, world-rules]
+    translation: "用守恒、配方比例和限制资源确定合成、生产与消耗上限，防止凭感觉配置产出。"
+    decision: "哪种资源最先限制产量，副产物和回收是否关闭了守恒漏洞？"
+    prototype: "建立一条含三种投入和回收的合成链，枚举极端库存组合。"
+    measure: "理论与实得产量、限制资源、资源净生成、废料和循环套利。"
+    falsifier: "守恒与配方比例不能预测产出上限，或存在未记录的资源源汇。"
+    boundary: "游戏可虚构资源，但账本必须闭合；不要把配方比例等同真实化学计量。"
+
+  - source_model_id: mm-4827493462f8
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, combat]
+    translation: "用于设计电荷转移、电势差和成对反应驱动的电池、武器或环境机关。"
+    decision: "玩家如何通过配对半反应和环境组成预测能量方向与强度？"
+    prototype: "制作四种电极与两种环境，允许玩家组合并观察电势和耗材变化。"
+    measure: "组合预测准确率、能量输出、耗材闭合、策略多样性。"
+    falsifier: "电势提示不能预测转移方向，或任意组合都产生同等结果。"
+    boundary: "不得把道德正负、阵营对立或普通能量条冒充氧化还原机制。"
+
+  - source_model_id: mm-7d542558a1b1
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于构造具有族群规律和局部例外的材料图谱，使玩家能从位置推断属性并发现新配方。"
+    decision: "元素或材料排列应暴露哪些可迁移趋势，又在哪里设置有理由的例外？"
+    prototype: "建立一个小型周期表式资源网格，用未见材料测试玩家外推。"
+    measure: "属性预测率、规则发现时间、例外记忆负担、配方探索覆盖。"
+    falsifier: "位置与属性没有可学习关系，玩家只能逐项记忆。"
+    boundary: "虚构材料系统可借结构，不应声称与真实周期趋势等价。"
+
+  - source_model_id: mm-4d9545b9b6af
+    transfer_mode: structural
+    design_lenses: [economy, progression, world-rules]
+    translation: "区分系统状态变化的方向驱动力与实际发生速度，用于设计资源从高价值差异向稳定分布的迁移。"
+    decision: "某个转化在规则上有利时，为何仍可能在一局或一季内看不到？"
+    prototype: "对同一资源转化分别改变驱动力与速率门槛，观察终局与时间路径。"
+    measure: "净流向、转化时间、停滞比例、终态分布和路径成本。"
+    falsifier: "驱动力方向不预测净变化，或速度与方向无法被独立操控。"
+    boundary: "自发不等于迅速，也不要把玩家主观欲望称为自由能。"
+
+  - source_model_id: mm-marginal-analysis
+    transfer_mode: direct
+    design_lenses: [economy, progression, production]
+    translation: "比较再增加一级属性、一份内容或一天工期的增量收益、全部增量成本和被挤出的最佳用途。"
+    decision: "下一单位投入是否仍比替代用途更有价值，何时应停止堆叠？"
+    prototype: "为关键投入绘制逐单位收益与成本曲线，并与第二优先方案交叉比较。"
+    measure: "边际留存或体验收益、边际成本、机会成本、停止点。"
+    falsifier: "增量变化无法测量，或总量决策与逐单位比较得出相同且稳定结论。"
+    boundary: "不要用平均收益代替边际收益，也不要遗漏被排挤的替代项。"
+
+  - source_model_id: mm-compounding
+    transfer_mode: direct
+    design_lenses: [progression, economy, live-ops]
+    translation: "检查收益是否能重新投入下一轮基数，识别滚雪球成长、长期账户价值和通胀的乘法路径。"
+    decision: "哪些收益可复投，容量上限、费用或失败会在何处中断复利？"
+    prototype: "模拟固定加成与可复投加成的三十轮轨迹，并加入一次中断冲击。"
+    measure: "增长倍数、集中度、追赶时间、破产率、上限触发时间。"
+    falsifier: "收益不能复投或每轮基数不受上一轮结果影响。"
+    boundary: "重复奖励不自动构成复利，必须存在净收益再投入。"
+
+  - source_model_id: mm-opportunity-cost
+    transfer_mode: direct
+    design_lenses: [player-behavior, production, economy]
+    translation: "把玩家时间、技能点、背包位和团队工期视为受限资源，设计选择时显式显示被放弃的最佳替代。"
+    decision: "选择该行动真正放弃了什么，取舍是否足够可读且有意义？"
+    prototype: "给同一资源设计三个互斥用途，比较无提示和显式取舍提示下的选择。"
+    measure: "选择分布、后悔率、资源闲置、替代项价值和决策时间。"
+    falsifier: "资源并不稀缺或选项可同时获得，因此不存在实质放弃。"
+    boundary: "成本不是标价本身，而是最佳可行替代项的价值。"
+
+  - source_model_id: mm-principal-agent
+    transfer_mode: direct
+    design_lenses: [social, live-ops, production]
+    translation: "分析公会干部、创作者、代练者、外包团队或自动代理在目标、信息和风险承担不一致时如何偏离系统目标。"
+    decision: "谁代表谁行动，哪些行为不可观察，奖励和损失由谁承担？"
+    prototype: "为委托任务设置可审计与不可审计两个版本，观察代理的质量和投机行为。"
+    measure: "目标偏离、质量缺陷、审计成本、投诉率、代理收益与系统损失。"
+    falsifier: "目标一致且行为完全可观察时，代理偏离仍同样出现。"
+    boundary: "玩家之间有分工不等于代理问题，必须存在目标或信息不对称。"
+
+  - source_model_id: mm-economies-of-scale
+    transfer_mode: direct
+    design_lenses: [production, live-ops, social]
+    translation: "检查玩家规模、内容复用或技术覆盖扩大后，长期单位成本是否下降，并识别容量和复杂度反转点。"
+    decision: "扩大产量或用户规模为何会降低单位成本，效应在哪个范围内成立？"
+    prototype: "按三个规模档模拟内容制作、服务器与客服成本，分离固定和变动部分。"
+    measure: "单位成本、固定成本摊薄、协调成本、容量利用率和反转点。"
+    falsifier: "规模扩大后长期平均单位成本不降，或下降完全来自质量削减。"
+    boundary: "收入增长、网络效应和规模经济是不同机制。"
+
+  - source_model_id: mm-moat
+    transfer_mode: direct
+    design_lenses: [live-ops, production, social]
+    translation: "识别游戏长期优势背后让竞争者难以复制、替代或绕过的结构性成本，而非把短期热度当壁垒。"
+    decision: "玩家内容、技术、社区或运营资产怎样持续产生相对优势，复制者要付出什么？"
+    prototype: "列出三种竞争者复制路径，估算其时间、资本、数据和社区迁移成本。"
+    measure: "内容供给速度、玩家迁移成本、相对获客成本、留存差和复制时延。"
+    falsifier: "竞争者可低成本复制且相对经济结果迅速收敛。"
+    boundary: "品牌好感、首发优势或功能数量本身不是护城河。"
+
+  - source_model_id: mm-network-effects
+    transfer_mode: direct
+    design_lenses: [social, live-ops]
+    translation: "检查新增有效玩家、创作者或公会是否通过连接或匹配提高既有参与者价值，并处理冷启动和拥堵。"
+    decision: "新增哪类参与者通过哪条连接提升谁的价值，低密度时如何启动？"
+    prototype: "在不同有效参与者密度下模拟匹配、交易或内容消费体验。"
+    measure: "匹配时间、成功连接数、内容命中率、留存随密度变化、拥堵成本。"
+    falsifier: "新增参与者不提高既有用户价值，或价值只来自独立内容投入。"
+    boundary: "用户数量增长不自动是网络效应，必须有可识别的跨用户价值通道。"
+
+  - source_model_id: mm-geico-core-excision
+    transfer_mode: direct
+    design_lenses: [production, core-loop, live-ops]
+    translation: "在臃肿玩法、内容或项目中识别能独立产生核心价值的健康闭环，切除持续消耗资源且破坏体验的部分。"
+    decision: "删除哪些模块后核心体验仍能独立成立，哪些问题已侵蚀到不存在可救核心？"
+    prototype: "制作只保留最强核心循环的删减版本，与完整版进行盲测。"
+    measure: "核心乐趣评分、完成率、维护成本、缺陷密度和删减后回访意愿。"
+    falsifier: "被删模块对核心价值有不可替代贡献，或所谓核心无法独立留住玩家。"
+    boundary: "切除不是无差别砍功能，必须先证明健康核心可独立生存。"
+
+  - source_model_id: mm-niche
+    transfer_mode: direct
+    design_lenses: [player-behavior, content, live-ops]
+    translation: "把目标玩家、使用情境、替代品和资源约束组合成可持续位置，而不是只定义一个小题材。"
+    decision: "这款游戏为哪类玩家在什么情境下解决独特需求，竞争压力如何？"
+    prototype: "让目标与邻近非目标玩家分别试玩同一垂直核心循环，比较替代选择。"
+    measure: "分群留存、替代品切换、口碑语言、获客成本和内容供给可持续性。"
+    falsifier: "目标分群没有差异价值，或资源条件无法维持该定位。"
+    boundary: "小市场、独特美术或一句定位口号不等于生态位。"
+
+  - source_model_id: mm-d8045dd0996f
+    transfer_mode: direct
+    design_lenses: [core-loop, combat, content]
+    translation: "找出不同角色、关卡和规则变体下应保持不变的核心关系，用对称与破缺控制公平、可学性和差异。"
+    decision: "哪些规则必须跨阵营或变体保持不变，哪些对称破缺创造有意义差异？"
+    prototype: "制作镜像规则与一次受控破缺版本，比较公平感和策略分化。"
+    measure: "胜率差、规则迁移率、对局多样性、公平感和反制可用性。"
+    falsifier: "保持或破坏所选不变量都不改变可学性、平衡或策略。"
+    boundary: "表面相同不等于机制对称，机制对称也不保证体验完全相同。"
+
+  - source_model_id: mm-1dafd97598ea
+    transfer_mode: direct
+    design_lenses: [combat, economy, progression]
+    translation: "测量关键参数在当前工作点小幅变化时对伤害、收益、难度或留存代理的局部影响，指导精细调参。"
+    decision: "在当前数值附近，哪个参数最敏感，微调多少会产生可见变化？"
+    prototype: "对单一参数做正负小步扫描，保持其他变量不变。"
+    measure: "局部斜率、弹性、置信区间、工作点和交互项。"
+    falsifier: "小幅变化的响应不稳定、不可重复，或工作点附近存在明显断点。"
+    boundary: "局部导数不能外推到远距离，也不能忽略参数交互。"
+
+  - source_model_id: mm-f15e784415c2
+    transfer_mode: direct
+    design_lenses: [core-loop, progression, economy]
+    translation: "把每轮状态如何由上一轮更新写清楚，分析成长、资源循环和敌人适应的收敛、发散与周期。"
+    decision: "重复应用规则后系统会稳定、爆炸、循环还是锁死？"
+    prototype: "从多个初始状态运行更新规则一百轮，绘制状态轨迹。"
+    measure: "收敛速度、周期长度、状态上界、初始条件敏感度和吸引域。"
+    falsifier: "迭代轨迹无法由声明的更新函数重现，或状态与前轮无依赖。"
+    boundary: "重复执行不等于递归机制，必须明确状态和更新规则。"
+
+  - source_model_id: mm-ca5cdb8acd22
+    transfer_mode: direct
+    design_lenses: [core-loop, economy, production]
+    translation: "将输入、合法范围、规则变换和输出显式化，用于检查战斗公式、掉落表、难度曲线和工具管线。"
+    decision: "每个允许输入是否得到唯一、可解释且位于合法范围的输出？"
+    prototype: "为核心公式生成边界、非法和随机样本，绘制输入输出图。"
+    measure: "未定义输入、输出越界、非单值冲突、映射覆盖率。"
+    falsifier: "同一完整输入在相同状态下产生无法解释的多个输出。"
+    boundary: "随机系统需把随机种子或分布纳入输入，不能因此否定函数表示。"
+
+  - source_model_id: mm-941bf971e56b
+    transfer_mode: direct
+    design_lenses: [economy, combat, live-ops]
+    translation: "把每秒资源、伤害、压力或注意力流量累积成整局存量和长期后果，区分瞬时峰值与总负担。"
+    decision: "局部速率变化在完整会话或赛季中累计成多大收益或损失？"
+    prototype: "记录随时间变化的流量曲线并计算累计量，与只看峰值的判断比较。"
+    measure: "曲线下面积、累计资源、总承伤、长期通胀和时间分布。"
+    falsifier: "累计结果与流量积分系统性不符，说明存在遗漏源汇或重置。"
+    boundary: "平均速率会掩盖时序和峰值，积分也不能替代体验节奏。"
+
+  - source_model_id: mm-30d197d6a613
+    transfer_mode: direct
+    design_lenses: [progression, combat, economy]
+    translation: "区分逐渐接近目标、真正达到目标和跨越离散断点，设计上限、软封顶与阈值体验。"
+    decision: "成长曲线应连续改善、渐近饱和还是在明确节点发生跃迁？"
+    prototype: "制作连续、软封顶和阶跃三个曲线版本，比较可读性与策略变化。"
+    measure: "边际变化、断点前后行为、达到时间、数值可读性和溢出。"
+    falsifier: "玩家行为和系统状态对连续与离散版本无稳定差异。"
+    boundary: "数值平滑不保证体验连续，规则切换也可能制造隐藏断点。"
+
+  - source_model_id: mm-4517776d4319
+    transfer_mode: direct
+    design_lenses: [combat, economy, production]
+    translation: "对无法闭式求解的战斗、掉落和路径系统做有限精度模拟，同时跟踪截断、采样与浮点误差。"
+    decision: "当前近似是否足以支持策划结论，误差会不会改变方案排序？"
+    prototype: "用不同步长、样本量和精度重复模拟，比较收敛和排序稳定性。"
+    measure: "近似误差、置信区间、数值稳定性、方案排名翻转率。"
+    falsifier: "提高精度后结果不收敛，或真实运行持续落在误差预算外。"
+    boundary: "更大模拟量不能修复错误规则、错误分布或遗漏变量。"
+
+  - source_model_id: mm-7a960f6b4ce1
+    transfer_mode: direct
+    design_lenses: [level-design, social, progression]
+    translation: "把关卡、任务、技能或玩家表示为节点和边，分析可达性、关键路径、桥接点、中心性和网络瓶颈。"
+    decision: "哪些连接控制探索与传播，移除或新增一条边会如何改变系统？"
+    prototype: "构建任务或关卡图，对关键边做增删实验并计算可达区域。"
+    measure: "路径长度、连通分量、中心性、死路率、桥接点负载。"
+    falsifier: "图结构变化不预测玩家路径、传播或系统可达性。"
+    boundary: "图指标不是体验价值，节点和边的语义必须先定义。"
+
+  - source_model_id: mm-f856988a2c82
+    transfer_mode: direct
+    design_lenses: [combat, economy, player-behavior]
+    translation: "用向量和矩阵表达多属性、状态转移和玩家特征，识别冗余维度、不可辨识参数与低维构筑空间。"
+    decision: "多个参数是否真正独立，哪些组合方向才改变结果？"
+    prototype: "采样属性组合并做矩阵秩或主方向分析，再删去冗余参数。"
+    measure: "矩阵秩、条件数、参数相关、低维解释率和预测误差。"
+    falsifier: "线性表示无法在目标工作区重现状态变化或参数效应。"
+    boundary: "线性代数表示不证明系统线性，非线性交互需显式扩展。"
+
+  - source_model_id: mm-267e488ed00d
+    transfer_mode: direct
+    design_lenses: [combat, economy]
+    translation: "先建立可拆解和可叠加的数值基线，再用偏离基线的证据定位乘区、阈值和协同。"
+    decision: "多个效果可以相加吗，若不能，非线性来自哪个交互？"
+    prototype: "分别测试单效果、两两组合和全组合，对比线性预测残差。"
+    measure: "叠加误差、交互残差、工作区间、组合胜率和异常点。"
+    falsifier: "组合结果在全部测试区间稳定满足线性叠加。"
+    boundary: "线性是基线而非默认真理，远离工作点时必须重测。"
+
+  - source_model_id: mm-acdf35a8fee3
+    transfer_mode: direct
+    design_lenses: [economy, production, core-loop]
+    translation: "在明确目标、硬约束和可行域后比较数值、内容与排期方案，必要时展示多目标前沿。"
+    decision: "哪些方案根本不可行，剩余方案优化什么且牺牲什么？"
+    prototype: "定义一个小型可求解策划问题，比较单目标最优与多目标可行方案。"
+    measure: "约束违反、目标改善、权重敏感度、局部最优和方案稳定性。"
+    falsifier: "目标与约束无法稳定定义，或优化结果不优于简单基线。"
+    boundary: "数学最优不是玩家价值最优，错误目标会精确地产生错误设计。"
+
+  - source_model_id: mm-68e9a2e0d68d
+    transfer_mode: direct
+    design_lenses: [content, combat, progression]
+    translation: "先定义独立选项和等价类，再计算角色、装备、路线与遭遇的真实组合空间，控制内容爆炸。"
+    decision: "系统实际提供多少不同配置，其中多少只是重复或不可达？"
+    prototype: "枚举小规模配置并按玩法结果去重，再估计扩展后的测试空间。"
+    measure: "理论组合数、可达组合数、等价类、覆盖率和测试成本。"
+    falsifier: "计数单位或独立性假设不成立，枚举结果持续重复或遗漏。"
+    boundary: "组合数量不等于有效多样性，必须按行为差异去重。"
+
+  - source_model_id: mm-2b1d22093700
+    transfer_mode: direct
+    design_lenses: [world-rules, combat, level-design]
+    translation: "设计扰动如何通过介质传播、衰减、反射或色散，用于声音、冲击、警戒和范围效果玩法。"
+    decision: "信息或能量从哪里以多快传播，边界与介质怎样改变玩家可预测性？"
+    prototype: "在三种介质和两种边界中传播同一脉冲，让玩家根据反馈定位来源。"
+    measure: "传播时延、衰减、定位准确率、反射误判和规则学习。"
+    falsifier: "距离、介质和边界不预测传播结果，简化为即时效果后体验不变。"
+    boundary: "传播隐喻用于社交信息时只能算结构转译，不能沿用物理参数作事实。"
+
+  - source_model_id: mm-954c263ec767
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于设计不能同时被任意精确读取的成对属性，让测量选择本身构成策略成本。"
+    decision: "玩家选择测量一个属性时，应放弃或扰动什么信息，取舍是否可读？"
+    prototype: "制作一件具有两种互斥精确读数的道具，测试玩家的信息策略。"
+    measure: "测量选择、预测误差、策略分化、规则误解和信息价值。"
+    falsifier: "两种属性可被同时无成本精确获得，或取舍不改变行动。"
+    boundary: "普通迷雾、随机性和信息不足不是量子不确定性关系。"
+
+  - source_model_id: mm-fec74c600590
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于构造状态、测量基底与概率结果相连的量子题材规则，使观测方式改变可获得结果分布。"
+    decision: "不同测量方式怎样把同一隐藏状态映射为不同概率结果？"
+    prototype: "用二维状态和两种测量基底制作可重复实验，显示长期频率。"
+    measure: "结果频率、预测校准、基底选择、规则理解和样本收敛。"
+    falsifier: "结果频率不随状态和测量基底变化，或无法匹配声明概率。"
+    boundary: "不得把玩家观察、意识或普通随机抽奖称为 Born 规则。"
+
+  - source_model_id: mm-46e0dd26760b
+    transfer_mode: direct
+    design_lenses: [level-design, combat, world-rules]
+    translation: "把吸引、危险、导航或影响表示为位置相关场与势能地形，用局部反馈引导移动和策略。"
+    decision: "空间中哪些位置改变行动代价，玩家能否由局部线索推断整体地形？"
+    prototype: "制作一个连续势场关卡，用可视反馈展示梯度并允许多路线穿越。"
+    measure: "路径分布、局部方向判断、到达成本、死区和意外稳定点。"
+    falsifier: "位置变化不预测行动代价，或玩家路径与场结构无关。"
+    boundary: "只有位置相关作用和明确边界时才是场模型，不能代替普通热区图。"
+
+  - source_model_id: mm-91a96d14ace5
+    transfer_mode: direct
+    design_lenses: [combat, world-rules]
+    translation: "用冲量大小、方向和作用时间设计打击、碰撞、击退与重量感，使运动变化可解释。"
+    decision: "一次攻击应通过多大、多久和哪个方向的作用改变目标运动？"
+    prototype: "固定总冲量，改变作用时间与方向，比较手感、可读性和控制。"
+    measure: "速度变化、位移、命中反馈、玩家控制恢复时间和误判率。"
+    falsifier: "相同边界条件下，动量变化与净冲量不符。"
+    boundary: "视觉震动和伤害数值不能替代真实运动状态变化。"
+
+  - source_model_id: mm-5dc7789f1f61
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于构造不可区分实体、占据限制和集体状态规则，产生不同于独立个体计数的解谜空间。"
+    decision: "实体交换是否不可区分，占据规则怎样改变可用配置？"
+    prototype: "设计同一关卡的经典个体、费米式排斥和玻色式聚集三个规则版本。"
+    measure: "可达状态数、解法差异、规则理解、配置分布。"
+    falsifier: "交换和占据限制不改变状态空间或解法。"
+    boundary: "玩家职业互斥、库存格或人群聚集通常不是量子统计。"
+
+  - source_model_id: mm-a28acfbc6882
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于设计由能量结构决定状态随时间演化的量子题材系统，让规则而非任意脚本控制变化。"
+    decision: "系统的能量算符允许哪些长期状态和转移，时间演化是否保持内部一致？"
+    prototype: "用小型有限维状态实现可复算演化，并展示守恒量和状态概率。"
+    measure: "状态归一性、守恒误差、周期、测量分布和玩家预测率。"
+    falsifier: "状态轨迹无法由声明的哈密顿量重现。"
+    boundary: "普通状态机、冷却计时或剧情推进不应包装成哈密顿量。"
+
+  - source_model_id: mm-57e628333aee
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, social, content]
+    translation: "用于设计联合状态不能拆成独立局部状态的合作谜题，同时严格区分相关、通信与因果。"
+    decision: "两端结果是否来自不可分联合状态，玩家能否利用相关性但不能借此传递超限信息？"
+    prototype: "制作双端测量谜题，分别测试经典共享随机与纠缠式相关版本。"
+    measure: "联合分布、边际分布、解谜成功率、通信通道和误解率。"
+    falsifier: "结果可由预先共享的局部变量或普通通信完整解释。"
+    boundary: "强相关、默契合作和同步事件都不自动是量子纠缠。"
+
+  - source_model_id: mm-8ff5c64be854
+    transfer_mode: direct
+    design_lenses: [level-design, world-rules, economy]
+    translation: "用空间差异驱动烟雾、热量、敌意、资源或信息的净输运，设计逐步混合与扩散时间。"
+    decision: "哪里存在梯度，扩散多快，玩家能否通过制造或阻断梯度改变局面？"
+    prototype: "在网格中模拟资源从高浓度区扩散，并加入可放置屏障。"
+    measure: "梯度、通量、混合时间、热点寿命和玩家预测准确率。"
+    falsifier: "净流量不随梯度方向和大小变化。"
+    boundary: "有传播不等于扩散，定向输运和主动追踪需要其他机制。"
+
+  - source_model_id: mm-c7864295cc14
+    transfer_mode: direct
+    design_lenses: [combat, level-design, world-rules]
+    translation: "把角色、平台或机关受到的外力和约束画清，判断其加速、变形或平衡状态。"
+    decision: "当前运动结果由哪些力造成，静止是净力为零还是被约束锁住？"
+    prototype: "为一个推拉机关制作受力图，对单项力和约束逐一开关。"
+    measure: "加速度、平衡误差、约束反力、玩家预测和异常穿透。"
+    falsifier: "在边界和质量固定时，净力不能预测加速度或平衡。"
+    boundary: "数值势均力敌不是物理平衡，必须有明确定义的力和约束。"
+
+  - source_model_id: mm-5f8905afab9c
+    transfer_mode: direct
+    design_lenses: [world-rules, combat, production]
+    translation: "用单位和无量纲比例检查公式，判断角色、地图或模拟放大后哪些关系必须改变。"
+    decision: "公式单位是否闭合，从原型尺度放大到正式内容时哪些量按什么幂次变化？"
+    prototype: "将同一物体或关卡按两倍尺度重建，预测并实测时间、速度、面积和成本。"
+    measure: "单位一致性、尺度外推误差、无量纲比、性能和手感偏差。"
+    falsifier: "经过控制的尺度变化不符合所声明的尺度律。"
+    boundary: "量纲正确只是必要条件，不证明公式机制正确。"
+
+  - source_model_id: mm-cc3991975703
+    transfer_mode: mechanic-only
+    design_lenses: [progression, world-rules, content]
+    translation: "用于设计由边界条件产生的离散等级、允许跃迁和选择规则，使成长档位具有系统来源。"
+    decision: "为何状态只能取离散档位，玩家能通过哪些合法跃迁改变状态？"
+    prototype: "建立五个离散能级与受限跃迁表，让玩家通过输入频率完成转换。"
+    measure: "合法跃迁率、规则理解、状态分布、越级漏洞和策略多样性。"
+    falsifier: "连续状态同样可行，或跃迁不受边界和选择规则限制。"
+    boundary: "等级制、稀有度和整数数值本身不是量子化。"
+
+  - source_model_id: mm-71cbb455982b
+    transfer_mode: direct
+    design_lenses: [combat, economy, world-rules]
+    translation: "建立闭合能量账本，把移动、攻击、热量、资源和损耗视为形式转换，检查效率与隐藏源汇。"
+    decision: "系统获得的效果由哪种能量或资源支付，损失去了哪里？"
+    prototype: "为一个战斗或载具循环记录完整能量流，并测试极端输入。"
+    measure: "输入输出差、转换效率、耗散、无限能漏洞和边界交换。"
+    falsifier: "闭合边界内出现无法解释的净能量增减。"
+    boundary: "游戏可以违反现实物理，但规则内部的资源账本仍需明确；伤害不是自动等同能量。"
+
+  - source_model_id: mm-d4edb4a5a85c
+    transfer_mode: structural
+    design_lenses: [economy, progression, world-rules]
+    translation: "检查资源差异、地图秩序和可逆选择如何随行动耗散，设计恢复成本与不可逆承诺。"
+    decision: "哪个过程会消耗可用差异，恢复原状态需要付出什么且能否完全恢复？"
+    prototype: "制作可逆和带耗散的两种资源转换循环，运行多轮比较。"
+    measure: "可用资源差、恢复成本、循环损失、状态空间收缩和时间方向。"
+    falsifier: "闭合循环可无成本完全复原，且不存在任何耗散或信息丢失。"
+    boundary: "复杂、混乱或内容变多不自动等于熵增加，必须定义状态和可用差异。"
+
+  - source_model_id: mm-fb4dec93d1f0
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, level-design, content]
+    translation: "用于设计经典不可通过但保留小概率穿透的势垒机制，让高度、宽度与环境共同控制风险。"
+    decision: "玩家如何读出势垒参数并决定等待、增能或承担低概率穿越？"
+    prototype: "制作不同高度和宽度的势垒，运行大量重复试验展示透射率。"
+    measure: "透射频率、参数敏感度、玩家概率校准、策略选择。"
+    falsifier: "透射率不随势垒参数变化，或可由普通隐藏通道解释。"
+    boundary: "低概率穿墙、随机暴击和绕路都不是量子隧穿。"
+
+  - source_model_id: mm-0df41f6ddc45
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于设计环境耦合逐步破坏相干、把可干涉状态变成经典概率混合的量子题材玩法。"
+    decision: "哪些环境互动泄露状态信息并缩短相干时间，玩家如何隔离系统？"
+    prototype: "实现同一状态在隔离与耦合环境下的干涉对比，并逐步增加噪声。"
+    measure: "相干度、干涉可见度、环境耦合强度、规则理解和恢复可能性。"
+    falsifier: "环境耦合变化不影响干涉或相干指标。"
+    boundary: "退相干不等于意识选择现实，也不等于普通注意力分散。"
+
+  - source_model_id: mm-d2fbdcb18acf
+    transfer_mode: direct
+    design_lenses: [economy, combat, live-ops]
+    translation: "测试系统受小扰动后回归、振荡、发散或跃迁，识别数值生态接近失稳的预警信号。"
+    decision: "当前平衡点是否能吸收扰动，哪个控制参数会触发构筑或经济相态切换？"
+    prototype: "在两个扰动幅度和多个参数区间运行重复模拟，并做升降参数扫描。"
+    measure: "恢复时间、波动、状态占比、特征值代理、跃迁和滞回。"
+    falsifier: "恢复与状态切换不随扰动或参数距离变化。"
+    boundary: "局部稳定不保证全局稳定，普通趋势变化也不自动是相变。"
+
+  - source_model_id: mm-f0584264021d
+    transfer_mode: direct
+    design_lenses: [combat, core-loop, live-ops]
+    translation: "分析周期性输入、冷却和系统固有节奏如何产生强化、抵消或共振，避免意外爆发循环。"
+    decision: "哪些周期匹配会异常放大伤害、资源或玩家压力，阻尼是否足够？"
+    prototype: "扫描输入频率和阻尼，记录响应幅度与相位。"
+    measure: "固有周期、峰值响应、阻尼、相位差、连锁触发率。"
+    falsifier: "响应幅度不随驱动频率变化，或不存在稳定周期。"
+    boundary: "任何重复节奏都不自动是共振，必须有固有频率与频率选择性放大。"
+
+  - source_model_id: mm-ded821acce72
+    transfer_mode: mechanic-only
+    design_lenses: [world-rules, content]
+    translation: "用于构造同一状态可在不同基底表示、但观测结果由测量规则产生的量子题材系统。"
+    decision: "状态如何表示，玩家选择的基底怎样改变可预测结果？"
+    prototype: "实现二维复数状态、归一化和两组基底展开，用频率展示结果。"
+    measure: "归一化误差、展开一致性、结果分布、玩家预测校准。"
+    falsifier: "不同表示给出不一致物理预测，或测量结果不服从状态定义。"
+    boundary: "叠加不是角色同时拥有多个普通标签，也不是剧情未决定。"
+
+  - source_model_id: mm-commitment-consistency
+    transfer_mode: direct
+    design_lenses: [player-behavior, social, progression]
+    translation: "设计主动、可见且有身份意义的选择如何提高后续一致行动，同时保留反悔与退出空间。"
+    decision: "哪些承诺能形成玩家身份和长期目标，哪些会变成不公平锁定？"
+    prototype: "比较私下可逆选择与公开身份承诺对后续任务选择的影响。"
+    measure: "后续一致选择率、退出率、后悔率、身份表达和承诺强度。"
+    falsifier: "控制既有偏好后，承诺形式不预测后续相关行为。"
+    boundary: "不要用沉没成本或强制锁定冒充自愿承诺，也不能假设效应普遍存在。"
+
+  - source_model_id: mm-overconfidence
+    transfer_mode: direct
+    design_lenses: [player-behavior, combat, production]
+    translation: "分别检测玩家或团队对表现、相对排名和不确定区间的高估，设计校准反馈与风险护栏。"
+    decision: "误判来自高估能力、排名还是置信区间过窄，反馈应纠正哪一类？"
+    prototype: "让参与者先预测成绩和区间，再完成任务并立即展示校准结果。"
+    measure: "预测误差、排名误差、区间覆盖率、风险选择和学习速度。"
+    falsifier: "三类校准指标均无系统偏差，或偏差由信息不足充分解释。"
+    boundary: "高难度失败和自信表达不等于过度自信，必须分别测量。"
+
+  - source_model_id: mm-incentive-caused-bias
+    transfer_mode: direct
+    design_lenses: [player-behavior, social, production]
+    translation: "检查奖励、排名、声誉和岗位目标如何偏置玩家或团队对规则、平衡与证据的解释。"
+    decision: "谁因某个结论获益，其反馈是否因此系统性偏向有利解释？"
+    prototype: "让不同利益条件的参与者评估同一平衡证据，比较搜索和解释差异。"
+    measure: "证据选择、结论方向、遗漏反例、利益强度和盲评差异。"
+    falsifier: "移除利益关联后判断方向与证据处理完全不变。"
+    boundary: "利益相关不证明恶意或虚假，必须观察认知处理被偏置的路径。"
+
+  - source_model_id: mm-incentives
+    transfer_mode: direct
+    design_lenses: [player-behavior, economy, live-ops]
+    translation: "把奖励如何改变玩家行动回报、参与者筛选、规则含义和内在动机拆开，防止指标替代。"
+    decision: "奖励会增加目标行为、吸引不同玩家，还是把原本有趣的活动变成任务？"
+    prototype: "设置无奖励、固定奖励和表现奖励三组，追踪目标与非目标行为。"
+    measure: "目标行为、质量、非目标行为、参与者构成、奖励撤除后的持续性。"
+    falsifier: "可控行为不随净回报变化，或质量与动机损失完全抵消收益。"
+    boundary: "奖励不自动提高体验，玩家无法控制的指标也不构成有效激励。"
+
+  - source_model_id: mm-envy-comparison
+    transfer_mode: direct
+    design_lenses: [player-behavior, social, progression]
+    translation: "设计排名、展示和同伴参照时，区分可达的激励比较与不可达的威胁比较。"
+    decision: "玩家与谁比较、差距是否被认为可达、比较会激励还是驱赶？"
+    prototype: "比较全球榜、相近水平榜和个人进步榜对同一玩家群的影响。"
+    measure: "挑战意愿、退出率、负面反馈、差距感知和后续投入。"
+    falsifier: "控制能力差距后，参照对象和可达性感知不影响行为或情绪。"
+    boundary: "排名下降、羡慕和敌意嫉妒不是同一现象，不能由单一指标推断。"
+
+  - source_model_id: mm-availability-bias
+    transfer_mode: direct
+    design_lenses: [player-behavior, live-ops, production]
+    translation: "检查醒目暴击、近期失败和社交热议是否替代真实分布，影响玩家公平感或团队改版优先级。"
+    decision: "当前判断来自完整数据，还是来自最容易想起的事件？"
+    prototype: "向两组展示同分布但不同显著性的事件，再比较概率判断和改版选择。"
+    measure: "主观概率、真实频率、事件显著性、回忆率和决策偏差。"
+    falsifier: "控制显著性后，判断仍准确跟随真实分布。"
+    boundary: "容易记住不一定造成偏差，只有它替代真实频率并导致系统误判时才成立。"
+
+  - source_model_id: mm-authority-bias
+    transfer_mode: direct
+    design_lenses: [player-behavior, social, production]
+    translation: "检查设计师、主播、公会领袖或系统标签的权威线索是否压低独立验证，并设计可质疑渠道。"
+    decision: "玩家或团队为何服从建议，是证据、合法性、身份认同还是责任转移？"
+    prototype: "对同一建议随机附加权威标签或匿名来源，比较采用与核验行为。"
+    measure: "采用率、证据检查、反对表达、责任归因和来源可信度。"
+    falsifier: "移除权威线索后行为不变，且参与者始终依据独立证据。"
+    boundary: "该模型本身存在争议；合理信任专业证据不等于权威偏差。"
+
+  - source_model_id: mm-confirmation-bias
+    transfer_mode: direct
+    design_lenses: [player-behavior, production]
+    translation: "检查玩家和团队是否只搜索、解释或记住支持既有构筑与设计信念的证据，并强制生成反向测试。"
+    decision: "当前方案为何看似有效，什么测试最可能证明它错？"
+    prototype: "要求参与者为偏好方案和对手方案各设计一项同等成本的反证测试。"
+    measure: "证据搜索方向、反例数量、预测校准、换方案阈值和盲评结果。"
+    falsifier: "信息策略与先验立场无关，且证据权重随诊断性而非方向变化。"
+    boundary: "坚持正确结论不等于确认偏误，必须观察系统性的信息处理偏差。"
+
+  - source_model_id: mm-social-proof
+    transfer_mode: direct
+    design_lenses: [player-behavior, social, live-ops]
+    translation: "设计队友选择、热门构筑和社区行为作为信息或规范线索时，检查独立性、质量和级联风险。"
+    decision: "群体行为是在提供独立信息，还是制造自我强化的从众信号？"
+    prototype: "展示独立选择统计与可见跟随链两种热门信息，比较玩家采用。"
+    measure: "采用率、选择独立性、信息质量、级联速度和少数方案存活率。"
+    falsifier: "群体线索的有无和独立性不影响不确定情境下的选择。"
+    boundary: "热门不等于优质，多个相同选择也可能来自同一上游信号。"
+
+  - source_model_id: mm-loss-aversion
+    transfer_mode: direct
+    design_lenses: [player-behavior, economy, progression]
+    translation: "围绕明确参考点测试失去已有物品、进度或机会与获得等额收益的非对称影响，谨慎设计失败代价。"
+    decision: "玩家把什么视为已有基准，损失设计会增加紧张还是导致退出？"
+    prototype: "在等额终值下比较获得框架与损失框架，并记录参考点。"
+    measure: "选择率、退出率、情绪、风险偏好、参考点和效应分群。"
+    falsifier: "控制参考点后，等额损益在选择、注意和情绪上无稳定差异。"
+    boundary: "该效应并非普遍定律，不能用来合理化惩罚性留存或暗黑模式。"
+
+  - source_model_id: mm-man-with-a-hammer
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "防止团队因熟悉某种引擎、玩法或指标而把不同问题都重写成同一种解法，并过早停止搜索。"
+    decision: "我们选择这个机制是因为问题需要，还是因为团队最熟悉它？"
+    prototype: "为同一体验目标强制生成三种机制不同的最小方案，再做盲测。"
+    measure: "方案机制差异、停止搜索时间、熟悉度与选择相关、盲测表现。"
+    falsifier: "在控制熟悉度后，所选工具仍由任务约束稳定支持。"
+    boundary: "使用擅长工具不是错误，只有它排挤更合适方案且缺少任务证据时才构成倾向。"
+
+  - source_model_id: mm-inversion
+    transfer_mode: direct
+    design_lenses: [core-loop, production, live-ops]
+    translation: "从无聊、软锁、生态崩坏或项目失败状态反推必要条件与可提前验证的失效路径。"
+    decision: "怎样最容易让这个设计失败，哪项早期测试能最快暴露它？"
+    prototype: "列出一个顶层失败，构造最小破坏性场景并验证防线。"
+    measure: "失效路径覆盖、触发阈值、检测时间、恢复能力和残余风险。"
+    falsifier: "反推路径无法在受控条件下导致失败，或已有机制稳定阻断全部路径。"
+    boundary: "反向思考用于发现必要风险，不应让团队只防守而停止探索价值。"
+
+  - source_model_id: mm-circle-of-competence
+    transfer_mode: direct
+    design_lenses: [production, core-loop]
+    translation: "区分团队对某类玩家、玩法和技术是见过、会说，还是能做出可校准判断，并为圈外决策设置实验和外部审查。"
+    decision: "哪些策划判断有可验证经验支撑，哪些只是熟悉感或偏好？"
+    prototype: "让团队预先预测试玩结果和区间，再按模块比较实际校准。"
+    measure: "预测误差、区间覆盖、领域经验、复现能力和外部评审分歧。"
+    falsifier: "所谓圈内领域的预测不比圈外更准确或更校准。"
+    boundary: "能力圈不是拒绝新类型的借口；圈外探索应通过低成本试验扩展能力。"

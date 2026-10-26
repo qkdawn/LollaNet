@@ -1,0 +1,53 @@
+version: lollanet-cma-qualification-v0.3.0
+paper_section: 6
+candidates:
+  - id: qwen3-4b-instruct-2507
+    model_id: Qwen/Qwen3-4B-Instruct-2507
+    revision: 2de2439ea21be1dc5cb21f22f88af07e43393cbb
+    revision_status: resolved_from_modelscope_git_2026-07-25
+    revision_source: https://www.modelscope.cn/Qwen/Qwen3-4B-Instruct-2507.git
+    source_provider: modelscope_git_lfs
+    repository_url: https://www.modelscope.cn/Qwen/Qwen3-4B-Instruct-2507.git
+    reasoning_mode: disabled
+    local_checkpoint: D:\LollaNetData\lollanet-cma\qualification\checkpoints-v3\qwen3-4b-instruct-2507
+  - id: qwen2.5-3b-instruct
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    revision: 8f4992eda43eea7c770690ddc0de8f732da246f5
+    revision_status: resolved_from_modelscope_git_2026-07-25
+    revision_source: https://www.modelscope.cn/Qwen/Qwen2.5-3B-Instruct.git
+    source_provider: modelscope_git_lfs
+    repository_url: https://www.modelscope.cn/Qwen/Qwen2.5-3B-Instruct.git
+    reasoning_mode: disabled
+    local_checkpoint: D:\LollaNetData\lollanet-cma\qualification\checkpoints-v3\qwen2.5-3b-instruct
+  - id: phi-3.5-mini-instruct
+    model_id: microsoft/Phi-3.5-mini-instruct
+    revision: 15257cc2edeb31c5bd2b43acc5f5e6289cc4f4ba
+    revision_status: resolved_from_modelscope_git_2026-07-25
+    revision_source: https://www.modelscope.cn/LLM-Research/Phi-3.5-mini-instruct.git
+    source_provider: modelscope_git_lfs
+    repository_url: https://www.modelscope.cn/LLM-Research/Phi-3.5-mini-instruct.git
+    reasoning_mode: disabled
+    local_checkpoint: D:\LollaNetData\lollanet-cma\qualification\checkpoints-v3\phi-3.5-mini-instruct
+loading:
+  quantization: bitsandbytes_nf4_4bit
+  double_quant: false
+  compute_dtype: bfloat16
+  batch_size: 1
+  maximum_input_tokens: 2048
+  maximum_new_tokens: 512
+  sampling: greedy
+  temperature: 0
+  seed: 20260724
+  hook_probe_delta: 0.0001
+  reasoning_mode: disabled
+qualification:
+  split: qualification
+  access_view: D:\LollaNetData\lollanet-cma\access-views\qualification-v1
+  records: 200
+  hook_smoke_records: 50
+  macro_families: [cm-associational, cm-interventional, cm-counterfactual, cm-mediation]
+selection:
+  bootstrap_samples: 10000
+  confidence_level: 0.95
+  seed: 20260725
+  tie_break: [peak_gpu_memory_bytes, median_latency_seconds, parse_failure_rate]
